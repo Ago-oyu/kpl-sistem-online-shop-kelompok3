@@ -29,6 +29,12 @@ namespace Backend
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(100),
                 stock INTEGER
+                );
+
+            CREATE TABLE IF NOT EXISTS user (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name VARCHAR(100),
+                phone_number VARCHAR(100)
                 );";
 
             using var cn = GetCn();
