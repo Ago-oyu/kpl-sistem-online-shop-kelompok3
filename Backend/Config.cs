@@ -14,6 +14,8 @@ namespace Backend
                 Config config = new();
                 config.SetDefault();
                 File.WriteAllText(path, JsonSerializer.Serialize(config));
+
+                return config;
             }
             string jsText = File.ReadAllText(path);
 

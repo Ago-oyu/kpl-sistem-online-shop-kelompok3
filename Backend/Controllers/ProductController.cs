@@ -12,14 +12,8 @@ namespace Backend.Controllers
     {
         readonly Database database = new();
         const string tableName = "product";
-        private readonly ILogger<ProductController> _logger;
 
-        public ProductController(ILogger<ProductController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetProduct")]
+        [HttpGet("getPage")]
         public IEnumerable<Product> Get([FromQuery] string? page=null, [FromQuery] int batch=20)
         {
             using var cn = database.GetCn();
@@ -33,7 +27,16 @@ namespace Backend.Controllers
 
             return cn.Query<Product>(query);
         }
-
+        [HttpGet("getProduct")]
+        public Product GetOne([FromQuery] string id)
+        {
+            using IDbConnection cn = database.GetCn();
+            var result = cn.Query<Product>($"select * from {tableName} where id={id};").ToList();
+            if (result.Count == 0){
+                return null;
+            }
+            return result[0];
+        }
         [HttpPost(Name = "PostProduct")]
         public void Post([FromBody] Product input)
         {
