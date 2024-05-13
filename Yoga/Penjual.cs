@@ -8,10 +8,10 @@ namespace Yoga
 {
     public class Penjual : User
     {
-        public String NamaToko {  get; set; }
+        public String NamaToko { get; set; }
         private DaftarProduk<Penjual> ProdukList { get; set; }
-        public enum Status { New, Bronze, Silver, Gold, Diamond}
-        public int[] BatasPoin = { 0, 5, 50, 100, 250 };
+        public enum Status { New, Bronze, Silver, Gold, Diamond }
+        public int[] BatasPoin = { 0, 5, 100, 500, 1000 };
         private int poin;
         private Status StatusToko { get; set; }
 
@@ -19,40 +19,29 @@ namespace Yoga
         {
             this.NamaToko = NamaToko;
             ProdukList = new DaftarProduk<Penjual>();
-            StatusToko = Enum.Parse(typeof(Status), 0);
+            StatusToko = (Status)0;
         }
 
         public void UpdateStatusToko()
         {
+            UpdatePoin();
             for (int i = 0; i < BatasPoin.Length; i++)
             {
                 if (poin >= BatasPoin[i])
                 {
                     continue;
-                } else
+                }
+                else
                 {
                     StatusToko = (Status)BatasPoin[i];
                 }
             }
         }
 
-        
+        public void UpdatePoin()
+        {
+            poin = 5 * ProdukList.GetTotalPenjualan();
 
-        //public void AddProduk(Produk produk)
-        //{
-        //    ProdukList.Add(produk);
-        //}
-
-        //public void RemoveProduk(String produkId)
-        //{
-        //    for (int i = 0; i < ProdukList.Count; i++)
-        //    {
-        //        if (ProdukList[i].GetId().Equals(produkId))
-        //        {
-        //            ProdukList.RemoveAt(i);
-        //            return;
-        //        }
-        //    }
-        //}
+        }
     }
 }

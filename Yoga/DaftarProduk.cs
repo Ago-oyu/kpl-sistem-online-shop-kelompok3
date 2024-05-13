@@ -46,5 +46,15 @@ namespace Yoga
                 return null;
             }
         }
+
+        public int GetTotalPenjualan()
+        {
+            int totalPenjualan = 0;
+            for (int i = 0;i < this.Count;i++)
+            {
+                totalPenjualan += this[i].GetTerjual();
+            }
+            return totalPenjualan;
+        }
     }
 }
