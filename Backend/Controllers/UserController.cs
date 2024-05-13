@@ -27,17 +27,21 @@ namespace Backend.Controllers
         }
 
         [HttpPost(Name = "PostUser")]
-        public void Post([FromBody] User input)
+        public Dictionary<string, string> Post([FromBody] User input)
         {
+            string guid = Database.CreateGUID();
+
             using IDbConnection cn = database.GetCn();
-            cn.QueryAsync($"insert into {tableName} (name, phone_number) values ('{input.name}', '{input.phoneNumber}');");
+            cn.QueryAsync($"insert into {tableName} (id, name, phone_number) values ('{guid}', '{input.name}', '{input.phoneNumber}');");
+
+            return new Dictionary<string, string>{{"userGuid", guid}};
         }
 
         [HttpDelete(Name = "DeleteUser")]
         public void Delete([FromQuery] string id)
         {
             using IDbConnection cn = database.GetCn();
-            cn.QueryAsync($"delete from {tableName} where id={id};");
+            cn.QueryAsync($"delete from {tableName} where id='{id}';");
         }
     }
 }

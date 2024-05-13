@@ -26,13 +26,13 @@ namespace Backend
         {
             var createTable = @"
             CREATE TABLE IF NOT EXISTS product (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id VARCHAR(50) PRIMARY KEY,
                 name VARCHAR(100),
                 stock INTEGER
                 );
 
             CREATE TABLE IF NOT EXISTS user (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                id VARCHAR(50) PRIMARY KEY,
                 name VARCHAR(100),
                 phone_number VARCHAR(100)
                 );";
@@ -43,6 +43,11 @@ namespace Backend
         public IDbConnection GetCn()
         {
             return new SQLiteConnection($"Data Source={dataSource}");
+        }
+        public static string CreateGUID()
+        {
+            string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            return guid.Substring(0, guid.Length-2);
         }
     }
 }
