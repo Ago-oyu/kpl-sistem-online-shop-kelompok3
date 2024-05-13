@@ -9,7 +9,7 @@ namespace Yoga
     public class Penjual : User
     {
         public String NamaToko {  get; set; }
-        private List<Produk> ProdukList { get; set; 
+        private List<Produk> ProdukList { get; set; } 
 
         public Penjual(string Nama, string Email, string Password, String NamaToko) : base(Nama, Email, Password)
         {
@@ -20,6 +20,11 @@ namespace Yoga
         public void AddProduk(Produk produk)
         {
             ProdukList.Add(produk);
+        }
+
+        public List<Produk> GetProdukList()
+        {
+            return ProdukList;
         }
 
         public void RemoveProduk(String produkId)

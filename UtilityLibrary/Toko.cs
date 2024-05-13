@@ -2,26 +2,24 @@
 {
     public class Toko
     {
-        enum Month { A, B, C, D }
-        public static List<String> listKategori = new List<string>() { "elektronik", "perabotan", "alat", "baju" };
+        private static List<string> kodeKategori = ["A", "B", "C", "D"];
+        private static List<string> listKategori = ["elektronik", "perabotan", "alat", "baju"];
 
-        public static string getKategori(string id)
+        public static string GetKategori(string id)
         {
-            Month idEnumValue = (Month)Enum.Parse(typeof(Month), id.Substring(0,1));
 
             // Get the integer value of the enum
-            int idIntValue = (int)idEnumValue;
+            int idIntValue = kodeKategori.IndexOf(id.Substring(0,1));
 
             return listKategori[idIntValue];
         }
 
-        public static string genId(string kategori, int numId)
+        public static string GenId(string kategori, int numId)
         {
-            Month[] allMonths = (Month[])Enum.GetValues(typeof(Month));
 
-            int index = listKategori.IndexOf(kategori);
+            int index = listKategori.IndexOf(kategori.ToLower());
 
-            return $"{allMonths[index]}{numId}";
+            return $"{kodeKategori[index]}{numId}";
         }
     }
 }
