@@ -1,13 +1,28 @@
-﻿namespace Yoga
+using UtilityLibrary;
+namespace Yoga
 {
     public class Produk
     {
-        private String Id;
-        private String Name;
         private String Description;
         private int Terjual;
 
-        public String GetId() { return Id; }
-        public int GetTerjual() { return Terjual; }
+        private static int productCount = 0;
+        private string Id, Nama;
+
+        public Produk(string nama, string kategori )
+        {
+            this.Id = Toko.GenId(kategori, ++productCount);
+            this.Nama = nama;
+        }
+
+        public string GetNama()
+        {
+            return Nama;
+        }
+
+        public string GetId()
+        {
+            return Id;
+        }
     }
 }

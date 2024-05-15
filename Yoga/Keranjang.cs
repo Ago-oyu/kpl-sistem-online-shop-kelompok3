@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Yoga
 {
-    public class Keranjang
+    public class Keranjang<T>
     {
+        public T totalHarga;
+        public int discount;
+        public List<Produk> listBelanja;
 
     }
 }
