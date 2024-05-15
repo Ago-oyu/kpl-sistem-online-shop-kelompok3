@@ -1,8 +1,10 @@
 using System.Data;
 using System.Data.SQLite;
+using System.Linq.Expressions;
 using System.Text.Json;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Backend.Controllers
 {
@@ -11,12 +13,11 @@ namespace Backend.Controllers
     public class BackendController : ControllerBase
     {
         readonly Database database = new();
-        const string tableName = "product";
         Dictionary<string, string> tableMapping = new(){
-            {"produk", "produk"},
+            {"produk", "product"},
             {"user", "user"},
-            {"keranjang", "keranjang"},
-            {"product", "product"}
+            // {"keranjang", "keranjang"},
+            // {"product", "product"}
         };
         public enum Types {
             produk, user, keranjang
@@ -24,43 +25,98 @@ namespace Backend.Controllers
         [HttpGet("getProductPage")]
         public IEnumerable<Product> Get([FromQuery] string? page=null, [FromQuery] int batch=20)
         {
-            using var cn = database.GetCn();
+            using var db = new Database();
 
-            var query = $"select * from {tableName} ";
+            var query = $"select * from {tableMapping[Types.produk.ToString()]} ";
+
             // kalau page null return semua
             if (page is not null)
             {
                 query+= $"limit {batch} offset ({page} - 1) * {batch}";
             }
-
-            return cn.Query<Product>(query);
+            
+            return db.Database.SqlQueryRaw<Product>(query).ToList();;
         }
         /// <summary>
         /// type bisa berisi produk, user, atau keranjang
         /// </summary>
         [HttpGet("{type}/{id}")]
-        public Product GetOne([FromRoute] Types type, [FromRoute] string id)
+        public string GetOne([FromRoute] Types type, [FromRoute] string id)
         {
-            using IDbConnection cn = database.GetCn();
-            var result = cn.Query<Product>($"select * from {tableMapping[type.ToString()]} where id={id};").ToList();
-            if (result.Count == 0){
-                return null;
+            using var db = new Database();
+            dynamic result; 
+            switch (type)
+            {
+                case Types.produk:
+                    result = db.product.AsEnumerable().FirstOrDefault(i => i.id == id);
+                    break;
+                case Types.user:
+                    // result = db.user.AsEnumerable().FirstOrDefault(i => i.id == id);
+                    return JsonSerializer.Serialize(db.user.AsEnumerable().FirstOrDefault(i => i.id == id));
+                    break;
+                default:
+                    return "";
             }
-            return result[0];
+
+            if (result is null)
+                return "";
+
+            return JsonSerializer.Serialize(result);
         }
-        [HttpPost("{type}")]
-        public void Post([FromRoute] Types type, [FromBody] Product input)
+
+        [HttpPost("produk")]
+        public Dictionary<string, string> PostProduct([FromBody] Product input)
         {
-            using IDbConnection cn = database.GetCn();
-            // implement class input mapper
-            cn.QueryAsync($"insert into {tableName} (name, stock) values ('{input.name}', {input.stock});");
+            using var db = new Database();
+
+            // kalau sudah ada update
+            Product row = db.product.AsEnumerable().FirstOrDefault(rw => rw.id == input.id, null);
+            if (row is not null)
+            {
+                db.Entry(row).CurrentValues.SetValues(input);
+                db.SaveChanges();
+                return new Dictionary<string, string>{{"status", "row updated"}};
+            }
+
+            // set id dengan guid random
+            string guid = Database.CreateGUID();
+            input.id = guid;
+
+            db.product.Add(input);
+            db.SaveChanges();
+
+            return new Dictionary<string, string>{{"createdGuid", guid}};
+        }
+        [HttpPost("user")]
+        public Dictionary<string, string> PostUser([FromBody] User input)
+        {
+            using var db = new Database();
+
+            // kalau data sudah ada update
+            var row = db.user.AsEnumerable().FirstOrDefault(i => i.id == input.id, null);
+            if (row is not null)
+            {
+                db.Entry(row).CurrentValues.SetValues(input);
+                db.SaveChanges();
+                return new Dictionary<string, string>{{"status", "row updated"}};
+            }
+
+            // set id dengan guid random
+            string guid = Database.CreateGUID();
+            input.id = guid;
+
+            db.user.Add(input);
+            db.SaveChanges();
+
+            return new Dictionary<string, string>{{"createdGuid", guid}};
         }
 
         [HttpDelete("{type}/{id}")]
         public void Delete([FromRoute] Types type, [FromRoute] string id)
         {
-            using IDbConnection cn = database.GetCn();
-            cn.QueryAsync($"delete from {tableMapping[type.ToString()]} where id={id};");
+            using var db = new Database();
+            db.Database.ExecuteSqlRaw($"delete from {tableMapping[type.ToString()]} where id='{id}';");
+            db.SaveChanges();
         }
     }
 }

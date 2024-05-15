@@ -1,15 +1,20 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace Backend
 {
     public class Product
     {
-        public string id { get; set; }
+        [Key]
+        public string? id { get; set; }
         public string name { get; set; }
         public int stock { get; set; }
     }
     public class User
     {
-        public string id { get; set; }
+        [Key]
+        public string? id { get; set; }
         public string name { get; set; }
-        public int phoneNumber { get; set; }
+        public Int64 phoneNumber { get; set; }
     }
 }

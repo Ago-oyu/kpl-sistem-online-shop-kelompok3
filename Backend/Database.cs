@@ -1,49 +1,46 @@
-using System.Data;
-using System.Data.SQLite;
-using Dapper;
+using Backend;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Storage;
+using System.Collections.Generic;
+using System.ComponentModel;
+
 
 namespace Backend
 {
-    public class Database
+    public class Database : DbContext
     {
-        string dataSource;
         Config config = Config.GetConfig();
-        public Database(string? dataSource=null)
+        public DbSet<Product> product { get; set; }
+        public DbSet<User> user { get; set; }
+
+        public Database()
         {
-            // load dari config jika dataSource tidak di input
-            if (dataSource is null)
+            // TODO: ganti jadi definisi table sendiri (foreign key, etc)
+            try
             {
-                dataSource = config.dataSource;
+                RelationalDatabaseCreator databaseCreator = 
+                    (RelationalDatabaseCreator) Database.GetService<IDatabaseCreator>();
+                databaseCreator.CreateTables();
+            } catch (Exception)
+            {
+                // table sudah dibuat
             }
-
-            // nama file database
-            this.dataSource = dataSource;
-
-            // inisialisasi table
-            InitDatabase();
+            
         }
-        void InitDatabase()
+        // The following configures EF to create a Sqlite database file in the
+        // special "local" folder for your platform.
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite($"Data Source={config.dataSource}");
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var createTable = @"
-            CREATE TABLE IF NOT EXISTS product (
-                id VARCHAR(50) PRIMARY KEY,
-                name VARCHAR(100),
-                stock INTEGER
-                );
-
-            CREATE TABLE IF NOT EXISTS user (
-                id VARCHAR(50) PRIMARY KEY,
-                name VARCHAR(100),
-                phone_number VARCHAR(100)
-                );";
-
-            using var cn = GetCn();
-            cn.Query(createTable);
+            // modelBuilder.Entity<User>()
+            //     .HasOne(e => e.productId)
+            //     .WithOne()
+            //     .HasForeignKey<Product>(e => e.id);
         }
-        public IDbConnection GetCn()
-        {
-            return new SQLiteConnection($"Data Source={dataSource}");
-        }
+
         public static string CreateGUID()
         {
             string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
