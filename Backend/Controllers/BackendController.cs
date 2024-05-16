@@ -1,10 +1,12 @@
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees;
 using System.Data.SQLite;
 using System.Linq.Expressions;
 using System.Text.Json;
 using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 
 namespace Backend.Controllers
 {
@@ -63,52 +65,78 @@ namespace Backend.Controllers
 
             return JsonSerializer.Serialize(result);
         }
-
-        [HttpPost("produk")]
-        public Dictionary<string, string> PostProduct([FromBody] Product input)
+        [HttpPost("{type}")]
+        public ContentResult PostAny([FromRoute] Types type, [FromBody] JsonElement input)
         {
             using var db = new Database();
 
-            // kalau sudah ada update
-            Product row = db.product.AsEnumerable().FirstOrDefault(rw => rw.id == input.id, null);
-            if (row is not null)
+            var updater = new DatabaseUpdater(db);
+            var operationDone = DatabaseUpdater.Result.inserted;
+            try {
+                switch (type)
+                {
+                    case Types.produk:
+                        operationDone = updater.Execute<Product>(input);
+                        break;
+                    case Types.user:
+                        operationDone = updater.Execute<User>(input);
+                        break;
+                }
+            } catch (Exception ex)
             {
-                db.Entry(row).CurrentValues.SetValues(input);
-                db.SaveChanges();
-                return new Dictionary<string, string>{{"status", "row updated"}};
+                // return new ContentResult() { Content = ex.Message, StatusCode = 500 };
+                throw;
+            }
+            
+
+            if (operationDone == DatabaseUpdater.Result.inserted)
+            {
+                return new ContentResult() { Content = "completed, data ter insert", StatusCode = 200 };
+            } else
+            {
+                return new ContentResult() { Content = "completed, data ter update", StatusCode = 200 };
             }
 
-            // set id dengan guid random
-            string guid = Database.CreateGUID();
-            input.id = guid;
+            // if (operationDone == DatabaseUpdater.Result.inserted)
+            // {
+            //     return new Dictionary<string, string>{{"status", "completed data ter insert"}};
+            // } else
+            // {
+            //     return new Dictionary<string, string>{{"status", "completed data ter update"}};
+            // }
 
-            db.product.Add(input);
-            db.SaveChanges();
-
-            return new Dictionary<string, string>{{"createdGuid", guid}};
+            // if (valid)
+            // {
+            //     return new Dictionary<string, string>{{"status", "completed"}};
+            // } else 
+            // {
+            //     if (insert)
+            //     {
+            //         return new Dictionary<string, string>{{"status", $"failed"}, {"reason", "primary key data sudah ada"}};
+            //     } else
+            //     {
+            //         return new Dictionary<string, string>{{"status", $"failed"}, {"reason", "primary key data belum ada (set query param insert ke true)"}};
+            //     }
+            // }
         }
-        [HttpPost("user")]
-        public Dictionary<string, string> PostUser([FromBody] User input)
+
+        [HttpPost("dl")]
+        public void rmid([FromBody] string input)
         {
             using var db = new Database();
 
-            // kalau data sudah ada update
-            var row = db.user.AsEnumerable().FirstOrDefault(i => i.id == input.id, null);
-            if (row is not null)
+            var updated = false;
+            foreach (User user in db.user.ToList())
             {
-                db.Entry(row).CurrentValues.SetValues(input);
-                db.SaveChanges();
-                return new Dictionary<string, string>{{"status", "row updated"}};
+                // if (user.ids.Contains(input))
+                // {
+                //     updated = true;
+                //     user.ids.Remove(input);
+                // }
             }
-
-            // set id dengan guid random
-            string guid = Database.CreateGUID();
-            input.id = guid;
-
-            db.user.Add(input);
-            db.SaveChanges();
-
-            return new Dictionary<string, string>{{"createdGuid", guid}};
+            
+            if (updated)
+                db.SaveChanges();
         }
 
         [HttpDelete("{type}/{id}")]

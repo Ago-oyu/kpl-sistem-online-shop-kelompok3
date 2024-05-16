@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Text.Json;
 
 
 namespace Backend
@@ -43,8 +44,52 @@ namespace Backend
 
         public static string CreateGUID()
         {
-            string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            return guid.Substring(0, guid.Length-2);
+            // string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            // return guid.Substring(0, guid.Length-2);
+
+            return Guid.NewGuid().ToString();
+        }
+    }
+    public class DatabaseUpdater
+    {
+        public enum Result {updated, inserted}
+        public Database db;
+        public DatabaseUpdater(Database db)
+        {   
+            this.db = db;
+        }
+        public Result Execute<T>(JsonElement input) where T : class
+        {
+            var row = GetRow<T>(input);
+            if (row is null)
+            {
+                Insert<T>(input);
+                return Result.inserted;
+            }
+            Update(row, input);
+            return Result.updated;
+        }
+        public T GetRow<T>(JsonElement input) where T : class
+        {
+            var row = db.Find<T>(input.GetProperty("id").GetString());
+            return row;
+        }
+        public void Insert<T>(JsonElement input) where T : class
+        {
+            T parsedInput = Parse<T>(input);
+            db.Add(parsedInput);
+            db.SaveChanges();
+        }
+        public void Update<T>(T row, JsonElement input) where T : class
+        {
+            T parsedInput = Parse<T>(input);
+            db.Entry(row).CurrentValues.SetValues(parsedInput);
+            db.SaveChanges();
+        }
+
+        public T Parse<T>(JsonElement input)
+        {
+            return JsonSerializer.Deserialize<T>(input);
         }
     }
 }
