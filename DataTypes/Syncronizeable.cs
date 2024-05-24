@@ -1,67 +1,25 @@
-using System.CodeDom;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json;
 using Mapster;
 
-namespace Backend
+namespace DataTypes
 {
-    public class Product : Syncronizeable<Product>
-    {
-        // [Key]
-        // public string id { get; set; }
-        public string name { get; set; }
-        public int stock { get; set; }
-
-        public static async Task<List<Product>> GetPage()
-        {
-            using var client = new HttpClient();
-
-            string requestUrl = baseUrl + "/api/getProductPage";
-
-            try
-            {
-                HttpResponseMessage response = await client.GetAsync(requestUrl);
-
-                // Check if the request was successful (status code 200)
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-
-                    return JsonSerializer.Deserialize<List<Product>>(responseBody);
-                }
-                else
-                {
-                    Console.WriteLine($"Failed to call the API. Status code: {response.StatusCode}");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
-            return null;
-        }
-    }
-    public class User : Syncronizeable<User>
-    {
-        // [Key]
-        // public string? id { get; set; }
-        public string name { get; set; }
-        public Int64 phoneNumber { get; set; }
-        public List<string> products { get; set; }
-
-    }
     public class Syncronizeable<T> where T : class
     {
         [Key]
-        public string id { get; set; }
+        public string Id { get; set; }
         public static string baseUrl;
         public static string endpoint;
+        public static void Setup(string baseUrlIn, string endpointIn)
+        {
+            baseUrl = baseUrlIn;
+            endpoint = endpointIn;
+
+        }
         public async Task Pull()
         {
-            
-            var serverObj = await Get(id);
+            var serverObj = await Get(Id);
             if (serverObj is not null)
                 serverObj.Adapt(this as T);
             else
@@ -123,10 +81,41 @@ namespace Backend
             }
             return default;
         }
-        
-        public virtual void ForeignKeyCheck(Database db)
+        public static async Task<List<T>> GetList(IEnumerable<string> ids)
         {
-            
+            // agar bise request secara parallel
+            var tasks = ids.Select(Get).ToList();
+            var results = await Task.WhenAll(tasks);
+            return results.ToList();
+        }
+        public async Task Delete()
+        {
+           await Delete(Id);
+        }
+        public static async Task Delete(string id)
+        {
+            using var client = new HttpClient();
+
+            string requestUrl = baseUrl + endpoint + "/" + id;
+
+            try
+            {
+                HttpResponseMessage response = await client.DeleteAsync(requestUrl);
+
+                // Check if the request was successful (status code 200)
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                }
+                else
+                {
+                    Console.WriteLine($"Failed to call the API. Status code: {response.StatusCode}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred: {ex.Message}");
+            }
         }
         public string Serialize()
         {

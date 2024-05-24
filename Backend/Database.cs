@@ -5,15 +5,17 @@ using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text.Json;
-
+using DataTypes;
 
 namespace Backend
 {
     public class Database : DbContext
     {
         Config config = Config.GetConfig();
-        public DbSet<Product> product { get; set; }
-        public DbSet<User> user { get; set; }
+        public DbSet<Produk> produk { get; set; }
+        public DbSet<Penjual> penjual { get; set; }
+        public DbSet<Pembeli> pembeli { get; set; }
+        public DbSet<Keranjang> keranjang { get; set; }
 
         public Database()
         {
