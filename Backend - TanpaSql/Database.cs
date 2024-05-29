@@ -1,6 +1,9 @@
+using Backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Common;
 
 
@@ -43,10 +46,6 @@ namespace Backend
         {
             string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
             return guid.Substring(0, guid.Length-2);
-        }
-        public DbConnection GetCn()
-        {
-            return this.Database.GetDbConnection();
         }
     }
 }

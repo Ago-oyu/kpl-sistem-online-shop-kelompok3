@@ -1,7 +1,9 @@
 using System.Text.Json.Serialization;
 using Backend;
 
-Config config = Config.GetConfig();
+/*Config config = Config.GetConfig();
+*/
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -11,9 +13,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers()
+/*builder.Services.AddControllers()
     .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
-
+*/
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,4 +31,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run($"http://{config.host}:{config.port}");
+/*app.Run($"http://{config.host}:{config.port}");
+*/
+
+app.Run();
