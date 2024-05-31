@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using System.ComponentModel;
+using DataTypes;
+using System.Text.Json;
 
 namespace Backend
 {
@@ -89,10 +91,6 @@ namespace Backend
         public T Parse<T>(JsonElement input)
         {
             return JsonSerializer.Deserialize<T>(input);
-        }
-        public DbConnection GetCn()
-        {
-            return this.Database.GetDbConnection();
         }
     }
 }
