@@ -31,6 +31,8 @@ namespace DataTypes
 
             string requestUrl = baseUrl + endpoint;
 
+            Console.WriteLine(requestUrl);
+
             var content = new StringContent(Serialize(), Encoding.UTF8, "application/json");
             
             try
@@ -121,6 +123,5 @@ namespace DataTypes
         {
             return JsonSerializer.Serialize(this as T);
         }
-    
     }
 }

@@ -29,4 +29,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run($"http://{config.host}:{config.port}");
+app.Run($"https://{config.host}:{config.port}");

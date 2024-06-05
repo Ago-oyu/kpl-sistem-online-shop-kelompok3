@@ -1,11 +1,10 @@
-using Backend;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text.Json;
 using DataTypes;
+using System.Text.Json;
 
 namespace Backend
 {
@@ -88,7 +87,6 @@ namespace Backend
             db.Entry(row).CurrentValues.SetValues(parsedInput);
             db.SaveChanges();
         }
-
         public T Parse<T>(JsonElement input)
         {
             return JsonSerializer.Deserialize<T>(input);
