@@ -41,6 +41,66 @@ namespace Backend.Controllers
             return db.Database.SqlQueryRaw<Produk>(query).ToList();;
         }
 
+        [HttpGet("login")]
+        public string Login([FromBody] LoginInfo data)
+        {
+            using var db = new Database();
+            LoginOut<dynamic> res = new();
+
+            if (data.type == UserTypes.pembeli)
+            {
+                res.info = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == data.email);
+            } else 
+            {
+                res.info = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == data.email);
+            }
+
+            if (res.info == null)
+            {
+                res.status = "user tidak ditemukan";
+            } else if (res.info.password != data.password)
+            {
+                res.status = "password salah";
+                res.info = null;
+            } else {
+                res.status = "sukses";
+            }
+
+            return JsonSerializer.Serialize(res);
+        }
+
+        [HttpGet("register/{type}")]
+        public string Register([FromBody] JsonElement data, [FromRoute] UserTypes type)
+        {
+            using var db = new Database();
+            dynamic res;
+            dynamic existing;
+
+            if (type == UserTypes.pembeli)
+            {
+                res = JsonSerializer.Deserialize<Pembeli>(data);
+                existing = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.email);
+            } else 
+            {
+                res = JsonSerializer.Deserialize<Penjual>(data);
+                existing = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.email);
+            }
+
+            if (existing != null)
+            {
+                return "email sudah terpakai";
+            } else
+            {
+                var updater = new DatabaseUpdater(db);
+                if (type == UserTypes.pembeli)
+                    updater.Insert<Pembeli>(data);
+                else
+                    updater.Insert<Penjual>(data);
+                
+                return "register sukses";
+            }
+        }
+
         /// <summary>
         /// type bisa berisi produk, user, atau keranjang
         /// </summary>
@@ -54,10 +114,10 @@ namespace Backend.Controllers
             {
                 case Types.produk:
                     return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                case Types.pembeli:
-                    return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                case Types.penjual:
-                    return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.pembeli:
+                //     return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.penjual:
+                //     return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.keranjang:
                     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 default:
@@ -77,12 +137,12 @@ namespace Backend.Controllers
                     case Types.produk:
                         operationDone = updater.Execute<Produk>(input);
                         break;
-                    case Types.pembeli:
-                        operationDone = updater.Execute<Pembeli>(input);
-                        break;
-                    case Types.penjual:
-                        operationDone = updater.Execute<Penjual>(input);
-                        break;
+                    // case Types.pembeli:
+                    //     operationDone = updater.Execute<Pembeli>(input);
+                    //     break;
+                    // case Types.penjual:
+                    //     operationDone = updater.Execute<Penjual>(input);
+                    //     break;
                     case Types.keranjang:
                         operationDone = updater.Execute<Keranjang>(input);
                         break;
