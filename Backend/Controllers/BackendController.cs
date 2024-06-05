@@ -93,7 +93,6 @@ namespace Backend.Controllers
                 throw;
             }
             
-
             if (operationDone == DatabaseUpdater.Result.inserted)
             {
                 return new ContentResult() { Content = "completed, data ter insert", StatusCode = 200 };

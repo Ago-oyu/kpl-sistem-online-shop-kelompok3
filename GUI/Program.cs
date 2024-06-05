@@ -16,7 +16,10 @@ namespace GUI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run();
+
+            Login login = new Login();
+            login.Show();
         }
     }
 }

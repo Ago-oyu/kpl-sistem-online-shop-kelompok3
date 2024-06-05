@@ -24,7 +24,6 @@ namespace Backend
                 return config;
             }
             string jsText = File.ReadAllText(path);
-
             try {
                 return JsonSerializer.Deserialize<Config>(jsText, options);
             } catch (Exception ex) {

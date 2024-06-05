@@ -87,7 +87,6 @@ namespace Backend
             db.Entry(row).CurrentValues.SetValues(parsedInput);
             db.SaveChanges();
         }
-
         public T Parse<T>(JsonElement input)
         {
             return JsonSerializer.Deserialize<T>(input);
