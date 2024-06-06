@@ -6,7 +6,7 @@ namespace DataTypes
 {
     public class Produk : Syncronizeable<Produk>
     {
-        public string nama;
+        public string Nama {get; set;}
 
         public Produk()
         {

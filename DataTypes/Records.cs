@@ -5,13 +5,13 @@ namespace DataTypes
     }
     public record LoginInfo
     {
-        public UserTypes type;
-        public string email;
-        public string password;
+        public UserTypes Type {get; set;}
+        public string Email {get; set;}
+        public string Password {get; set;}
     }
     public record LoginOut<T>
     {
-        public string status;
-        public T info;
+        public string Status {get; set;}
+        public T Info {get; set;}
     }
 }

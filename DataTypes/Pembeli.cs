@@ -8,8 +8,8 @@ namespace DataTypes
 {
     public class Pembeli : User<Pembeli>
     {
-        public string alamat;
-        public string keranjang;
+        public string Alamat {get; set;}
+        public string Keranjang {get; set;}
 
         public Pembeli(string Nama, string Email, string Password) : base(Nama, Email, Password)
         {

@@ -41,35 +41,35 @@ namespace Backend.Controllers
             return db.Database.SqlQueryRaw<Produk>(query).ToList();;
         }
 
-        [HttpGet("login")]
-        public string Login([FromBody] LoginInfo data)
+        [HttpPost("login")]
+        public string LoginMethod([FromBody] LoginInfo data)
         {
             using var db = new Database();
             LoginOut<dynamic> res = new();
 
-            if (data.type == UserTypes.pembeli)
+            if (data.Type == UserTypes.pembeli)
             {
-                res.info = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == data.email);
+                res.Info = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
             } else 
             {
-                res.info = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == data.email);
+                res.Info = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
             }
 
-            if (res.info == null)
+            if (res.Info == null)
             {
-                res.status = "user tidak ditemukan";
-            } else if (res.info.password != data.password)
+                res.Status = "user tidak ditemukan";
+            } else if (res.Info.Password != data.Password)
             {
-                res.status = "password salah";
-                res.info = null;
+                res.Status = "password salah";
+                res.Info = null;
             } else {
-                res.status = "sukses";
+                res.Status = "sukses";
             }
 
             return JsonSerializer.Serialize(res);
         }
 
-        [HttpGet("register/{type}")]
+        [HttpPost("register/{type}")]
         public string Register([FromBody] JsonElement data, [FromRoute] UserTypes type)
         {
             using var db = new Database();
@@ -79,11 +79,11 @@ namespace Backend.Controllers
             if (type == UserTypes.pembeli)
             {
                 res = JsonSerializer.Deserialize<Pembeli>(data);
-                existing = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.email);
+                existing = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
             } else 
             {
                 res = JsonSerializer.Deserialize<Penjual>(data);
-                existing = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.email);
+                existing = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
             }
 
             if (existing != null)

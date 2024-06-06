@@ -25,7 +25,7 @@ namespace DataTypes
         {
             using var client = new HttpClient();
 
-            string requestUrl = baseUrl + "/login";
+            string requestUrl = baseUrl + "/api/login";
 
             Console.WriteLine(requestUrl);
 
@@ -43,12 +43,12 @@ namespace DataTypes
                 }
                 else
                 {
-                    return new LoginOut<T>(){ status = "status msg eror"};
+                    return new LoginOut<T>(){ Status = "status msg eror"};
                 }
             }
             catch (Exception ex)
             {
-                return new LoginOut<T>(){ status = $"An error occurred: {ex.Message}"};
+                return new LoginOut<T>(){ Status = $"An error occurred: {ex.Message}"};
             }
         }
 
@@ -57,7 +57,7 @@ namespace DataTypes
        {
             using var client = new HttpClient();
 
-            string requestUrl = baseUrl + $"/register/" + (typeof(T) == typeof(Pembeli)? UserTypes.pembeli.ToString():UserTypes.penjual.ToString());
+            string requestUrl = baseUrl + $"/api/register/" + (typeof(T) == typeof(Pembeli)? UserTypes.pembeli.ToString():UserTypes.penjual.ToString());
 
             Console.WriteLine(requestUrl);
 
@@ -75,7 +75,7 @@ namespace DataTypes
                 }
                 else
                 {
-                    return "status error";
+                    return "status error:" + responseBody;
                 }
             }
             catch (Exception ex)
