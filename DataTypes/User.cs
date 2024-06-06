@@ -23,6 +23,8 @@ namespace DataTypes
 
         public static async Task<LoginOut<T>> Login(LoginInfo form)
         {
+            form.Type = typeof(T) == typeof(Pembeli) ? UserTypes.pembeli:UserTypes.penjual;
+
             using var client = new HttpClient();
 
             string requestUrl = baseUrl + "/api/login";
