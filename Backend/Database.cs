@@ -15,6 +15,7 @@ namespace Backend
         public DbSet<Penjual> penjual { get; set; }
         public DbSet<Pembeli> pembeli { get; set; }
         public DbSet<Keranjang> keranjang { get; set; }
+        public DbSet<Pesanan> pesanan { get; set; }
 
         public Database()
         {
@@ -86,6 +87,14 @@ namespace Backend
             T parsedInput = Parse<T>(input);
             db.Entry(row).CurrentValues.SetValues(parsedInput);
             db.SaveChanges();
+        }
+        public void Update<T>(JsonElement input) where T : class
+        {
+            var row = GetRow<T>(input);
+            T parsedInput = Parse<T>(input);
+            db.Entry(row).CurrentValues.SetValues(parsedInput);
+            db.SaveChanges();
+            
         }
         public T Parse<T>(JsonElement input)
         {

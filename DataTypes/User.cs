@@ -55,7 +55,7 @@ namespace DataTypes
         }
 
         // override jadi register
-       public new async Task<string> Push()
+       public async Task<string> Register()
        {
             using var client = new HttpClient();
 

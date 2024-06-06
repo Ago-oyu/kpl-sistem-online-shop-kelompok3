@@ -23,7 +23,7 @@ namespace Backend.Controllers
         //     // {"product", "product"}
         // };
         public enum Types {
-            produk, pembeli, penjual, keranjang
+            produk, pembeli, penjual, keranjang, pesanan
         }
         [HttpGet("getProductPage")]
         public IEnumerable<Produk> Get([FromQuery] string? page=null, [FromQuery] int batch=20)
@@ -120,6 +120,8 @@ namespace Backend.Controllers
                 //     return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.keranjang:
                     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                case Types.pesanan:
+                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 default:
                     return "";
             }
@@ -131,20 +133,33 @@ namespace Backend.Controllers
 
             var updater = new DatabaseUpdater(db);
             var operationDone = DatabaseUpdater.Result.inserted;
+
+            if (type == Types.pembeli || type == Types.penjual)
+            {
+                dynamic row = type == Types.pembeli ? updater.GetRow<Pembeli>(input) : updater.GetRow<Penjual>(input);
+                if (row == null) 
+                    return new ContentResult() { Content = "hanya boleh update data untuk tipe penjual dan pembeli, gunakan register untuk menabah entry baru", StatusCode = 400 };
+            }
+
             try {
                 switch (type)
                 {
                     case Types.produk:
                         operationDone = updater.Execute<Produk>(input);
                         break;
-                    // case Types.pembeli:
-                    //     operationDone = updater.Execute<Pembeli>(input);
-                    //     break;
-                    // case Types.penjual:
-                    //     operationDone = updater.Execute<Penjual>(input);
-                    //     break;
+                    case Types.pembeli:
+                        updater.Update<Pembeli>(input);
+                        operationDone = DatabaseUpdater.Result.updated;
+                        break;
+                    case Types.penjual:
+                        updater.Update<Penjual>(input);
+                        operationDone = DatabaseUpdater.Result.updated;
+                        break;
                     case Types.keranjang:
                         operationDone = updater.Execute<Keranjang>(input);
+                        break;
+                    case Types.pesanan:
+                        operationDone = updater.Execute<Pesanan>(input);
                         break;
                 }
             } catch (Exception ex)
