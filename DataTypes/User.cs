@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Mapster;
 
 namespace DataTypes
 {
@@ -13,12 +14,17 @@ namespace DataTypes
         public string Nama { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        
-        public User(String Nama, String Email, String Password)
+
+        /// <summary>
+        /// email dan password harus terisi untuk proses pull
+        /// </summary>
+        public new async Task Pull()
         {
-            this.Nama = Nama;
-            this.Email = Email;
-            this.Password = Password;
+            var serverObj = await Login(new LoginInfo(){Email=Email, Password=Password});
+            if (serverObj is not null)
+                serverObj.Info.Adapt(this as T);
+            else
+                Console.WriteLine("objek tidak ada di server");
         }
 
         public static async Task<LoginOut<T>> Login(LoginInfo form)
@@ -54,7 +60,6 @@ namespace DataTypes
             }
         }
 
-        // override jadi register
        public async Task<string> Register()
        {
             using var client = new HttpClient();

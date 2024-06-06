@@ -139,6 +139,8 @@ namespace Backend.Controllers
                 dynamic row = type == Types.pembeli ? updater.GetRow<Pembeli>(input) : updater.GetRow<Penjual>(input);
                 if (row == null) 
                     return new ContentResult() { Content = "hanya boleh update data untuk tipe penjual dan pembeli, gunakan register untuk menabah entry baru", StatusCode = 400 };
+                else if (row.Password != input.GetProperty("Password").GetString())
+                    return new ContentResult() { Content = "update gagal password salah", StatusCode = 400 };
             }
 
             try {

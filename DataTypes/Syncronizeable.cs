@@ -17,6 +17,10 @@ namespace DataTypes
             endpoint = endpointIn;
 
         }
+        
+        /// <summary>
+        /// untuk Child Class User Email dan Password harus ter set dengan tepat agar bisa pull (class lain cukup Id)
+        /// </summary>
         public async Task Pull()
         {
             var serverObj = await Get(Id);
@@ -25,6 +29,10 @@ namespace DataTypes
             else
                 Console.WriteLine("objek tidak ada di server");
         }
+
+        /// <summary>
+        /// untuk Child Class User Password harus ter set dengan tepat agar bisa push
+        /// </summary>
         public async Task<string> Push()
         {
             using var client = new HttpClient();

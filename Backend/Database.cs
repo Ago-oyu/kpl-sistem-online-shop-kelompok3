@@ -73,7 +73,7 @@ namespace Backend
         }
         public T GetRow<T>(JsonElement input) where T : class
         {
-            var row = db.Find<T>(input.GetProperty("id").GetString());
+            var row = db.Find<T>(input.GetProperty("Id").GetString());
             return row;
         }
         public void Insert<T>(JsonElement input) where T : class
