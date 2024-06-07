@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataTypes;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
 namespace GUI
 {
@@ -15,6 +16,7 @@ namespace GUI
     {
         String inputUsername;
         String inputPassword;
+
 
         public Login()
         {
@@ -35,7 +37,7 @@ namespace GUI
             Application.Exit();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             inputUsername = usernameTextBox.Text;
             inputPassword = passwordTextBox.Text;
@@ -44,7 +46,11 @@ namespace GUI
             pembeli.Nama = inputUsername;
             pembeli.Password = inputPassword;
 
-            pembeli.Pull();
+            LoginInfo info = new() { Email = inputUsername, Password = inputPassword };
+
+            LoginOut<Pembeli> res = Pembeli.Login(info).Result;
+
+            label1.Text = res.Status;
         }
     }
 }
