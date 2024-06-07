@@ -20,7 +20,7 @@ namespace GUI
         private void btnToRegister_Click(object sender, EventArgs e)
         {
             Register register = new Register();
-
+            this.Dispose();
         }
 
         private void Close(object sender, FormClosedEventArgs e)
