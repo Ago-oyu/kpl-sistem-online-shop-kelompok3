@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DataTypes;
 
 namespace GUI
 {
@@ -39,7 +40,11 @@ namespace GUI
             inputUsername = usernameTextBox.Text;
             inputPassword = passwordTextBox.Text;
 
+            Pembeli pembeli = new Pembeli();
+            pembeli.Nama = inputUsername;
+            pembeli.Password = inputPassword;
 
+            pembeli.Pull();
         }
     }
 }

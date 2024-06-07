@@ -14,7 +14,7 @@ prd.Id = Database.CreateGUID();
 
 Console.WriteLine(prd.Id);
 
-prd.nama = "pensil";
+prd.Nama = "pensil";
 string res = await prd.Push();
 
 Console.WriteLine($"{prd.Id}: {res}");
