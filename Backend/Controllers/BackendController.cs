@@ -23,7 +23,7 @@ namespace Backend.Controllers
         //     // {"product", "product"}
         // };
         public enum Types {
-            produk, pembeli, penjual, keranjang
+            produk, pembeli, penjual, keranjang, pesanan
         }
         [HttpGet("getProductPage")]
         public IEnumerable<Produk> Get([FromQuery] string? page=null, [FromQuery] int batch=20)
@@ -41,6 +41,66 @@ namespace Backend.Controllers
             return db.Database.SqlQueryRaw<Produk>(query).ToList();;
         }
 
+        [HttpPost("login")]
+        public string LoginMethod([FromBody] LoginInfo data)
+        {
+            using var db = new Database();
+            LoginOut<dynamic> res = new();
+
+            if (data.Type == UserTypes.pembeli)
+            {
+                res.Info = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
+            } else 
+            {
+                res.Info = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
+            }
+
+            if (res.Info == null)
+            {
+                res.Status = "user tidak ditemukan";
+            } else if (res.Info.Password != data.Password)
+            {
+                res.Status = "password salah";
+                res.Info = null;
+            } else {
+                res.Status = "sukses";
+            }
+
+            return JsonSerializer.Serialize(res);
+        }
+
+        [HttpPost("register/{type}")]
+        public string Register([FromBody] JsonElement data, [FromRoute] UserTypes type)
+        {
+            using var db = new Database();
+            dynamic res;
+            dynamic existing;
+
+            if (type == UserTypes.pembeli)
+            {
+                res = JsonSerializer.Deserialize<Pembeli>(data);
+                existing = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+            } else 
+            {
+                res = JsonSerializer.Deserialize<Penjual>(data);
+                existing = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+            }
+
+            if (existing != null)
+            {
+                return "email sudah terpakai";
+            } else
+            {
+                var updater = new DatabaseUpdater(db);
+                if (type == UserTypes.pembeli)
+                    updater.Insert<Pembeli>(data);
+                else
+                    updater.Insert<Penjual>(data);
+                
+                return "register sukses";
+            }
+        }
+
         /// <summary>
         /// type bisa berisi produk, user, atau keranjang
         /// </summary>
@@ -54,12 +114,14 @@ namespace Backend.Controllers
             {
                 case Types.produk:
                     return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                case Types.pembeli:
-                    return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                case Types.penjual:
-                    return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.pembeli:
+                //     return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.penjual:
+                //     return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.keranjang:
                     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                case Types.pesanan:
+                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 default:
                     return "";
             }
@@ -71,6 +133,16 @@ namespace Backend.Controllers
 
             var updater = new DatabaseUpdater(db);
             var operationDone = DatabaseUpdater.Result.inserted;
+
+            if (type == Types.pembeli || type == Types.penjual)
+            {
+                dynamic row = type == Types.pembeli ? updater.GetRow<Pembeli>(input) : updater.GetRow<Penjual>(input);
+                if (row == null) 
+                    return new ContentResult() { Content = "hanya boleh update data untuk tipe penjual dan pembeli, gunakan register untuk menabah entry baru", StatusCode = 400 };
+                else if (row.Password != input.GetProperty("Password").GetString())
+                    return new ContentResult() { Content = "update gagal password salah", StatusCode = 400 };
+            }
+
             try {
                 switch (type)
                 {
@@ -78,13 +150,18 @@ namespace Backend.Controllers
                         operationDone = updater.Execute<Produk>(input);
                         break;
                     case Types.pembeli:
-                        operationDone = updater.Execute<Pembeli>(input);
+                        updater.Update<Pembeli>(input);
+                        operationDone = DatabaseUpdater.Result.updated;
                         break;
                     case Types.penjual:
-                        operationDone = updater.Execute<Penjual>(input);
+                        updater.Update<Penjual>(input);
+                        operationDone = DatabaseUpdater.Result.updated;
                         break;
                     case Types.keranjang:
                         operationDone = updater.Execute<Keranjang>(input);
+                        break;
+                    case Types.pesanan:
+                        operationDone = updater.Execute<Pesanan>(input);
                         break;
                 }
             } catch (Exception ex)

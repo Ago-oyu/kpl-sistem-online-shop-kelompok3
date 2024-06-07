@@ -8,10 +8,10 @@ namespace DataTypes
 {
     public class Keranjang : Syncronizeable<Keranjang>
     {
-        public List<string> listBelanja;
+        public List<string> ListBelanja {get; set;}
         public List<Produk> GetListBelanja()
         {
-            return Produk.GetList(listBelanja).Result;
+            return Produk.GetList(ListBelanja).Result;
         }
     }
 }
