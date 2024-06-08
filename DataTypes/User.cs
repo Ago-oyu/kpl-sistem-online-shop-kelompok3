@@ -33,6 +33,11 @@ namespace DataTypes
                 Console.WriteLine($"pull gagal: {serverObj.Status}");
         }
 
+        public static async Task<LoginOut<T>> Login(string Email, string Password)
+        {
+            return await Login(new LoginInfo(){ Email=Email, Password=Password });
+        }
+
         public static async Task<LoginOut<T>> Login(LoginInfo form)
         {
             form.Type = typeof(T) == typeof(Pembeli) ? UserTypes.pembeli:UserTypes.penjual;
