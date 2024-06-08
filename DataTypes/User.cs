@@ -15,16 +15,22 @@ namespace DataTypes
         public string Email { get; set; }
         public string Password { get; set; }
 
+        public User(string Email, string Password, string Id=null) : base(Id)
+        {
+            this.Email = Email;
+            this.Password = Password;
+        }
+
         /// <summary>
         /// email dan password harus terisi untuk proses pull
         /// </summary>
         public new async Task Pull()
         {
             var serverObj = await Login(new LoginInfo(){Email=Email, Password=Password});
-            if (serverObj is not null)
+            if (serverObj.Info is not null)
                 serverObj.Info.Adapt(this as T);
             else
-                Console.WriteLine("objek tidak ada di server");
+                Console.WriteLine($"pull gagal: {serverObj.Status}");
         }
 
         public static async Task<LoginOut<T>> Login(LoginInfo form)

@@ -18,6 +18,13 @@ namespace DataTypes
 
         }
         
+        public Syncronizeable(string Id=null)
+        {
+            this.Id = Id;
+            if (Id == null)
+                this.Id = CreateGUID();
+        }
+
         /// <summary>
         /// untuk Child Class User Email dan Password harus ter set dengan tepat agar bisa pull (class lain cukup Id)
         /// </summary>
@@ -130,6 +137,14 @@ namespace DataTypes
         public string Serialize()
         {
             return JsonSerializer.Serialize(this as T);
+        }
+
+        public static string CreateGUID()
+        {
+            // string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            // return guid.Substring(0, guid.Length-2);
+
+            return Guid.NewGuid().ToString();
         }
     }
 }
