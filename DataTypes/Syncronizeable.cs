@@ -9,8 +9,8 @@ namespace DataTypes
     {
         [Key]
         public string Id { get; set; }
-        public static string baseUrl;
-        public static string endpoint;
+        public static string baseUrl= null;
+        public static string endpoint = null;
         public static void Setup(string baseUrlIn, string endpointIn)
         {
             baseUrl = baseUrlIn;
