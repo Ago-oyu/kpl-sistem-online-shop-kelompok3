@@ -26,7 +26,8 @@ namespace Backend.Controllers
             produk, pembeli, penjual, keranjang, pesanan
         }
         [HttpGet("getProductPage")]
-        public IEnumerable<Produk> Get([FromQuery] int? page=null, [FromQuery] int batch=20)
+        public IEnumerable<Produk> Get([FromQuery] int? page=null, [FromQuery] int batch=20, 
+            [FromQuery] Produk.Sorting? sort=Produk.Sorting.none, [FromQuery] Produk.SortDir? dir=Produk.SortDir.asc)
         {
             using var db = new Database();
 
@@ -35,9 +36,23 @@ namespace Backend.Controllers
             // kalau page null return semua
             if (page is not null && page > 0)
             {
-                query+= $"limit {batch} offset ({page} - 1) * {batch}";
+                query+= $"limit {batch} offset ({page} - 1) * {batch} ";
             }
             
+            bool sorted = true;
+            switch (sort)
+            {
+                case Produk.Sorting.random:
+                    query+= "ORDER BY RAND() ";
+                    break;
+                default:
+                    sorted = false;
+                    break;
+            }
+            
+            if (sorted)
+                query+= dir.ToString().ToUpper();
+
             return db.Database.SqlQueryRaw<Produk>(query).ToList();;
         }
 

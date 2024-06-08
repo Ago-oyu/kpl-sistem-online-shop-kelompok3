@@ -33,11 +33,16 @@ namespace DataTypes
                 Console.WriteLine($"pull gagal: {serverObj.Status}");
         }
 
+        /// <summary>
+        /// login user berdasarkan email dan password / objek loginInfo
+        /// </summary>
+        /// <returns>objek loginOut yang berisi status login dan objek user jika login berhasil</returns>
         public static async Task<LoginOut<T>> Login(string Email, string Password)
         {
             return await Login(new LoginInfo(){ Email=Email, Password=Password });
         }
 
+        /// <inheritdoc cref="Login(string, string)"/>
         public static async Task<LoginOut<T>> Login(LoginInfo form)
         {
             form.Type = typeof(T) == typeof(Pembeli) ? UserTypes.pembeli:UserTypes.penjual;
@@ -71,6 +76,10 @@ namespace DataTypes
             // }
         }
 
+        /// <summary>
+        /// register user baru ke database
+        /// </summary>
+        /// <returns>info apakah register berhasil atau gagal (e.g. kalau email sudah terpakai)</returns>
        public async Task<string> Register()
        {
             using var client = new HttpClient();

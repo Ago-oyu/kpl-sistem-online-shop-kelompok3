@@ -26,6 +26,7 @@ namespace DataTypes
         }
 
         /// <summary>
+        /// update objek caller dengan data terbaru dari database
         /// untuk Child Class User Email dan Password harus ter set dengan tepat agar bisa pull (class lain cukup Id)
         /// </summary>
         public async Task Pull()
@@ -38,6 +39,7 @@ namespace DataTypes
         }
 
         /// <summary>
+        /// update row di database untuk objek caller berdasarkan field Id
         /// untuk Child Class User Password harus ter set dengan tepat agar bisa push
         /// </summary>
         public async Task<string> Push()
@@ -70,6 +72,12 @@ namespace DataTypes
             //     return $"An error occurred: {ex.Message}";
             // }
         }
+
+        /// <summary>
+        /// ambil objek dari database berdasarkan Id
+        /// untuk child class user gunakan method Login untuk mengambil data
+        /// </summary>
+        /// <returns>instance objek dari database dengan id sesuai parameter</returns>
         public static async Task<T> Get(string id)
         {
             using var client = new HttpClient();
@@ -105,6 +113,10 @@ namespace DataTypes
             var results = await Task.WhenAll(tasks);
             return results.ToList();
         }
+
+        /// <summary>
+        /// hapus objek ini dari database berdasarkan Id
+        /// </summary>
         public async Task Delete()
         {
            await Delete(Id);
