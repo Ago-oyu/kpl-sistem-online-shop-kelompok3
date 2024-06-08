@@ -10,7 +10,7 @@ namespace DataTypes
         public enum SortDir { asc, desc }
         public string Nama {get; set;}
 
-        public Produk()
+        public Produk(string Id=null) : base(Id)
         {
 
         }
