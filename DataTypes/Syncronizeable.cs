@@ -46,12 +46,12 @@ namespace DataTypes
 
             string requestUrl = baseUrl + endpoint;
 
-            Console.WriteLine(requestUrl);
+            // Console.WriteLine(requestUrl);
 
             var content = new StringContent(Serialize(), Encoding.UTF8, "application/json");
             
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.PostAsync(requestUrl, content);
 
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -64,11 +64,11 @@ namespace DataTypes
                 {
                     return $"Failed to call the API. Status code: {response.StatusCode} {responseBody}";
                 }
-            }
-            catch (Exception ex)
-            {
-                return $"An error occurred: {ex.Message}";
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     return $"An error occurred: {ex.Message}";
+            // }
         }
         public static async Task<T> Get(string id)
         {
@@ -76,8 +76,8 @@ namespace DataTypes
 
             string requestUrl = baseUrl + endpoint + "/" + id;
 
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.GetAsync(requestUrl);
 
                 // Check if the request was successful (status code 200)
@@ -91,11 +91,11 @@ namespace DataTypes
                 {
                     Console.WriteLine($"Failed to call the API. Status code: {response.StatusCode}");
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine($"An error occurred: {ex.Message}");
+            // }
             return default;
         }
         public static async Task<List<T>> GetList(IEnumerable<string> ids)
@@ -115,8 +115,8 @@ namespace DataTypes
 
             string requestUrl = baseUrl + endpoint + "/" + id;
 
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.DeleteAsync(requestUrl);
 
                 // Check if the request was successful (status code 200)
@@ -128,11 +128,11 @@ namespace DataTypes
                 {
                     Console.WriteLine($"Failed to call the API. Status code: {response.StatusCode}");
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred: {ex.Message}");
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     Console.WriteLine($"An error occurred: {ex.Message}");
+            // }
         }
         public string Serialize()
         {

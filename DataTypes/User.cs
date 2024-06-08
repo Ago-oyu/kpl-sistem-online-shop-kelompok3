@@ -46,12 +46,12 @@ namespace DataTypes
 
             string requestUrl = baseUrl + "/api/login";
 
-            Console.WriteLine(requestUrl);
+            // Console.WriteLine(requestUrl);
 
             var content = new StringContent(JsonSerializer.Serialize(form), Encoding.UTF8, "application/json");
             
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.PostAsync(requestUrl, content);
 
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -64,11 +64,11 @@ namespace DataTypes
                 {
                     return new LoginOut<T>(){ Status = "status msg eror"};
                 }
-            }
-            catch (Exception ex)
-            {
-                return new LoginOut<T>(){ Status = $"An error occurred: {ex.Message}"};
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     return new LoginOut<T>(){ Status = $"An error occurred: {ex.Message}"};
+            // }
         }
 
        public async Task<string> Register()
@@ -77,12 +77,12 @@ namespace DataTypes
 
             string requestUrl = baseUrl + $"/api/register/" + (typeof(T) == typeof(Pembeli)? UserTypes.pembeli.ToString():UserTypes.penjual.ToString());
 
-            Console.WriteLine(requestUrl);
+            // Console.WriteLine(requestUrl);
 
             var content = new StringContent(JsonSerializer.Serialize(this as T), Encoding.UTF8, "application/json");
             
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.PostAsync(requestUrl, content);
 
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -95,11 +95,11 @@ namespace DataTypes
                 {
                     return "status error:" + responseBody;
                 }
-            }
-            catch (Exception ex)
-            {
-                return $"An error occurred: {ex.Message}";
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     return $"An error occurred: {ex.Message}";
+            // }
        }
     }
 }
