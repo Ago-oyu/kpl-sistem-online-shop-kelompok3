@@ -14,6 +14,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers()
     .AddJsonOptions(options => { options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()); });
 
+builder.Services.AddControllers()
+    .AddJsonOptions(options => { options.JsonSerializerOptions.PropertyNameCaseInsensitive = false; });
+    
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

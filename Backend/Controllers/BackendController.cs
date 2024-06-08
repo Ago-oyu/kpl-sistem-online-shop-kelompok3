@@ -26,7 +26,7 @@ namespace Backend.Controllers
             produk, pembeli, penjual, keranjang, pesanan
         }
         [HttpGet("getProductPage")]
-        public IEnumerable<Produk> Get([FromQuery] int? page=null, [FromQuery] int batch=20, 
+        public string Get([FromQuery] int? page=null, [FromQuery] int batch=20, 
             [FromQuery] Produk.Sorting? sort=Produk.Sorting.none, [FromQuery] Produk.SortDir? dir=Produk.SortDir.asc)
         {
             using var db = new Database();
@@ -43,7 +43,7 @@ namespace Backend.Controllers
             switch (sort)
             {
                 case Produk.Sorting.random:
-                    query.Add("ORDER BY RAND()");
+                    query.Add("ORDER BY RANDOM()");
                     break;
                 default:
                     sorted = false;
@@ -53,7 +53,7 @@ namespace Backend.Controllers
             if (sorted)
                 query.Add(dir.ToString().ToUpper());
 
-            return db.Database.SqlQueryRaw<Produk>(string.Join(" ", query)).ToList();;
+            return JsonSerializer.Serialize(db.Database.SqlQueryRaw<Produk>(string.Join(" ", query)).ToList());
         }
 
         [HttpPost("login")]
