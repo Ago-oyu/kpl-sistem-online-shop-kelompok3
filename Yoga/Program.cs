@@ -16,13 +16,13 @@ Console.WriteLine(produk3.GetId());
 
 Console.WriteLine("\nGetKategori():");
 Penjual penjual1 = new Penjual("Yazov", "Yazov.Taboritsky@gmail.com", "password", "");
-penjual1.AddProduk(produk3);
-penjual1.AddProduk(produk1);
-penjual1.AddProduk(produk2);
+penjual1.GetDaftarProduk().Add(produk3);
+penjual1.GetDaftarProduk().Add(produk1);
+penjual1.GetDaftarProduk().Add(produk2);
 
 
 Console.WriteLine("Alat:");
-foreach (Produk produk in penjual1.GetProdukList())
+foreach (Produk produk in penjual1.GetDaftarProduk())
 {
     if (Toko.GetKategori(produk.GetId()) == "alat")
     {
@@ -31,11 +31,13 @@ foreach (Produk produk in penjual1.GetProdukList())
 }
 
 Console.WriteLine("\nElektronik");
-foreach (Produk produk in penjual1.GetProdukList())
+foreach (Produk produk in penjual1.GetDaftarProduk())
 {
     if (Toko.GetKategori(produk.GetId()) == "elektronik")
     {
         Console.WriteLine(produk.GetNama());
     }
 }
+
+Console.ReadLine();
 

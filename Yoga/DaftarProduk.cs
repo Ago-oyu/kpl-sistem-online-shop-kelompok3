@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Yoga
 {
-     class DaftarProduk<T> : List<Produk>
+     public class DaftarProduk<T> : List<Produk>
     {
         T tipe;
         public void RemoveProduk(String ProdukId)
@@ -29,21 +29,25 @@ namespace Yoga
         }
         public Produk GetTerlaris()
         {
-            if (tipe is Penjual)
+            Produk Terlaris = this[0];
+            try
             {
-                Produk Terlaris = this[0];
-                for (int i = 0; i < this.Count; i++)
+                if (tipe is Penjual)
                 {
-                    if (this[i].GetTerjual() > Terlaris.GetTerjual())
+                    for (int i = 0; i < this.Count; i++)
                     {
-                        Terlaris = this[i];
+                        if (this[i].GetJmlPenjualan() > Terlaris.GetJmlPenjualan())
+                        {
+                            Terlaris = this[i];
+                        }
                     }
                 }
                 return Terlaris;
-            } else
+            } catch (Exception e)
             {
+                Console.WriteLine(e.Message);
                 Console.WriteLine("Method GetTerlaris hanya untuk penjual");
-                return null;
+                return Terlaris;
             }
         }
 
@@ -52,7 +56,7 @@ namespace Yoga
             int totalPenjualan = 0;
             for (int i = 0;i < this.Count;i++)
             {
-                totalPenjualan += this[i].GetTerjual();
+                totalPenjualan += this[i].GetJmlPenjualan();
             }
             return totalPenjualan;
         }

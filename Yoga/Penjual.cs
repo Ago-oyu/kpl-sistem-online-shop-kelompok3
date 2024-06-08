@@ -9,7 +9,7 @@ namespace Yoga
     public class Penjual : User
     {
         public String NamaToko { get; set; }
-        private DaftarProduk<Penjual> ProdukList { get; set; }
+        private DaftarProduk<Penjual> ProdukList;
         public enum Status { New, Bronze, Silver, Gold, Diamond }
         public int[] BatasPoin = { 0, 5, 100, 500, 1000 };
         private int poin;
@@ -20,6 +20,21 @@ namespace Yoga
             this.NamaToko = NamaToko;
             ProdukList = new DaftarProduk<Penjual>();
             StatusToko = (Status)0;
+        }
+
+        public DaftarProduk<Penjual> GetDaftarProduk()
+        {
+            return ProdukList;
+        }
+
+        public String GetStatusToko()
+        {
+            return StatusToko.ToString();
+        }
+
+        public int GetPoin()
+        {
+            return poin;
         }
 
         public void UpdateStatusToko()
@@ -33,7 +48,8 @@ namespace Yoga
                 }
                 else
                 {
-                    StatusToko = (Status)BatasPoin[i];
+                    //StatusToko = (Status)BatasPoin[i];
+                    StatusToko = (Status)2;
                 }
             }
         }
