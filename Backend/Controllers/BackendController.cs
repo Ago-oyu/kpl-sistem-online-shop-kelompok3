@@ -31,29 +31,29 @@ namespace Backend.Controllers
         {
             using var db = new Database();
 
-            var query = $"select * from produk";
+            List<string> query = new(){ $"select * from produk" };
 
             // kalau page null return semua
             if (page is not null && page > 0)
             {
-                query+= $"limit {batch} offset ({page} - 1) * {batch} ";
+                query.Add($"limit {batch} offset ({page} - 1) * {batch}");
             }
             
             bool sorted = true;
             switch (sort)
             {
                 case Produk.Sorting.random:
-                    query+= "ORDER BY RAND() ";
+                    query.Add("ORDER BY RAND()");
                     break;
                 default:
                     sorted = false;
                     break;
             }
-            
-            if (sorted)
-                query+= dir.ToString().ToUpper();
 
-            return db.Database.SqlQueryRaw<Produk>(query).ToList();;
+            if (sorted)
+                query.Add(dir.ToString().ToUpper());
+
+            return db.Database.SqlQueryRaw<Produk>(string.Join(" ", query)).ToList();;
         }
 
         [HttpPost("login")]
