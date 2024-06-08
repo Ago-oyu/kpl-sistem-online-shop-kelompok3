@@ -11,9 +11,9 @@ namespace DataTypes
         public string NamaToko {  get; set; }
         private List<string> ProdukList { get; set; } 
         
-        public List<Produk> GetProdukList()
+        public async Task<List<Produk>> GetProdukList()
         {
-            return Produk.GetList(ProdukList).Result;
+            return await Produk.GetList(ProdukList);
         }
     }
 }

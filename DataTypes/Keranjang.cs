@@ -9,9 +9,9 @@ namespace DataTypes
     public class Keranjang : Syncronizeable<Keranjang>
     {
         public List<string> ListBelanja {get; set;}
-        public List<Produk> GetListBelanja()
+        public async Task<List<Produk>> GetListBelanja()
         {
-            return Produk.GetList(ListBelanja).Result;
+            return await Produk.GetList(ListBelanja);
         }
     }
 }

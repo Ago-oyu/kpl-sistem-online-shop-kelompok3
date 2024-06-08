@@ -23,7 +23,7 @@ namespace DataTypes
         /// <param name="sort">sorting apa</param>
         /// <param name="dir">sorting direction nya apa</param>
         /// <returns></returns>
-        public static async Task<List<Produk>> GetPage(int page=1, int itemPerPage=20, Sorting sort=Sorting.none, SortDir dir=SortDir.asc)
+        public static async Task<List<Produk>> GetPage(int page=-1, int itemPerPage=20, Sorting sort=Sorting.none, SortDir dir=SortDir.asc)
         {
             using var client = new HttpClient();
 
