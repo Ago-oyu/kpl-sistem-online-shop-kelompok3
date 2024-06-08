@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataTypes
 {
-    public class Penjual : User<Penjual>
+    public class Penjual(string Email, string Password) : User<Penjual>(Email, Password)
     {
         public string NamaToko {  get; set; }
         private List<string> ProdukList { get; set; } 
