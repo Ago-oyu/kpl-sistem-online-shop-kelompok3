@@ -26,14 +26,14 @@ namespace Backend.Controllers
             produk, pembeli, penjual, keranjang, pesanan
         }
         [HttpGet("getProductPage")]
-        public IEnumerable<Produk> Get([FromQuery] string? page=null, [FromQuery] int batch=20)
+        public IEnumerable<Produk> Get([FromQuery] int? page=null, [FromQuery] int batch=20)
         {
             using var db = new Database();
 
             var query = $"select * from produk";
 
             // kalau page null return semua
-            if (page is not null)
+            if (page is not null && page > 0)
             {
                 query+= $"limit {batch} offset ({page} - 1) * {batch}";
             }
