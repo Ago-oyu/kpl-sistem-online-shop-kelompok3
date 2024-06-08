@@ -11,7 +11,13 @@ namespace DataTypes
     }
     public record LoginOut<T>
     {
+        /// <summary>
+        /// login berhasil atau tidak dan alasannya kalau tidak berhasil
+        /// </summary>
         public string Status {get; set;}
+        /// <summary>
+        /// kalau login berhasil data user akan disimpan disini, = null jika login gagal
+        /// </summary>
         public T Info {get; set;}
     }
 }
