@@ -42,9 +42,30 @@ namespace GUI
             inputUsername = usernameTextBox.Text;
             inputPassword = passwordTextBox.Text;
 
-            LoginOut<Pembeli> res = await Pembeli.Login(inputUsername, inputPassword);
+            LoginInfo logInf = new();
 
-            label1.Text = res.Status;
+            logInf.Email = inputUsername;
+            logInf.Password = inputPassword;
+
+
+            if (pembeliRadioButton.Checked)
+            {
+                LoginOut<Pembeli> res = await Pembeli.Login(logInf);
+                MessageBox.Show(res.Status + " Pembe");
+/*                PanelPembeli pPenj = new(res.Info);
+*/            }
+            else
+            {
+                LoginOut<Penjual> res = await Penjual.Login(logInf);
+                MessageBox.Show(res.Status + " Penj");
+                if (res.Info != null)
+                {
+                    PanelPenjual pPenj = new(res.Info);
+                    pPenj.Show();
+                    this.Hide();
+
+                }
+            }
         }
     }
 }
