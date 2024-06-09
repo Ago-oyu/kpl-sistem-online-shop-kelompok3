@@ -26,13 +26,16 @@ namespace Backend.Controllers
             produk, pembeli, penjual, keranjang, pesanan
         }
         [HttpGet("getProductPage")]
-        public string Get([FromQuery] int? page=null, [FromQuery] int batch=20, 
-            [FromQuery] Produk.Sorting? sort=Produk.Sorting.none, [FromQuery] Produk.SortDir? dir=Produk.SortDir.asc)
+        public string Get([FromQuery] int? page=null, [FromQuery] int batch=20, [FromQuery] Produk.Sorting? sort=Produk.Sorting.none, 
+            [FromQuery] Produk.SortDir? dir=Produk.SortDir.asc, [FromQuery] string namaContain="")
         {
             using var db = new Database();
 
             var query = db.produk.Where(prd => true).AsEnumerable();
             
+            if (namaContain != "")
+                query = query.Where(prd => prd.Nama.Contains(namaContain));
+
             bool sorted = true;
             switch (sort)
             {
