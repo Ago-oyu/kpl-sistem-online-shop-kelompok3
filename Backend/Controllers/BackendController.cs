@@ -31,31 +31,32 @@ namespace Backend.Controllers
         {
             using var db = new Database();
 
-            List<string> query = new(){ $"select * from produk" };
-            // var q = db.produk.Where(p => true);
-
-            // kalau page null return semua
-            if (page is not null && page > 0)
-            {
-                query.Add($"limit {batch} offset ({page} - 1) * {batch}");
-                // q.Skip((page?? - 1) * batch).Take(batch);
-            }
+            var query = db.produk.Where(prd => true).AsEnumerable();
             
             bool sorted = true;
             switch (sort)
             {
                 case Produk.Sorting.random:
-                    query.Add("ORDER BY RANDOM()");
+                    query = query.OrderBy(prd => Guid.NewGuid());
+                    break;
+                case Produk.Sorting.harga:
+                    query = query.OrderBy(prd => prd.Harga);
                     break;
                 default:
                     sorted = false;
                     break;
             }
 
-            if (sorted)
-                query.Add(dir.ToString().ToUpper());
+            if (sorted && dir == Produk.SortDir.desc)
+                query = query.Reverse();
 
-            return JsonSerializer.Serialize(db.Database.SqlQueryRaw<Produk>(string.Join(" ", query)).ToList());
+            // kalau page null return semua
+            if (page is not null && page > 0)
+            {
+                query = query.Skip((page?? - 1) * batch).Take(batch);
+            }
+
+            return JsonSerializer.Serialize(query.ToList());
         }
 
         [HttpPost("login")]
