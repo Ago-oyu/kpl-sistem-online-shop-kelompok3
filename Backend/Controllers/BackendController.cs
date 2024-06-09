@@ -147,20 +147,20 @@ namespace Backend.Controllers
         public ContentResult PostAny([FromRoute] Types type, [FromBody] JsonElement input)
         {
             using var db = new Database();
-
             var updater = new DatabaseUpdater(db);
             var operationDone = DatabaseUpdater.Result.inserted;
 
             if (type == Types.pembeli || type == Types.penjual)
             {
                 dynamic row = type == Types.pembeli ? updater.GetRow<Pembeli>(input) : updater.GetRow<Penjual>(input);
-                if (row == null) 
+                if (row == null)
                     return new ContentResult() { Content = "hanya boleh update data untuk tipe penjual dan pembeli, gunakan register untuk menabah entry baru", StatusCode = 400 };
                 else if (row.Password != input.GetProperty("Password").GetString())
                     return new ContentResult() { Content = "update gagal password salah", StatusCode = 400 };
             }
 
-            try {
+            try
+            {
                 switch (type)
                 {
                     case Types.produk:
@@ -186,11 +186,12 @@ namespace Backend.Controllers
                 // return new ContentResult() { Content = ex.Message, StatusCode = 500 };
                 throw;
             }
-            
+
             if (operationDone == DatabaseUpdater.Result.inserted)
             {
                 return new ContentResult() { Content = "completed, data ter insert", StatusCode = 200 };
-            } else
+            }
+            else
             {
                 return new ContentResult() { Content = "completed, data ter update", StatusCode = 200 };
             }

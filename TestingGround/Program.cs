@@ -23,7 +23,6 @@ Pembeli newUser = new()
     Alamat = "bumi"
 };
 
-
 Console.WriteLine(await newUser.Register());
 
 LoginInfo info = new() { Email = email, Password = pass };

@@ -13,6 +13,12 @@ namespace GUI2
         {
             Pembeli.baseUrl = "http://localhost:5058";
             Pembeli.endpoint = "/api/pembeli";
+
+            Penjual.baseUrl = "http://localhost:5058";
+            Penjual.endpoint = "/api/penjual";
+
+            Produk.baseUrl = "http://localhost:5058";
+            Produk.endpoint = "/api/Produk";
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

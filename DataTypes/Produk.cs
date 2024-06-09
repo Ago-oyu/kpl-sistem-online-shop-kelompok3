@@ -9,6 +9,11 @@ namespace DataTypes
         public enum Sorting { none, random, diskon, harga }
         public enum SortDir { asc, desc }
         public string Nama {get; set;}
+        public int Harga { get; set; }
+        public string TokoPenjual { get; set; }
+        public string NamaPenjual { get; set; }
+        public string Deskripsi { get; set; }
+        public int Stok { get; set; }
 
         public Produk(string Id=null) : base(Id)
         {
