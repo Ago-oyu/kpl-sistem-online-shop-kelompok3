@@ -3,18 +3,65 @@ using System.Text.Json;
 using Backend;
 using DataTypes;
 
-Produk.baseUrl = "https://localhost:5058/swagger";
+string baseUrl = "http://localhost:5058";
+
+Produk.baseUrl = baseUrl;
 Produk.endpoint = "/api/produk";
 
-Pembeli.baseUrl = "https://localhost:5058/swagger";
-Pembeli.endpoint = "/api/user";
+Pembeli.baseUrl = baseUrl;
+Pembeli.endpoint = "/api/pembeli";
 
-Produk prd = new();
-prd.Id = Database.CreateGUID();
+string email = "testing@mail.com";
+string pass = "jola";
 
-Console.WriteLine(prd.Id);
+Pembeli newUser = new()
+{
+    Nama = "test",
+    Email = email,
+    Password = pass,
+    Id = Database.CreateGUID(),
+    Alamat = "bumi"
+};
 
-prd.nama = "pensil";
-string res = await prd.Push();
 
-Console.WriteLine($"{prd.Id}: {res}");
+Console.WriteLine(await newUser.Register());
+
+LoginInfo info = new() { Email = email, Password = pass };
+
+LoginOut<Pembeli> res = Pembeli.Login(info).Result;
+
+// res.Status kalau login gagal info disini
+// res.Info objek hasil login;
+
+Console.WriteLine("# init");
+Console.WriteLine(JsonSerializer.Serialize(res));
+
+Pembeli user = res.Info;
+user.Nama = "john";
+await user.Push();
+
+res = Pembeli.Login(info).Result;
+
+Console.WriteLine("# update nama");
+Console.WriteLine(JsonSerializer.Serialize(res));
+
+Pembeli newUsr = new();
+// newUsr.Id = user.Id;
+newUsr.Email = user.Email;
+newUsr.Password = user.Password;
+
+Console.WriteLine("# pre update");
+Console.WriteLine(JsonSerializer.Serialize(newUsr));
+
+await newUsr.Pull();
+Console.WriteLine("# post update");
+Console.WriteLine(JsonSerializer.Serialize(newUsr));
+
+
+// Console.WriteLine(await newUser.Register());
+
+// info = new(){ Type = UserTypes.pembeli, Email=email, Password=pass };
+// user = Pembeli.Login(info).Result;
+
+// Console.WriteLine("# post register");
+// Console.WriteLine(JsonSerializer.Serialize(user));

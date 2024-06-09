@@ -10,22 +10,16 @@ using System.Windows.Forms;
 
 namespace GUI
 {
-    public partial class Login : Form
+    public partial class Register : Form
     {
-        public Login()
+        public Register()
         {
             InitializeComponent();
         }
 
-        private void btnToRegister_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-            Register register = new Register();
-
-        }
-
-        private void Close(object sender, FormClosedEventArgs e)
-        {
-            Application.Exit();
+            this.Close();
         }
     }
 }
