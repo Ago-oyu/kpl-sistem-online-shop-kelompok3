@@ -42,13 +42,7 @@ namespace GUI
             inputUsername = usernameTextBox.Text;
             inputPassword = passwordTextBox.Text;
 
-            Pembeli pembeli = new Pembeli();
-            pembeli.Nama = inputUsername;
-            pembeli.Password = inputPassword;
-
-            LoginInfo info = new() { Email = inputUsername, Password = inputPassword };
-
-            LoginOut<Pembeli> res = Pembeli.Login(info).Result;
+            LoginOut<Pembeli> res = await Pembeli.Login(inputUsername, inputPassword);
 
             label1.Text = res.Status;
         }
