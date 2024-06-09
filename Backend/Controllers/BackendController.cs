@@ -30,15 +30,17 @@ namespace Backend.Controllers
         {
             using var db = new Database();
 
-            var query = $"select * from produk";
+            List<string> query = new(){ $"select * from produk" };
+            // var q = db.produk.Where(p => true);
 
             // kalau page null return semua
             if (page is not null)
             {
-                query+= $"limit {batch} offset ({page} - 1) * {batch}";
+                query.Add($"limit {batch} offset ({page} - 1) * {batch}");
+                // q.Skip((page?? - 1) * batch).Take(batch);
             }
             
-            return db.Database.SqlQueryRaw<Produk>(query).ToList();;
+            return db.Database.SqlQueryRaw<Produk>(String.Join(" ", query)).ToList();;
         }
 
         [HttpPost("login")]
