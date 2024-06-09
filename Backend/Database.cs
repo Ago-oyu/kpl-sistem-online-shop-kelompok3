@@ -43,14 +43,6 @@ namespace Backend
             //     .WithOne()
             //     .HasForeignKey<Product>(e => e.id);
         }
-
-        public static string CreateGUID()
-        {
-            // string guid = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
-            // return guid.Substring(0, guid.Length-2);
-
-            return Guid.NewGuid().ToString();
-        }
     }
     public class DatabaseUpdater
     {

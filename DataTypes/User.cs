@@ -15,18 +15,34 @@ namespace DataTypes
         public string Email { get; set; }
         public string Password { get; set; }
 
+        public User(string Email, string Password, string Id=null) : base(Id)
+        {
+            this.Email = Email;
+            this.Password = Password;
+        }
+
         /// <summary>
         /// email dan password harus terisi untuk proses pull
         /// </summary>
         public new async Task Pull()
         {
             var serverObj = await Login(new LoginInfo(){Email=Email, Password=Password});
-            if (serverObj is not null)
+            if (serverObj.Info is not null)
                 serverObj.Info.Adapt(this as T);
             else
-                Console.WriteLine("objek tidak ada di server");
+                Console.WriteLine($"pull gagal: {serverObj.Status}");
         }
 
+        /// <summary>
+        /// login user berdasarkan email dan password / objek loginInfo
+        /// </summary>
+        /// <returns>objek loginOut yang berisi status login dan objek user jika login berhasil</returns>
+        public static async Task<LoginOut<T>> Login(string Email, string Password)
+        {
+            return await Login(new LoginInfo(){ Email=Email, Password=Password });
+        }
+
+        /// <inheritdoc cref="Login(string, string)"/>
         public static async Task<LoginOut<T>> Login(LoginInfo form)
         {
             form.Type = typeof(T) == typeof(Pembeli) ? UserTypes.pembeli:UserTypes.penjual;
@@ -35,12 +51,12 @@ namespace DataTypes
 
             string requestUrl = baseUrl + "/api/login";
 
-            Console.WriteLine(requestUrl);
+            // Console.WriteLine(requestUrl);
 
             var content = new StringContent(JsonSerializer.Serialize(form), Encoding.UTF8, "application/json");
             
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.PostAsync(requestUrl, content);
 
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -53,25 +69,29 @@ namespace DataTypes
                 {
                     return new LoginOut<T>(){ Status = "status msg eror"};
                 }
-            }
-            catch (Exception ex)
-            {
-                return new LoginOut<T>(){ Status = $"An error occurred: {ex.Message}"};
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     return new LoginOut<T>(){ Status = $"An error occurred: {ex.Message}"};
+            // }
         }
 
+        /// <summary>
+        /// register user baru ke database
+        /// </summary>
+        /// <returns>info apakah register berhasil atau gagal (e.g. kalau email sudah terpakai)</returns>
        public async Task<string> Register()
        {
             using var client = new HttpClient();
 
             string requestUrl = baseUrl + $"/api/register/" + (typeof(T) == typeof(Pembeli)? UserTypes.pembeli.ToString():UserTypes.penjual.ToString());
 
-            Console.WriteLine(requestUrl);
+            // Console.WriteLine(requestUrl);
 
             var content = new StringContent(JsonSerializer.Serialize(this as T), Encoding.UTF8, "application/json");
             
-            try
-            {
+            // try
+            // {
                 HttpResponseMessage response = await client.PostAsync(requestUrl, content);
 
                 string responseBody = await response.Content.ReadAsStringAsync();
@@ -84,11 +104,11 @@ namespace DataTypes
                 {
                     return "status error:" + responseBody;
                 }
-            }
-            catch (Exception ex)
-            {
-                return $"An error occurred: {ex.Message}";
-            }
+            // }
+            // catch (Exception ex)
+            // {
+            //     return $"An error occurred: {ex.Message}";
+            // }
        }
     }
 }

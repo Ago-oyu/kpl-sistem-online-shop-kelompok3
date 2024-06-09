@@ -6,12 +6,18 @@ using System.Threading.Tasks;
 
 namespace DataTypes
 {
-    public class Keranjang : Syncronizeable<Keranjang>
+    public class Keranjang: Syncronizeable<Keranjang>
     {
         public List<string> ListBelanja {get; set;}
-        public List<Produk> GetListBelanja()
+
+        public Keranjang(string Id=null) : base(Id)
         {
-            return Produk.GetList(ListBelanja).Result;
+
+        }
+
+        public async Task<List<Produk>> GetListBelanja()
+        {
+            return await Produk.GetList(ListBelanja);
         }
     }
 }
