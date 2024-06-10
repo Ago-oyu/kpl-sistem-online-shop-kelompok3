@@ -17,7 +17,6 @@ namespace GUI
         String inputUsername;
         String inputPassword;
 
-
         public Login()
         {
             InitializeComponent();
@@ -47,23 +46,26 @@ namespace GUI
             logInf.Email = inputUsername;
             logInf.Password = inputPassword;
 
-
             if (pembeliRadioButton.Checked)
             {
                 LoginOut<Pembeli> res = await Pembeli.Login(logInf);
-                MessageBox.Show(res.Status + " Pembe");
-/*                PanelPembeli pPenj = new(res.Info);
-*/            }
+                MessageBox.Show(res.Status);
+                if (res.Info != null)
+                {
+                    PanelPembeli pPemp = new(res.Info);
+                    pPemp.Show();
+                    this.Hide();
+                }
+            }
             else
             {
                 LoginOut<Penjual> res = await Penjual.Login(logInf);
-                MessageBox.Show(res.Status + " Penj");
+                MessageBox.Show(res.Status);
                 if (res.Info != null)
                 {
                     PanelPenjual pPenj = new(res.Info);
                     pPenj.Show();
                     this.Hide();
-
                 }
             }
         }

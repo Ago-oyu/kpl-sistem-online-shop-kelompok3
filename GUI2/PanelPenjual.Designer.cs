@@ -44,6 +44,7 @@
             label3 = new Label();
             label4 = new Label();
             tambahProdukButton = new Button();
+            refreshButton = new Button();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stokNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HargaNumericUpDown).BeginInit();
@@ -73,7 +74,7 @@
             produkGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             produkGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             produkGridView.Size = new Size(332, 111);
-            produkGridView.TabIndex = 1;
+            produkGridView.TabIndex = 2;
             // 
             // Nama
             // 
@@ -173,12 +174,23 @@
             tambahProdukButton.UseVisualStyleBackColor = true;
             tambahProdukButton.Click += tambahProdukButton_Click;
             // 
+            // refreshButton
+            // 
+            refreshButton.Location = new Point(464, 316);
+            refreshButton.Name = "refreshButton";
+            refreshButton.Size = new Size(75, 23);
+            refreshButton.TabIndex = 11;
+            refreshButton.Text = "Refresh";
+            refreshButton.UseVisualStyleBackColor = true;
+            refreshButton.Click += refreshButton_Click;
+            // 
             // PanelPenjual
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackgroundImageLayout = ImageLayout.None;
             ClientSize = new Size(678, 450);
+            Controls.Add(refreshButton);
             Controls.Add(tambahProdukButton);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -216,5 +228,6 @@
         private Label label3;
         private Label label4;
         private Button tambahProdukButton;
+        private Button refreshButton;
     }
 }
