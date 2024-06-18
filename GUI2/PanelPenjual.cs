@@ -57,11 +57,30 @@ namespace GUI
             {
                 produkGridView.Rows.Add(produk.Nama, produk.Harga, produk.Deskripsi);
             }
-       }
+        }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
             AwaitGetProduk();
+        }
+
+        private void produkGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                PanelEditProduk ppd = new(produkGridView.SelectedRows[0].Cells["ID"].Value.ToString());
+                ppd.ShowDialog();
+            }
+        }
+
+        private void produkGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void namaTextBox_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
