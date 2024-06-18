@@ -30,23 +30,10 @@ namespace GUI
 
         async private void tambahProdukButton_Click(object sender, EventArgs e)
         {
-            string namaProduk = namaTextBox.Text;
-            int hargaProduk = (int)HargaNumericUpDown.Value;
-            string deskripsiProduk = deskripsiTextBox.Text;
-            int stokProduk = (int)stokNumericUpDown.Value;
-            Produk newProduk = new Produk()
-            {
-                Id = Produk.CreateGUID(),
-                Nama = namaProduk,
-                Harga = hargaProduk,
-                Deskripsi = deskripsiProduk,
-                Stok = stokProduk,
-                IDPenjual = p.Id
-            };
-            
-            // (Nanti) Tambahin error condintion
-            ShopApiClient.Database.AddProduk(newProduk);
-            MessageBox.Show(await newProduk.Push());
+            PanelTambahProduk panelTambahProduk = new PanelTambahProduk(p);
+            this.Hide();
+            panelTambahProduk.ShowDialog();
+            this.Show();
             GetProduk();
         }
 

@@ -46,7 +46,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(301, 9);
+            label1.Location = new Point(269, 12);
             label1.Name = "label1";
             label1.Size = new Size(155, 28);
             label1.TabIndex = 0;
@@ -56,7 +56,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(106, 67);
+            label2.Location = new Point(74, 70);
             label2.Name = "label2";
             label2.Size = new Size(99, 20);
             label2.TabIndex = 1;
@@ -66,7 +66,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(155, 124);
+            label3.Location = new Point(123, 127);
             label3.Name = "label3";
             label3.Size = new Size(50, 20);
             label3.TabIndex = 2;
@@ -76,7 +76,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(136, 178);
+            label4.Location = new Point(104, 181);
             label4.Name = "label4";
             label4.Size = new Size(69, 20);
             label4.TabIndex = 3;
@@ -86,7 +86,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(167, 288);
+            label5.Location = new Point(135, 291);
             label5.Name = "label5";
             label5.Size = new Size(38, 20);
             label5.TabIndex = 4;
@@ -95,14 +95,14 @@
             // 
             // namaProdukTextBox
             // 
-            namaProdukTextBox.Location = new Point(238, 64);
+            namaProdukTextBox.Location = new Point(206, 67);
             namaProdukTextBox.Name = "namaProdukTextBox";
             namaProdukTextBox.Size = new Size(408, 27);
             namaProdukTextBox.TabIndex = 5;
             // 
             // hargaNumericUpDown
             // 
-            hargaNumericUpDown.Location = new Point(238, 121);
+            hargaNumericUpDown.Location = new Point(206, 124);
             hargaNumericUpDown.Name = "hargaNumericUpDown";
             hargaNumericUpDown.Size = new Size(166, 27);
             hargaNumericUpDown.TabIndex = 6;
@@ -110,7 +110,7 @@
             // 
             // deskripsiTextBox
             // 
-            deskripsiTextBox.Location = new Point(238, 178);
+            deskripsiTextBox.Location = new Point(206, 181);
             deskripsiTextBox.Multiline = true;
             deskripsiTextBox.Name = "deskripsiTextBox";
             deskripsiTextBox.Size = new Size(408, 77);
@@ -118,14 +118,15 @@
             // 
             // stokNumericUpDown
             // 
-            stokNumericUpDown.Location = new Point(238, 285);
+            stokNumericUpDown.Location = new Point(206, 288);
             stokNumericUpDown.Name = "stokNumericUpDown";
             stokNumericUpDown.Size = new Size(150, 27);
             stokNumericUpDown.TabIndex = 8;
+            stokNumericUpDown.TextAlign = HorizontalAlignment.Right;
             // 
             // tambahBtn
             // 
-            tambahBtn.Location = new Point(345, 383);
+            tambahBtn.Location = new Point(292, 386);
             tambahBtn.Name = "tambahBtn";
             tambahBtn.Size = new Size(94, 29);
             tambahBtn.TabIndex = 9;
@@ -137,7 +138,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(697, 450);
             Controls.Add(tambahBtn);
             Controls.Add(stokNumericUpDown);
             Controls.Add(deskripsiTextBox);
