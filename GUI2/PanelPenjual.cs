@@ -36,7 +36,7 @@ namespace GUI
             int stokProduk = (int)stokNumericUpDown.Value;
             Produk newProduk = new Produk()
             {
-                Id = Produk.CreateGUID(),
+                Id = DataTypes.Produk.CreateGUID(),
                 Nama = namaProduk,
                 Harga = hargaProduk,
                 Deskripsi = deskripsiProduk,

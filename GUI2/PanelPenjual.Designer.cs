@@ -48,11 +48,19 @@
             tabControl1 = new TabControl();
             HomePage = new TabPage();
             PesananPage = new TabPage();
+            dataGridView2 = new DataGridView();
+            Pembeli = new DataGridViewTextBoxColumn();
+            Produk = new DataGridViewTextBoxColumn();
+            Jumlah = new DataGridViewTextBoxColumn();
+            TotalHarga = new DataGridViewTextBoxColumn();
+            Alamat = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stokNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HargaNumericUpDown).BeginInit();
             tabControl1.SuspendLayout();
             HomePage.SuspendLayout();
+            PesananPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
             // 
             // welcomeLabel
@@ -228,6 +236,7 @@
             // 
             // PesananPage
             // 
+            PesananPage.Controls.Add(dataGridView2);
             PesananPage.Location = new Point(4, 24);
             PesananPage.Name = "PesananPage";
             PesananPage.Padding = new Padding(3);
@@ -235,6 +244,54 @@
             PesananPage.TabIndex = 1;
             PesananPage.Text = "Pesanan";
             PesananPage.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView2
+            // 
+            dataGridView2.AllowUserToAddRows = false;
+            dataGridView2.AllowUserToDeleteRows = false;
+            dataGridView2.AllowUserToResizeColumns = false;
+            dataGridView2.AllowUserToResizeRows = false;
+            dataGridView2.BackgroundColor = Color.White;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Columns.AddRange(new DataGridViewColumn[] { Pembeli, Produk, Jumlah, TotalHarga, Alamat });
+            dataGridView2.Location = new Point(-4, 3);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.ReadOnly = true;
+            dataGridView2.RowHeadersVisible = false;
+            dataGridView2.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView2.Size = new Size(555, 140);
+            dataGridView2.TabIndex = 3;
+            // 
+            // Pembeli
+            // 
+            Pembeli.HeaderText = "Pembeli";
+            Pembeli.Name = "Pembeli";
+            Pembeli.ReadOnly = true;
+            // 
+            // Produk
+            // 
+            Produk.HeaderText = "Produk";
+            Produk.Name = "Produk";
+            Produk.ReadOnly = true;
+            // 
+            // Jumlah
+            // 
+            Jumlah.HeaderText = "Jumlah";
+            Jumlah.Name = "Jumlah";
+            Jumlah.ReadOnly = true;
+            // 
+            // TotalHarga
+            // 
+            TotalHarga.HeaderText = "Total Harga";
+            TotalHarga.Name = "TotalHarga";
+            TotalHarga.ReadOnly = true;
+            // 
+            // Alamat
+            // 
+            Alamat.HeaderText = "Alamat";
+            Alamat.Name = "Alamat";
+            Alamat.ReadOnly = true;
             // 
             // PanelPenjual
             // 
@@ -252,6 +309,8 @@
             tabControl1.ResumeLayout(false);
             HomePage.ResumeLayout(false);
             HomePage.PerformLayout();
+            PesananPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
         }
 
@@ -276,5 +335,11 @@
         private TabControl tabControl1;
         private TabPage HomePage;
         private TabPage PesananPage;
+        private DataGridView dataGridView2;
+        private DataGridViewTextBoxColumn Pembeli;
+        private DataGridViewTextBoxColumn Produk;
+        private DataGridViewTextBoxColumn Jumlah;
+        private DataGridViewTextBoxColumn TotalHarga;
+        private DataGridViewTextBoxColumn Alamat;
     }
 }
