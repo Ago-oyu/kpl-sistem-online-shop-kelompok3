@@ -27,11 +27,11 @@ namespace DataTypes
         /// <param name="sort">sorting apa</param>
         /// <param name="dir">sorting direction nya apa</param>
         /// <returns></returns>
-        public static async Task<List<Produk>> GetPage(int page=-1, int itemPerPage=20, Sorting sort=Sorting.none, SortDir dir=SortDir.asc)
+        public static async Task<List<Produk>> GetPage(int page=-1, int itemPerPage=20, Sorting sort=Sorting.none, SortDir dir=SortDir.asc, string namaContain="")
         {
             using var client = new HttpClient();
 
-            string requestUrl = baseUrl + $"/api/getProductPage?page={page}&batch={itemPerPage}&sort={sort}&dir={dir}";
+            string requestUrl = baseUrl + $"/api/getProductPage?page={page}&batch={itemPerPage}&sort={sort}&dir={dir}&namaContain={namaContain}";
             
             // try
             // {
@@ -54,6 +54,27 @@ namespace DataTypes
             //     Console.WriteLine($"An error occurred: {ex.Message}");
             // }
             return null;
+        }
+    }
+
+    public class ProdukFilterForm
+    {
+        public int filterId { get; }
+        private string Nama { get; set; }
+        public readonly List<Func<Produk, bool>> FilterList;
+        public ProdukFilterForm FilterNama(string contain)
+        {
+            return new ProdukFilterForm(Contain){ Nama=contain };
+        }
+        ProdukFilterForm(Func<Produk, bool> useFilter)
+        {
+            FilterList = new(){ Contain };
+
+            filterId = FilterList.IndexOf(useFilter);
+        }
+        public bool Contain(Produk prd)
+        {
+            return prd.Nama.Contains(Nama);
         }
     }
 }
