@@ -59,6 +59,7 @@
             produkGridView.AllowUserToDeleteRows = false;
             produkGridView.AllowUserToResizeColumns = false;
             produkGridView.AllowUserToResizeRows = false;
+            produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.BackgroundColor = Color.White;
             produkGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, penjualId, Nama, Harga, Deskripsi });
@@ -175,6 +176,7 @@
             pesananDataGridView.AllowUserToDeleteRows = false;
             pesananDataGridView.AllowUserToResizeColumns = false;
             pesananDataGridView.AllowUserToResizeRows = false;
+            pesananDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             pesananDataGridView.BackgroundColor = Color.White;
             pesananDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { Penjual, Produk, Jumlah, TotalHarga, Alamat });

@@ -31,6 +31,10 @@
             components = new System.ComponentModel.Container();
             welcomeLabel = new Label();
             produkGridView = new DataGridView();
+            ID = new DataGridViewTextBoxColumn();
+            Nama = new DataGridViewTextBoxColumn();
+            Harga = new DataGridViewTextBoxColumn();
+            Deskripsi = new DataGridViewTextBoxColumn();
             namaTextBox = new TextBox();
             contextMenuStrip1 = new ContextMenuStrip(components);
             deskripsiTextBox = new TextBox();
@@ -52,10 +56,6 @@
             Jumlah = new DataGridViewTextBoxColumn();
             TotalHarga = new DataGridViewTextBoxColumn();
             Alamat = new DataGridViewTextBoxColumn();
-            ID = new DataGridViewTextBoxColumn();
-            Nama = new DataGridViewTextBoxColumn();
-            Harga = new DataGridViewTextBoxColumn();
-            Deskripsi = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stokNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HargaNumericUpDown).BeginInit();
@@ -80,6 +80,7 @@
             produkGridView.AllowUserToDeleteRows = false;
             produkGridView.AllowUserToResizeColumns = false;
             produkGridView.AllowUserToResizeRows = false;
+            produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.BackgroundColor = Color.White;
             produkGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, Nama, Harga, Deskripsi });
@@ -92,6 +93,30 @@
             produkGridView.TabIndex = 2;
             produkGridView.CellContentClick += produkGridView_CellContentClick;
             produkGridView.CellDoubleClick += produkGridView_CellDoubleClick;
+            // 
+            // ID
+            // 
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            ID.Visible = false;
+            // 
+            // Nama
+            // 
+            Nama.HeaderText = "Nama";
+            Nama.Name = "Nama";
+            Nama.ReadOnly = true;
+            // 
+            // Harga
+            // 
+            Harga.HeaderText = "Harga";
+            Harga.Name = "Harga";
+            Harga.ReadOnly = true;
+            // 
+            // Deskripsi
+            // 
+            Deskripsi.HeaderText = "Deskripsi";
+            Deskripsi.Name = "Deskripsi";
+            Deskripsi.ReadOnly = true;
             // 
             // namaTextBox
             // 
@@ -249,6 +274,7 @@
             pesananDataGridView.AllowUserToDeleteRows = false;
             pesananDataGridView.AllowUserToResizeColumns = false;
             pesananDataGridView.AllowUserToResizeRows = false;
+            pesananDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             pesananDataGridView.BackgroundColor = Color.White;
             pesananDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { Pembeli, Produk, Jumlah, TotalHarga, Alamat });
@@ -290,30 +316,6 @@
             Alamat.HeaderText = "Alamat";
             Alamat.Name = "Alamat";
             Alamat.ReadOnly = true;
-            // 
-            // ID
-            // 
-            ID.HeaderText = "ID";
-            ID.Name = "ID";
-            ID.Visible = false;
-            // 
-            // Nama
-            // 
-            Nama.HeaderText = "Nama";
-            Nama.Name = "Nama";
-            Nama.ReadOnly = true;
-            // 
-            // Harga
-            // 
-            Harga.HeaderText = "Harga";
-            Harga.Name = "Harga";
-            Harga.ReadOnly = true;
-            // 
-            // Deskripsi
-            // 
-            Deskripsi.HeaderText = "Deskripsi";
-            Deskripsi.Name = "Deskripsi";
-            Deskripsi.ReadOnly = true;
             // 
             // PanelPenjual
             // 
