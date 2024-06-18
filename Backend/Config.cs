@@ -1,6 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Identity;
+using System.IO;
 
 namespace Backend
 {
@@ -9,25 +9,30 @@ namespace Backend
         public string dataSource = "./database.db";
         public string host = "localhost";
         public string port = "5058";
-        public static Config GetConfig (string path="./backend_config.json")
+        
+        public static T GetConfig<T>(string path = "./backend_config.json") where T : new()
         {
             var options = new JsonSerializerOptions
             {
                 IncludeFields = true,
                 WriteIndented = true,
             };
+            
             if (!File.Exists(path))
             {
-                Config config = new();
+                T config = new();
                 File.WriteAllText(path, JsonSerializer.Serialize(config, options));
-
                 return config;
             }
+            
             string jsText = File.ReadAllText(path);
-            try {
-                return JsonSerializer.Deserialize<Config>(jsText, options);
-            } catch (Exception ex) {
-                throw new Exception("Invalid config");
+            try
+            {
+                return JsonSerializer.Deserialize<T>(jsText, options);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Invalid config", ex);
             }
         }
     }
