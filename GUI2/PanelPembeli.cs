@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -14,7 +15,6 @@ namespace GUI
     public partial class PanelPembeli : Form
     {
         Pembeli p;
-        List<Produk> lp;
         public PanelPembeli(Pembeli p)
         {
             InitializeComponent();
@@ -26,9 +26,8 @@ namespace GUI
 
         async private void GetProduk()
         {
-            lp = await Produk.GetPage();
-            produkGridView.Rows.Clear(); ;
-            foreach (Produk produk in lp)
+            produkGridView.Rows.Clear();
+            foreach (Produk produk in await ShopApiClient.Database.GetProdukList())
             {
                 produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi);
             }

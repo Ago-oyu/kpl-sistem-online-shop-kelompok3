@@ -49,9 +49,9 @@ namespace GUI
         {
             Pesanan newPesanan = new()
             {
-               Produk = produk,
-                Pembeli = pembeli,
-                Penjual = penjual,
+                ProdukID = produk.Id,
+                PembeliID = pembeli.Id,
+                PenjualID = penjual.Id,
                 stok = (int)StokNumericUpDown.Value,
                 totalHarga = produk.Harga * (int)StokNumericUpDown.Value
             };

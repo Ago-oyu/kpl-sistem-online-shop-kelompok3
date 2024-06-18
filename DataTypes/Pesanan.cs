@@ -8,9 +8,9 @@ namespace DataTypes
     public class Pesanan: Syncronizeable<Pesanan>
     {
         public StatusPesanan Status {get; set;}
-        public Produk Produk {get; set;}
-        public Penjual Penjual {get; set;}
-        public Pembeli Pembeli {get; set;}
+        public string ProdukID { get; set; }
+        public string PenjualID { get; set; }
+        public string PembeliID { get; set; }
 
         public int stok { get; set; }
         public int totalHarga { get; set; }

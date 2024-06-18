@@ -22,6 +22,9 @@ namespace GUI
             produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
+
+            HargaNumericUpDown.Maximum = 1000000000000;
+            stokNumericUpDown.Minimum = 1000000000000;
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
             AwaitGetProduk();
