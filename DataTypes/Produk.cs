@@ -18,6 +18,7 @@ namespace DataTypes
         public Produk(string Id=null) : base(Id)
         {
         }
+        public Produk() : base(null) { }
 
         /// <summary>
         /// return hasil query table produk, kalau page < 1 return semua item di table produk
