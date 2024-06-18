@@ -21,7 +21,8 @@ namespace GUI
 
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-            GetProduk();
+            GetProduk(); 
+            GetPesanan();
         }
 
         async private void GetProduk()
@@ -33,11 +34,22 @@ namespace GUI
             }
         }
 
+        async private void GetPesanan()
+        {
+            produkGridView.Rows.Clear(); ;
+            foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
+            {
+                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok, pesanan.totalHarga, pesanan.Pembeli.Alamat);
+            }
+        }
+
         private void refreshButton_Click(object sender, EventArgs e)
         {
             ShopApiClient.Database.Refresh();
             GetProduk();
+            GetPesanan();
         }
+
 
         private async void selectProduk(object sender, DataGridViewCellEventArgs e)
         {

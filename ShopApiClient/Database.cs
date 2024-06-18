@@ -26,11 +26,47 @@ namespace ShopApiClient
             }
 
             List<Produk> TempList = new();
-            foreach (Produk produk in await Produk.GetPage())
+            foreach (Produk produk in listProduk)
             {
                 if (produk.IDPenjual == penj.Id)
                 {
                     TempList.Add(produk);
+                }
+            }
+            return TempList;
+        }
+
+        public static async Task<List<Pesanan>> GetPesananList(Pembeli pem)
+        {
+            if (listPesanan == null)
+            {
+                listPesanan = await Pesanan.GetListPesanan();
+            }
+
+            List<Pesanan> TempList = new();
+            foreach (Pesanan pesanan in listPesanan)
+            {
+                if (pesanan.PembeliID == pem.Id)
+                {
+                    TempList.Add(pesanan);
+                }
+            }
+            return TempList;
+        }
+
+        public static async Task<List<Pesanan>> GetPesananList(Penjual penj)
+        {
+            if (listPesanan == null)
+            {
+                listPesanan = await Pesanan.GetListPesanan();
+            }
+
+            List<Pesanan> TempList = new();
+            foreach (Pesanan pesanan in listPesanan)
+            {
+                if (pesanan.PenjualID == penj.Id)
+                {
+                    TempList.Add(pesanan);
                 }
             }
             return TempList;

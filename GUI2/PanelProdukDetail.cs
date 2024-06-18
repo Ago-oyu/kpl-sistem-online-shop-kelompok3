@@ -40,7 +40,7 @@ namespace GUI
             DeskripsiProdukLabel.Text = produk.Deskripsi;
 
             StokNumericUpDown.Maximum = produk.Stok;
-            TotalHargaLabel.Text = produk.Harga.ToString();
+            TotalHargaLabel.Text = (produk.Stok * produk.Harga).ToString();
         }
 
         private async void pesanProduk_Click(object sender, EventArgs e)

@@ -26,8 +26,6 @@ namespace GUI
         {
             produk = await Produk.Get(id);
 
-            MessageBox.Show(id);
-
             namaTextBox.Text = produk.Nama;
             HargaNumericUpDown.Value = produk.Harga;
             deskripsiTextBox.Text = produk.Deskripsi;
@@ -50,6 +48,7 @@ namespace GUI
 
             MessageBox.Show(msg);
 
+            ShopApiClient.Database.Refresh();
             this.Dispose();
         }
 
