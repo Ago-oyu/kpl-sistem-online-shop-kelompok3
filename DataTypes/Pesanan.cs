@@ -13,15 +13,12 @@ namespace DataTypes
 
         public string ProdukID {get; set;}
         [NotMapped]
-        [JsonIgnore]
         public Produk Produk {get; set;}
         public string PenjualID {get; set;}
         [NotMapped]
-        [JsonIgnore]
         public Penjual Penjual {get; set;}
         public string PembeliID {get; set;}
         [NotMapped]
-        [JsonIgnore]
         public Pembeli Pembeli {get; set;}
         
         public int stok { get; set; }
