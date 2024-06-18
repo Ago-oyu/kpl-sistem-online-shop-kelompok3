@@ -80,6 +80,8 @@
             produkGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             produkGridView.Size = new Size(332, 140);
             produkGridView.TabIndex = 2;
+            produkGridView.CellContentClick += produkGridView_CellContentClick;
+            produkGridView.CellDoubleClick += produkGridView_CellDoubleClick;
             // 
             // Nama
             // 
@@ -105,6 +107,7 @@
             namaTextBox.Name = "namaTextBox";
             namaTextBox.Size = new Size(100, 23);
             namaTextBox.TabIndex = 2;
+            namaTextBox.TextChanged += namaTextBox_TextChanged;
             // 
             // contextMenuStrip1
             // 
