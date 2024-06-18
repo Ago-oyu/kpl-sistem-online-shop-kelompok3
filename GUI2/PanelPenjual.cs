@@ -23,8 +23,8 @@ namespace GUI
             produkGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
 
-            HargaNumericUpDown.Maximum = 1000000000000;
-            stokNumericUpDown.Minimum = 1000000000000;
+            HargaNumericUpDown.Maximum = 2147483647;
+            stokNumericUpDown.Maximum = 2147483647;
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
             AwaitGetProduk();
@@ -53,12 +53,9 @@ namespace GUI
         async private void AwaitGetProduk()
         {
             produkGridView.Rows.Clear(); ;
-            foreach (Produk produk in await Produk.GetPage())
+            foreach (Produk produk in await ShopApiClient.Database.GetProdukList(p))
             {
-                if (p.Id == produk.IDPenjual)
-                {
-                    produkGridView.Rows.Add(produk.Nama, produk.Harga, produk.Deskripsi);
-                }
+                produkGridView.Rows.Add(produk.Nama, produk.Harga, produk.Deskripsi);
             }
        }
 

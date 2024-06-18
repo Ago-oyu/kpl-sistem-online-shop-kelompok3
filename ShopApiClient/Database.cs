@@ -31,6 +31,7 @@ namespace ShopApiClient
         {
             if (listProduk == null)
             {
+                listProduk = new();
                 foreach (Produk produk in await Produk.GetPage())
                 {
                     if (produk.IDPenjual == penj.Id)
@@ -43,7 +44,11 @@ namespace ShopApiClient
             return listProduk;
         }
 
-
+        public void Reset()
+        {
+            listProduk = null;
+            listPesanan = null;
+        }
 
         /*        private async Task Login(string email, string password)
                 {

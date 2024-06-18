@@ -37,11 +37,11 @@
             welcomeLabel = new Label();
             refreshButton = new Button();
             tabControl1 = new TabControl();
-            tabPage1 = new TabPage();
-            tabPage2 = new TabPage();
+            HomePage = new TabPage();
+            PesananPage = new TabPage();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             tabControl1.SuspendLayout();
-            tabPage1.SuspendLayout();
+            HomePage.SuspendLayout();
             SuspendLayout();
             // 
             // produkGridView
@@ -53,14 +53,14 @@
             produkGridView.BackgroundColor = Color.White;
             produkGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, penjualId, Nama, Harga, Deskripsi });
-            produkGridView.Location = new Point(8, 94);
+            produkGridView.Location = new Point(8, 66);
             produkGridView.MultiSelect = false;
             produkGridView.Name = "produkGridView";
             produkGridView.ReadOnly = true;
             produkGridView.RowHeadersVisible = false;
             produkGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             produkGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            produkGridView.Size = new Size(332, 320);
+            produkGridView.Size = new Size(332, 348);
             produkGridView.TabIndex = 3;
             produkGridView.CellDoubleClick += selectProduk;
             // 
@@ -117,8 +117,8 @@
             // 
             // tabControl1
             // 
-            tabControl1.Controls.Add(tabPage1);
-            tabControl1.Controls.Add(tabPage2);
+            tabControl1.Controls.Add(HomePage);
+            tabControl1.Controls.Add(PesananPage);
             tabControl1.Dock = DockStyle.Fill;
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
@@ -126,28 +126,28 @@
             tabControl1.Size = new Size(800, 450);
             tabControl1.TabIndex = 13;
             // 
-            // tabPage1
+            // HomePage
             // 
-            tabPage1.Controls.Add(welcomeLabel);
-            tabPage1.Controls.Add(refreshButton);
-            tabPage1.Controls.Add(produkGridView);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(792, 422);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "tabPage1";
-            tabPage1.UseVisualStyleBackColor = true;
+            HomePage.Controls.Add(welcomeLabel);
+            HomePage.Controls.Add(refreshButton);
+            HomePage.Controls.Add(produkGridView);
+            HomePage.Location = new Point(4, 24);
+            HomePage.Name = "HomePage";
+            HomePage.Padding = new Padding(3);
+            HomePage.Size = new Size(792, 422);
+            HomePage.TabIndex = 0;
+            HomePage.Text = "Home";
+            HomePage.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // PesananPage
             // 
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(192, 72);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "tabPage2";
-            tabPage2.UseVisualStyleBackColor = true;
+            PesananPage.Location = new Point(4, 24);
+            PesananPage.Name = "PesananPage";
+            PesananPage.Padding = new Padding(3);
+            PesananPage.Size = new Size(792, 422);
+            PesananPage.TabIndex = 1;
+            PesananPage.Text = "Pesanan";
+            PesananPage.UseVisualStyleBackColor = true;
             // 
             // PanelPembeli
             // 
@@ -159,8 +159,8 @@
             Text = "PanelPembeli";
             ((System.ComponentModel.ISupportInitialize)produkGridView).EndInit();
             tabControl1.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
-            tabPage1.PerformLayout();
+            HomePage.ResumeLayout(false);
+            HomePage.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -175,7 +175,7 @@
         private DataGridViewTextBoxColumn Harga;
         private DataGridViewTextBoxColumn Deskripsi;
         private TabControl tabControl1;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
+        private TabPage HomePage;
+        private TabPage PesananPage;
     }
 }
