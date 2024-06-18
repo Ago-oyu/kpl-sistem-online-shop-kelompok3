@@ -142,7 +142,7 @@ namespace Backend.Controllers
                 case Types.keranjang:
                     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.pesanan:
-                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
                 default:
                     return "";
             }
