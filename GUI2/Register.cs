@@ -51,12 +51,11 @@ namespace GUI
 
             if (PembeliRadioButton.Checked)
             {
-                Pembeli newUser = new()
+                Pembeli newUser = new(inputEmail, pass)
                 {
                     Nama = inputUsername,
                     Email = inputEmail,
-                    Password = pass,
-                    Id = Database.CreateGUID(),
+                    Id = Pembeli.CreateGUID(),
                     Alamat = inputAlamatOrNamaToko
                 };
 
@@ -64,13 +63,12 @@ namespace GUI
             }
             else
             {
-                Penjual newUser = new()
+                Penjual newUser = new(inputEmail, pass)
                 {
 
                     Nama = inputUsername,
                     Email = inputEmail,
-                    Password = pass,
-                    Id = Database.CreateGUID(),
+                    Id = Pembeli.CreateGUID(),
                     NamaToko = inputAlamatOrNamaToko
 
                 };

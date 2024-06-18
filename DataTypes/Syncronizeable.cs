@@ -59,7 +59,6 @@ namespace DataTypes
                 string responseBody = await response.Content.ReadAsStringAsync();
                 if (response.IsSuccessStatusCode)
                 {
-
                     return responseBody;
                 }
                 else
