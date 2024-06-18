@@ -32,8 +32,6 @@ namespace GUI
             produk = await Produk.Get(produkId);
             penjual = await Penjual.Get(penjualId);
 
-            MessageBox.Show(penjual.Nama);
-
             NamaTokoLabel.Text = penjual.NamaToko;
             NamaPenjualLabel.Text = penjual.Nama;
             NamaProdukLabel.Text = produk.Nama;

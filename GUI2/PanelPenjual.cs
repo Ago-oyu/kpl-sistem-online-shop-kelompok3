@@ -55,7 +55,7 @@ namespace GUI
             produkGridView.Rows.Clear(); ;
             foreach (Produk produk in await ShopApiClient.Database.GetProdukList(p))
             {
-                produkGridView.Rows.Add(produk.Nama, produk.Harga, produk.Deskripsi);
+                produkGridView.Rows.Add(produk.Id, produk.Nama, produk.Harga, produk.Deskripsi);
             }
         }
 

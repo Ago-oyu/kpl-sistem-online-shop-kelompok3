@@ -14,6 +14,7 @@ namespace GUI
     public partial class PanelEditProduk : Form
     {
         Produk produk;
+
         public PanelEditProduk(string produkId)
         {
             InitializeComponent();
@@ -24,6 +25,8 @@ namespace GUI
         async void InitField(string id)
         {
             produk = await Produk.Get(id);
+
+            MessageBox.Show(id);
 
             namaTextBox.Text = produk.Nama;
             HargaNumericUpDown.Value = produk.Harga;

@@ -31,9 +31,6 @@
             components = new System.ComponentModel.Container();
             welcomeLabel = new Label();
             produkGridView = new DataGridView();
-            Nama = new DataGridViewTextBoxColumn();
-            Harga = new DataGridViewTextBoxColumn();
-            Deskripsi = new DataGridViewTextBoxColumn();
             namaTextBox = new TextBox();
             contextMenuStrip1 = new ContextMenuStrip(components);
             deskripsiTextBox = new TextBox();
@@ -54,6 +51,10 @@
             Jumlah = new DataGridViewTextBoxColumn();
             TotalHarga = new DataGridViewTextBoxColumn();
             Alamat = new DataGridViewTextBoxColumn();
+            ID = new DataGridViewTextBoxColumn();
+            Nama = new DataGridViewTextBoxColumn();
+            Harga = new DataGridViewTextBoxColumn();
+            Deskripsi = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)stokNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)HargaNumericUpDown).BeginInit();
@@ -80,7 +81,7 @@
             produkGridView.AllowUserToResizeRows = false;
             produkGridView.BackgroundColor = Color.White;
             produkGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            produkGridView.Columns.AddRange(new DataGridViewColumn[] { Nama, Harga, Deskripsi });
+            produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, Nama, Harga, Deskripsi });
             produkGridView.Location = new Point(17, 274);
             produkGridView.Name = "produkGridView";
             produkGridView.RowHeadersVisible = false;
@@ -90,24 +91,6 @@
             produkGridView.TabIndex = 2;
             produkGridView.CellContentClick += produkGridView_CellContentClick;
             produkGridView.CellDoubleClick += produkGridView_CellDoubleClick;
-            // 
-            // Nama
-            // 
-            Nama.HeaderText = "Nama";
-            Nama.Name = "Nama";
-            Nama.ReadOnly = true;
-            // 
-            // Harga
-            // 
-            Harga.HeaderText = "Harga";
-            Harga.Name = "Harga";
-            Harga.ReadOnly = true;
-            // 
-            // Deskripsi
-            // 
-            Deskripsi.HeaderText = "Deskripsi";
-            Deskripsi.Name = "Deskripsi";
-            Deskripsi.ReadOnly = true;
             // 
             // namaTextBox
             // 
@@ -296,6 +279,29 @@
             Alamat.Name = "Alamat";
             Alamat.ReadOnly = true;
             // 
+            // ID
+            // 
+            ID.HeaderText = "ID";
+            ID.Name = "ID";
+            // 
+            // Nama
+            // 
+            Nama.HeaderText = "Nama";
+            Nama.Name = "Nama";
+            Nama.ReadOnly = true;
+            // 
+            // Harga
+            // 
+            Harga.HeaderText = "Harga";
+            Harga.Name = "Harga";
+            Harga.ReadOnly = true;
+            // 
+            // Deskripsi
+            // 
+            Deskripsi.HeaderText = "Deskripsi";
+            Deskripsi.Name = "Deskripsi";
+            Deskripsi.ReadOnly = true;
+            // 
             // PanelPenjual
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -321,9 +327,6 @@
 
         private Label welcomeLabel;
         private DataGridView produkGridView;
-        private DataGridViewTextBoxColumn Nama;
-        private DataGridViewTextBoxColumn Harga;
-        private DataGridViewTextBoxColumn Deskripsi;
         private TextBox namaTextBox;
         private ContextMenuStrip contextMenuStrip1;
         private TextBox deskripsiTextBox;
@@ -344,5 +347,9 @@
         private DataGridViewTextBoxColumn Jumlah;
         private DataGridViewTextBoxColumn TotalHarga;
         private DataGridViewTextBoxColumn Alamat;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn Nama;
+        private DataGridViewTextBoxColumn Harga;
+        private DataGridViewTextBoxColumn Deskripsi;
     }
 }
