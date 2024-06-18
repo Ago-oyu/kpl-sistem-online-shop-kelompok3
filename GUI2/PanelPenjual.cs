@@ -22,7 +22,6 @@ namespace GUI
             produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
             GetProduk();
