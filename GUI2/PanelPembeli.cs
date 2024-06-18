@@ -35,6 +35,7 @@ namespace GUI
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
+            ShopApiClient.Database.Refresh();
             GetProduk();
         }
 
@@ -47,6 +48,11 @@ namespace GUI
                     p);
                 ppd.ShowDialog();
             }
+        }
+
+        private void PanelPembeli_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ShopApiClient.Database.Reset();
         }
     }
 }

@@ -22,12 +22,9 @@ namespace GUI
             produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-
-            HargaNumericUpDown.Maximum = 2147483647;
-            stokNumericUpDown.Maximum = 2147483647;
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-            AwaitGetProduk();
+            GetProduk();
 
         }
 
@@ -46,22 +43,31 @@ namespace GUI
                 Stok = stokProduk,
                 IDPenjual = p.Id
             };
+            
+            // (Nanti) Tambahin error condintion
+            ShopApiClient.Database.AddProduk(newProduk);
             MessageBox.Show(await newProduk.Push());
-            AwaitGetProduk();
+            GetProduk();
         }
 
-        async private void AwaitGetProduk()
+        async private void GetProduk()
         {
             produkGridView.Rows.Clear(); ;
             foreach (Produk produk in await ShopApiClient.Database.GetProdukList(p))
             {
                 produkGridView.Rows.Add(produk.Nama, produk.Harga, produk.Deskripsi);
             }
-       }
+        }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            AwaitGetProduk();
+            ShopApiClient.Database.Refresh();
+            GetProduk();
+        }
+
+        private void PanelPenjual_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ShopApiClient.Database.Reset();
         }
     }
 }

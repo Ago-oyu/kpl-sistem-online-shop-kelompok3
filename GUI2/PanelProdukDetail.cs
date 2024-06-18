@@ -52,6 +52,7 @@ namespace GUI
                 ProdukID = produk.Id,
                 PembeliID = pembeli.Id,
                 PenjualID = penjual.Id,
+
                 stok = (int)StokNumericUpDown.Value,
                 totalHarga = produk.Harga * (int)StokNumericUpDown.Value
             };

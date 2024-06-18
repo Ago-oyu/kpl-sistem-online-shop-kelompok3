@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 
 namespace DataTypes
 {
-    public class Pembeli(string Email, string Password) : User<Pembeli>(Email, Password)
+    public class Pembeli: User<Pembeli>
     {
         public string Alamat {get; set;}
         public string Keranjang {get; set;}
         public List<string> ListPesanan {get; set;}
+        public Pembeli(string Email, string Password) : base(Email, Password) { }
+        public Pembeli() : base(null, null) { }
     }
 }

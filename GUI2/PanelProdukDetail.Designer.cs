@@ -43,16 +43,16 @@
             // NamaTokoLabel
             // 
             NamaTokoLabel.AutoSize = true;
-            NamaTokoLabel.Location = new Point(105, 39);
+            NamaTokoLabel.Location = new Point(282, 30);
             NamaTokoLabel.Name = "NamaTokoLabel";
-            NamaTokoLabel.Size = new Size(93, 15);
+            NamaTokoLabel.Size = new Size(92, 15);
             NamaTokoLabel.TabIndex = 0;
             NamaTokoLabel.Text = "NamaTokoLabel";
             // 
             // NamaPenjualLabel
             // 
             NamaPenjualLabel.AutoSize = true;
-            NamaPenjualLabel.Location = new Point(118, 78);
+            NamaPenjualLabel.Location = new Point(271, 60);
             NamaPenjualLabel.Name = "NamaPenjualLabel";
             NamaPenjualLabel.Size = new Size(106, 15);
             NamaPenjualLabel.TabIndex = 1;
@@ -114,9 +114,9 @@
             // TotalHargaLabel
             // 
             TotalHargaLabel.AutoSize = true;
-            TotalHargaLabel.Location = new Point(318, 336);
+            TotalHargaLabel.Location = new Point(285, 335);
             TotalHargaLabel.Name = "TotalHargaLabel";
-            TotalHargaLabel.Size = new Size(93, 15);
+            TotalHargaLabel.Size = new Size(92, 15);
             TotalHargaLabel.TabIndex = 8;
             TotalHargaLabel.Text = "TotalHargaLabel";
             // 

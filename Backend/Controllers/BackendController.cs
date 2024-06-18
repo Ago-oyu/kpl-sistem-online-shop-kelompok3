@@ -142,7 +142,31 @@ namespace Backend.Controllers
                 case Types.keranjang:
                     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.pesanan:
-                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
+                default:
+                    return "";
+            }
+        }
+        [HttpGet("{type}/many")]
+        public string GetMany([FromRoute] Types type)
+        {
+            using var db = new Database();
+            dynamic result; 
+
+            switch (type)
+            {
+                // case Types.produk:
+                //     return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.pembeli:
+                //      return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.penjual:
+                //      return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                // case Types.keranjang:
+                //     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                case Types.pesanan:
+                    List<Pesanan> pesanans = db.pesanan.ToList();
+                    pesanans.ForEach(i => i.PullDependency(db));
+                    return JsonSerializer.Serialize(pesanans);
                 default:
                     return "";
             }
