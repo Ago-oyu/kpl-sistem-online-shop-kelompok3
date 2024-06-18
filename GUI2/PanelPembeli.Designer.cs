@@ -39,9 +39,12 @@
             tabControl1 = new TabControl();
             HomePage = new TabPage();
             PesananPage = new TabPage();
+            dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             tabControl1.SuspendLayout();
             HomePage.SuspendLayout();
+            PesananPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // produkGridView
@@ -141,6 +144,7 @@
             // 
             // PesananPage
             // 
+            PesananPage.Controls.Add(dataGridView1);
             PesananPage.Location = new Point(4, 24);
             PesananPage.Name = "PesananPage";
             PesananPage.Padding = new Padding(3);
@@ -148,6 +152,17 @@
             PesananPage.TabIndex = 1;
             PesananPage.Text = "Pesanan";
             PesananPage.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(264, 140);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.Size = new Size(240, 150);
+            dataGridView1.TabIndex = 0;
             // 
             // PanelPembeli
             // 
@@ -157,10 +172,13 @@
             Controls.Add(tabControl1);
             Name = "PanelPembeli";
             Text = "PanelPembeli";
+            FormClosed += PanelPembeli_FormClosed;
             ((System.ComponentModel.ISupportInitialize)produkGridView).EndInit();
             tabControl1.ResumeLayout(false);
             HomePage.ResumeLayout(false);
             HomePage.PerformLayout();
+            PesananPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -177,5 +195,6 @@
         private TabControl tabControl1;
         private TabPage HomePage;
         private TabPage PesananPage;
+        private DataGridView dataGridView1;
     }
 }

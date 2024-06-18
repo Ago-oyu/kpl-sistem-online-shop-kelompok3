@@ -53,8 +53,9 @@ namespace GUI
                 if (res.Info != null)
                 {
                     PanelPembeli pPemp = new(res.Info);
-                    pPemp.Show();
                     this.Hide();
+                    pPemp.ShowDialog();
+                    this.Show();
                 }
             }
             else
@@ -64,8 +65,9 @@ namespace GUI
                 if (res.Info != null)
                 {
                     PanelPenjual pPenj = new(res.Info);
-                    pPenj.Show();
                     this.Hide();
+                    pPenj.ShowDialog();
+                    this.Show();
                 }
             }
         }

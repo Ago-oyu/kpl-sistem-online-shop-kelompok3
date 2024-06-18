@@ -12,8 +12,12 @@ namespace DataTypes
         public string PenjualID { get; set; }
         public string PembeliID { get; set; }
 
-        public int stok { get; set; }
-        public int totalHarga { get; set; }
+        public string NamaProduk {  get; set; }
+        public string NamaPenjual {  get; set; }
+        public string NamaPembeli {  get; set; }
+
+        public int JumlahPesanan { get; set; }
+        public int TotalHarga { get; set; }
 
         public Pesanan(string Id=null) : base(Id)
         {

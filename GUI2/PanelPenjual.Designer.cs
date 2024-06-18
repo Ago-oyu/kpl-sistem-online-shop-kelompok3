@@ -122,13 +122,17 @@
             // stokNumericUpDown
             // 
             stokNumericUpDown.Location = new Point(107, 182);
+            stokNumericUpDown.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
+            stokNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             stokNumericUpDown.Name = "stokNumericUpDown";
             stokNumericUpDown.Size = new Size(120, 23);
             stokNumericUpDown.TabIndex = 4;
+            stokNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // HargaNumericUpDown
             // 
             HargaNumericUpDown.Location = new Point(107, 87);
+            HargaNumericUpDown.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
             HargaNumericUpDown.Name = "HargaNumericUpDown";
             HargaNumericUpDown.Size = new Size(120, 23);
             HargaNumericUpDown.TabIndex = 5;
@@ -241,6 +245,7 @@
             Controls.Add(tabControl1);
             Name = "PanelPenjual";
             Text = "PanelPenjual";
+            FormClosed += PanelPenjual_FormClosed;
             ((System.ComponentModel.ISupportInitialize)produkGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)stokNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)HargaNumericUpDown).EndInit();

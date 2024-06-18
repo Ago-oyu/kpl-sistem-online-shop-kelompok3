@@ -52,8 +52,13 @@ namespace GUI
                 ProdukID = produk.Id,
                 PembeliID = pembeli.Id,
                 PenjualID = penjual.Id,
-                stok = (int)StokNumericUpDown.Value,
-                totalHarga = produk.Harga * (int)StokNumericUpDown.Value
+
+                NamaProduk = produk.Nama,
+                NamaPembeli = pembeli.Nama,
+                NamaPenjual = penjual.Nama,
+
+                JumlahPesanan = (int)StokNumericUpDown.Value,
+                TotalHarga = produk.Harga * (int)StokNumericUpDown.Value
             };
 
 /*            MessageBox.Show(JsonSerializer.Serialize<Pesanan>(newPesanan));
