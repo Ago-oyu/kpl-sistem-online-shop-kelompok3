@@ -72,6 +72,8 @@
             produkGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             produkGridView.Size = new Size(379, 453);
             produkGridView.TabIndex = 2;
+            produkGridView.CellContentClick += produkGridView_CellContentClick;
+            produkGridView.CellDoubleClick += produkGridView_CellDoubleClick;
             // 
             // Nama
             // 
