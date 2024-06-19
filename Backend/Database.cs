@@ -88,6 +88,27 @@ namespace Backend
             db.SaveChanges();
             
         }
+        // will have to do, mungkin revisi nanti
+        public void InsertUser<T>(JsonElement input) where T : class, IHashable
+        {
+            T parsedInput = Parse<T>(input);
+            parsedInput.Salt = PasswordHandler.CreateSalt();
+            parsedInput.Password = PasswordHandler.GenerateSHA512Hash(parsedInput.Password, parsedInput.Salt);
+
+            Insert<T>(JsonSerializer.SerializeToElement(parsedInput));
+        }
+        public void UpdateUser<T>(JsonElement input) where T : class, IHashable
+        {
+            var row = GetRow<T>(input);
+            var inputParsed = Parse<T>(input);
+
+            // agar password hashed di db tidak update dengna password plain text dan salt tidak ter hapus
+            // karena 2 elemen ini hanya ada di backend jadi dari input user gak ada
+            inputParsed.Password = row.Password;
+            inputParsed.Salt = row.Salt;
+
+            Update(row, JsonSerializer.SerializeToElement(inputParsed));
+        }
         public T Parse<T>(JsonElement input)
         {
             return JsonSerializer.Deserialize<T>(input);

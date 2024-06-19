@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataTypes
 {
-    public class Penjual : User<Penjual>
+    public class Penjual : User<Penjual>, IHashable
     {
         public string NamaToko {  get; set; }
         private List<string> ProdukList { get; set; } 

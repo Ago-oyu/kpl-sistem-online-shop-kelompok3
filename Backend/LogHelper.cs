@@ -66,9 +66,9 @@ namespace Backend
             diagnosticContext.Set("ResponseBody", responseBodyPayload);
 
             if (!string.IsNullOrEmpty(RequestPayload))
-                inOutInfo+= "\ninput:\n" + RequestPayload;
+                inOutInfo+= "\ninput:\n" + RequestPayload + "\n";
             if (!string.IsNullOrEmpty(responseBodyPayload))
-                inOutInfo+= "\noutput:\n" + responseBodyPayload;
+                inOutInfo+= "\noutput:\n" + responseBodyPayload + "\n";
 
             diagnosticContext.Set("RequestInfo", inOutInfo);
         }

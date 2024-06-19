@@ -7,7 +7,7 @@ namespace DataTypes
 {
     public class Produk : Syncronizeable<Produk>
     {
-        public enum Sorting { none, random, diskon, harga }
+        public enum Sorting { none, random, harga }
         public enum SortDir { asc, desc }
         public string Nama {get; set;}
         public int Harga { get; set; }
