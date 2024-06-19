@@ -121,7 +121,17 @@
             Deskripsi.MinimumWidth = 6;
             Deskripsi.Name = "Deskripsi";
             Deskripsi.ReadOnly = true;
+            Deskripsi.Width = 125;
             // 
+            // 
+            // namaTextBox
+            // 
+/*            namaTextBox.Location = new Point(107, 58);
+            namaTextBox.Name = "namaTextBox";
+            namaTextBox.Size = new Size(100, 23);
+            namaTextBox.TabIndex = 2;
+            namaTextBox.TextChanged += namaTextBox_TextChanged;
+*/            // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
