@@ -36,6 +36,7 @@
             Harga = new DataGridViewTextBoxColumn();
             Deskripsi = new DataGridViewTextBoxColumn();
             Stok = new DataGridViewTextBoxColumn();
+            Status = new DataGridViewTextBoxColumn();
             welcomeLabel = new Label();
             refreshButton = new Button();
             tabControl1 = new TabControl();
@@ -73,7 +74,7 @@
             produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.BackgroundColor = Color.White;
             produkGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, penjualId, Nama, Harga, Deskripsi, Stok });
+            produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, penjualId, Nama, Harga, Deskripsi, Stok, Status });
             produkGridView.Location = new Point(8, 66);
             produkGridView.MultiSelect = false;
             produkGridView.Name = "produkGridView";
@@ -129,6 +130,12 @@
             Stok.Name = "Stok";
             Stok.ReadOnly = true;
             // 
+            // Status
+            // 
+            Status.HeaderText = "Status";
+            Status.Name = "Status";
+            Status.ReadOnly = true;
+            // 
             // welcomeLabel
             // 
             welcomeLabel.AutoSize = true;
@@ -175,6 +182,7 @@
             HomePage.TabIndex = 0;
             HomePage.Text = "Home";
             HomePage.UseVisualStyleBackColor = true;
+            HomePage.Click += HomePage_Click;
             // 
             // searchButton
             // 
@@ -196,7 +204,6 @@
             // 
             // statusComboBox
             // 
-            statusComboBox.Enabled = false;
             statusComboBox.FormattingEnabled = true;
             statusComboBox.Items.AddRange(new object[] { "Semua", "Banyak", "Sedikit", "Habis" });
             statusComboBox.Location = new Point(466, 220);
@@ -344,12 +351,6 @@
         private DataGridView dataGridView1;
         private ComboBox statusComboBox;
         private Label label1;
-        private DataGridViewTextBoxColumn ID;
-        private DataGridViewTextBoxColumn penjualId;
-        private DataGridViewTextBoxColumn Nama;
-        private DataGridViewTextBoxColumn Harga;
-        private DataGridViewTextBoxColumn Deskripsi;
-        private DataGridViewTextBoxColumn Stok;
         private DataGridView pesananDataGridView;
         private Button button1;
         private DataGridViewTextBoxColumn Penjual;
@@ -361,5 +362,12 @@
         private TextBox searchTextBox;
         private BindingSource databaseBindingSource;
         private Button searchButton;
+        private DataGridViewTextBoxColumn ID;
+        private DataGridViewTextBoxColumn penjualId;
+        private DataGridViewTextBoxColumn Nama;
+        private DataGridViewTextBoxColumn Harga;
+        private DataGridViewTextBoxColumn Deskripsi;
+        private DataGridViewTextBoxColumn Stok;
+        private DataGridViewTextBoxColumn Status;
     }
 }

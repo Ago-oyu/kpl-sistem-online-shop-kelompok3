@@ -16,8 +16,8 @@ namespace GUI
     public partial class PanelPembeli : Form
     {
         Pembeli p;
-        String statusStok;
         string search = "";
+        string currentStatusStok = "";
 
         public PanelPembeli(Pembeli p)
         {
@@ -25,9 +25,9 @@ namespace GUI
 
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-            //currentStatusStok = statusStok.Semua;
-            statusComboBox.SelectedIndex = 0;
-            GetProduk();
+            currentStatusStok = "Semua";
+/*            statusComboBox.SelectedIndex = 0;
+*/            GetProduk();
             GetPesanan();
 
         }
@@ -38,10 +38,21 @@ namespace GUI
             List<Produk> filteredList = new();
 
             produkGridView.Rows.Clear();
-            
+
+            MessageBox.Show(currentStatusStok);
 
             filteredList = await ShopApiClient.Database.GetProdukList();
 
+
+            if (currentStatusStok != "Semua")
+            {
+
+                filteredList = filteredList.Where(produk => produk.Status.ToString() == currentStatusStok).ToList<Produk>();
+            }
+
+/*            currentStatusStok = "habis";
+            MessageBox.Show((filteredList[0].Status.ToString() == currentStatusStok).ToString());
+*/
 
             if (search.Length > 0)
             {
@@ -50,10 +61,10 @@ namespace GUI
 
             foreach (Produk produk in filteredList)
             {
-                produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok);
+                produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok, produk.Status);
             }
-                
-            
+
+
             produkGridView.ClearSelection();
         }
 
@@ -62,7 +73,7 @@ namespace GUI
             pesananDataGridView.Rows.Clear(); ;
             foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
             {
-                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok, 
+                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok,
                     pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Status);
             }
             pesananDataGridView.ClearSelection();
@@ -94,8 +105,8 @@ namespace GUI
 
         private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-/*            Enum.TryParse(statusComboBox.Text, out currentStatusStok);
-*/            GetProduk();
+            currentStatusStok = statusComboBox.Text.ToLower();
+            GetProduk();
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
@@ -105,10 +116,16 @@ namespace GUI
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            //Enum.TryParse(statusComboBox.Text, out currentStatusStok);
-            statusStok = statusComboBox.Text;
+            /*            Enum.TryParse(statusComboBox.Text, out currentStatusStok);
+            *//*            currentStatusStok = statusComboBox.Text;
+            */
+
             GetProduk();
         }
-    
+
+        private void HomePage_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

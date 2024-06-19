@@ -5,7 +5,7 @@ using System.Text.Json;
 
 namespace DataTypes
 {
-    public enum StatusStok { habis, sedikit, banyak}
+    public enum StatusStok {habis, sedikit, banyak}
     public class Produk : Syncronizeable<Produk>
     {
         private  int[] BatasStatus = new int[3] {0, 20, int.MaxValue};
@@ -21,7 +21,8 @@ namespace DataTypes
         public Produk(string Id=null) : base(Id)
         {
         }
-        public Produk() : base(null) { }
+        public Produk() : base(null) {
+        }
 
         /// <summary>
         /// return hasil query table produk, kalau page < 1 return semua item di table produk
