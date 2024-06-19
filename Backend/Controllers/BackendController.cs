@@ -59,7 +59,7 @@ namespace Backend.Controllers
                 query = query.Skip((page?? - 1) * batch).Take(batch);
             }
 
-            return JsonSerializer.Serialize(query.ToList());
+            return JsonSerializer.Serialize(query.ToList().Select(x => x.PullDependency(db)));
         }
 
         [HttpPost("login")]
@@ -79,12 +79,14 @@ namespace Backend.Controllers
             if (res.Info == null)
             {
                 res.Status = "user tidak ditemukan";
-            } else if (res.Info.Password != data.Password)
+            } else if (!PasswordHandler.CheckPassword(data.Password, res.Info.Salt, res.Info.Password))
             {
                 res.Status = "password salah";
                 res.Info = null;
             } else {
                 res.Status = "sukses";
+                res.Info.Password = data.Password; // set password plainText agar bisa update data
+                res.Info.Salt = null; // set password plainText agar bisa update data
             }
 
             return JsonSerializer.Serialize(res);
@@ -95,28 +97,34 @@ namespace Backend.Controllers
         {
             using var db = new Database();
             dynamic res;
-            dynamic existing;
+            dynamic existingEmail; // antara tipe Pembeli atau Penjual
+            dynamic existingId; // antara tipe Pembeli atau Penjual
 
             if (type == UserTypes.pembeli)
             {
                 res = JsonSerializer.Deserialize<Pembeli>(data);
-                existing = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+                existingEmail = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+                existingId = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == res.Id);
             } else 
             {
                 res = JsonSerializer.Deserialize<Penjual>(data);
-                existing = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+                existingEmail = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+                existingId = db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == res.Id);
             }
 
-            if (existing != null)
+            if (existingEmail != null)
             {
                 return "email sudah terpakai";
+            } else if (existingId != null)
+            {
+                return "id sudah terpakai";
             } else
             {
                 var updater = new DatabaseUpdater(db);
                 if (type == UserTypes.pembeli)
-                    updater.Insert<Pembeli>(data);
+                    updater.InsertUser<Pembeli>(data);
                 else
-                    updater.Insert<Penjual>(data);
+                    updater.InsertUser<Penjual>(data);
                 
                 return "register sukses";
             }
@@ -134,7 +142,7 @@ namespace Backend.Controllers
             switch (type)
             {
                 case Types.produk:
-                    return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                    return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
                 case Types.pembeli:
                      return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.penjual:
@@ -183,7 +191,7 @@ namespace Backend.Controllers
                 dynamic row = type == Types.pembeli ? updater.GetRow<Pembeli>(input) : updater.GetRow<Penjual>(input);
                 if (row == null)
                     return new ContentResult() { Content = "hanya boleh update data untuk tipe penjual dan pembeli, gunakan register untuk menabah entry baru", StatusCode = 400 };
-                else if (row.Password != input.GetProperty("Password").GetString())
+                else if (!PasswordHandler.CheckPassword(input.GetProperty("Password").GetString(), row.Salt, row.Password)) 
                     return new ContentResult() { Content = "update gagal password salah", StatusCode = 400 };
             }
 
@@ -195,11 +203,11 @@ namespace Backend.Controllers
                         operationDone = updater.Execute<Produk>(input);
                         break;
                     case Types.pembeli:
-                        updater.Update<Pembeli>(input);
+                        updater.UpdateUser<Pembeli>(input);
                         operationDone = DatabaseUpdater.Result.updated;
                         break;
                     case Types.penjual:
-                        updater.Update<Penjual>(input);
+                        updater.UpdateUser<Penjual>(input);
                         operationDone = DatabaseUpdater.Result.updated;
                         break;
                     case Types.keranjang:

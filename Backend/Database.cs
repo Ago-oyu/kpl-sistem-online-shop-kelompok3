@@ -25,6 +25,75 @@ namespace Backend
                 RelationalDatabaseCreator databaseCreator = 
                     (RelationalDatabaseCreator) Database.GetService<IDatabaseCreator>();
                 databaseCreator.CreateTables();
+
+                DatabaseUpdater updater = new(this);
+
+                Penjual pjl = new()
+                {
+                    Id="tes", // buat ini aja harusnya dibiaring kosong
+                    NamaToko="tes",
+                    Nama="tes",
+                    Password="tes",
+                    Email="tes"
+                };
+                updater.InsertUser<Penjual>(JsonSerializer.SerializeToElement(pjl));
+
+                Pembeli pmb = new()
+                {
+                    Id="testes", // buat ini aja harusnya dibiaring kosong
+                    Alamat="tes",
+                    Nama="tes",
+                    Password="tes",
+                    Email="tes"
+                };
+                updater.InsertUser<Pembeli>(JsonSerializer.SerializeToElement(pmb));
+
+                Produk prd = new()
+                {
+                    Nama="pensil",
+                    Harga=10000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=1
+                };
+
+                produk.Add(prd);
+
+                prd = new()
+                {
+                    Nama="pulpen",
+                    Harga=20000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=5
+                };
+
+                produk.Add(prd);
+
+                prd = new()
+                {
+                    Nama="penggaris",
+                    Harga=50000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=10
+                };
+
+                produk.Add(prd);
+
+                prd = new()
+                {
+                    Nama="kursi",
+                    Harga=100000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=100
+                };
+
+                produk.Add(prd);
+
+                SaveChanges();
+
             } catch (Exception)
             {
                 // table sudah dibuat
@@ -87,6 +156,27 @@ namespace Backend
             db.Entry(row).CurrentValues.SetValues(parsedInput);
             db.SaveChanges();
             
+        }
+        // will have to do, mungkin revisi nanti
+        public void InsertUser<T>(JsonElement input) where T : class, IHashable
+        {
+            T parsedInput = Parse<T>(input);
+            parsedInput.Salt = PasswordHandler.CreateSalt();
+            parsedInput.Password = PasswordHandler.GenerateSHA512Hash(parsedInput.Password, parsedInput.Salt);
+
+            Insert<T>(JsonSerializer.SerializeToElement(parsedInput));
+        }
+        public void UpdateUser<T>(JsonElement input) where T : class, IHashable
+        {
+            var row = GetRow<T>(input);
+            var inputParsed = Parse<T>(input);
+
+            // agar password hashed di db tidak update dengna password plain text dan salt tidak ter hapus
+            // karena 2 elemen ini hanya ada di backend jadi dari input user gak ada
+            inputParsed.Password = row.Password;
+            inputParsed.Salt = row.Salt;
+
+            Update(row, JsonSerializer.SerializeToElement(inputParsed));
         }
         public T Parse<T>(JsonElement input)
         {

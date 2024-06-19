@@ -5,15 +5,18 @@ using System.Text.Json;
 
 namespace DataTypes
 {
+    public enum StatusStok { habis, sedikit, banyak}
     public class Produk : Syncronizeable<Produk>
     {
-        public enum Sorting { none, random, diskon, harga }
+        private  int[] BatasStatus = new int[3] {0, 20, int.MaxValue};
+        public enum Sorting { none, random, harga }
         public enum SortDir { asc, desc }
         public string Nama {get; set;}
         public int Harga { get; set; }
         public string IDPenjual { get; set; }
         public string Deskripsi { get; set; }
         public int Stok { get; set; }
+        public StatusStok Status {  get; set; }
 
         public Produk(string Id=null) : base(Id)
         {
@@ -55,6 +58,18 @@ namespace DataTypes
             //     Console.WriteLine($"An error occurred: {ex.Message}");
             // }
             return null;
+        }
+
+        public void UpdateStatus()
+        {
+            for (int i = 0; i < BatasStatus.Count(); i++)
+            {
+                if (Stok <= BatasStatus[i])
+                {
+                    Status = (StatusStok)i;
+                    break;
+                }
+            }
         }
     }
 

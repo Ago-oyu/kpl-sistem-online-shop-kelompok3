@@ -1,19 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Mapster;
 
 namespace DataTypes
 {
-    public class User<T> : Syncronizeable<T> where T : class
+    public class User<T> : Syncronizeable<T> where T : class, IHashable
     {
         public string Nama { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
+        /// <summary>
+        /// gak perlu diapa apain, keperluan hashing
+        /// </summary>
+        public string Salt { get; set; }
 
         public User(string Email, string Password, string Id=null) : base(Id)
         {
@@ -21,6 +28,10 @@ namespace DataTypes
             this.Password = Password;
         }
 
+        public bool CheckPassword(string plainPassword)
+        {
+            return PasswordHandler.CheckPassword(plainPassword, Salt, Password);
+        }
         /// <summary>
         /// email dan password harus terisi untuk proses pull
         /// </summary>
@@ -110,5 +121,32 @@ namespace DataTypes
             //     return $"An error occurred: {ex.Message}";
             // }
        }
+    }
+    public class PasswordHandler
+    {
+        public static string CreateSalt(int size=16)
+        {
+            var rng = new RNGCryptoServiceProvider();
+            var buff = new byte[size];
+            rng.GetBytes(buff);
+            return Convert.ToBase64String(buff);
+        }
+        public static string GenerateSHA512Hash(string input, string salt)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(input + salt);
+            byte[] hash = SHA512.HashData(bytes);
+
+            return Convert.ToBase64String(hash);
+        }
+        public static bool CheckPassword(string plainPassword, string Salt, string HashedPassword)
+        {
+            string h = GenerateSHA512Hash(plainPassword, Salt);
+            return GenerateSHA512Hash(plainPassword, Salt) == HashedPassword;
+        }
+    }
+    public interface IHashable
+    {
+        public string Password {get; set; }
+        public string Salt {get; set; }
     }
 }
