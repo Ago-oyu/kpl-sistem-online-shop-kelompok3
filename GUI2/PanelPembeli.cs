@@ -16,23 +16,20 @@ namespace GUI
     public partial class PanelPembeli : Form
     {
         Pembeli p;
+        String statusStok;
         string search = "";
 
-        enum statusStok { Semua, Habis, Sedikit, Banyak }
-        int[] batasStatus = { -1, 0, 10, int.MaxValue };
-
-        statusStok currentStatusStok;
         public PanelPembeli(Pembeli p)
         {
             InitializeComponent();
 
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-
-            currentStatusStok = statusStok.Semua;
-
+            //currentStatusStok = statusStok.Semua;
+            statusComboBox.SelectedIndex = 0;
             GetProduk();
             GetPesanan();
+
         }
 
         async private void GetProduk()
@@ -41,29 +38,10 @@ namespace GUI
             List<Produk> filteredList = new();
 
             produkGridView.Rows.Clear();
-            if (currentStatusStok == statusStok.Semua)
-            {
+            
 
-                filteredList = await ShopApiClient.Database.GetProdukList();
+            filteredList = await ShopApiClient.Database.GetProdukList();
 
-/*                foreach (Produk produk in await ShopApiClient.Database.GetProdukList())
-                {
-                    produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok);
-                }
-*/            }
-            else
-            {
-                foreach (Produk produk in await ShopApiClient.Database.GetProdukList())
-                {
-/*                    if (produk.Stok <= batasStatus[(int)currentStatusStok] && produk.Stok > batasStatus[(int)currentStatusStok - 1])
-
-                        filteredList.Add(produk);
-*/                    
-                    filteredList = filteredList.Where(
-                        produk => produk.Stok <= batasStatus[(int)currentStatusStok] && produk.Stok > batasStatus[(int)currentStatusStok - 1]
-                    ).ToList<Produk>();
-                }
-            }
 
             if (search.Length > 0)
             {
@@ -74,6 +52,8 @@ namespace GUI
             {
                 produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok);
             }
+                
+            
             produkGridView.ClearSelection();
         }
 
@@ -82,7 +62,7 @@ namespace GUI
             pesananDataGridView.Rows.Clear(); ;
             foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
             {
-                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok,
+                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok, 
                     pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Status);
             }
             pesananDataGridView.ClearSelection();
@@ -114,8 +94,8 @@ namespace GUI
 
         private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            Enum.TryParse(statusComboBox.Text, out currentStatusStok);
-            GetProduk();
+/*            Enum.TryParse(statusComboBox.Text, out currentStatusStok);
+*/            GetProduk();
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
@@ -125,7 +105,10 @@ namespace GUI
 
         private void searchButton_Click(object sender, EventArgs e)
         {
+            //Enum.TryParse(statusComboBox.Text, out currentStatusStok);
+            statusStok = statusComboBox.Text;
             GetProduk();
         }
+    
     }
 }

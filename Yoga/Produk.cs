@@ -4,7 +4,7 @@ namespace Yoga
     public class Produk
     {
         private String Description;
-        private int Terjual;
+        private int JmlPenjualan;
 
         private static int productCount = 0;
         private string Id, Nama;
@@ -23,6 +23,16 @@ namespace Yoga
         public string GetId()
         {
             return Id;
+        }
+
+        public int GetJmlPenjualan()
+        {
+            return JmlPenjualan;
+        }
+
+        public void AddPenjualan(int Terjual)
+        {
+            JmlPenjualan += Terjual;
         }
     }
 }
