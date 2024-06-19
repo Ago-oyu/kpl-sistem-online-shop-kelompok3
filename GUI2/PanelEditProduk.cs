@@ -34,11 +34,11 @@ namespace GUI
 
         private async void updateProdukButton_Click(object sender, EventArgs e)
         {
-            string namaProduk = namaTextBox.Text;
+/*            string namaProduk = namaTextBox.Text;
             int hargaProduk = (int)HargaNumericUpDown.Value;
             string deskripsiProduk = deskripsiTextBox.Text;
             int stokProduk = (int)stokNumericUpDown.Value;
-
+*/
             produk.Nama = namaTextBox.Text;
             produk.Harga = (int)HargaNumericUpDown.Value;
             produk.Deskripsi = deskripsiTextBox.Text;

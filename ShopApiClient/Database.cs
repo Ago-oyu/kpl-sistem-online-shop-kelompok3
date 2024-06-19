@@ -14,8 +14,16 @@ namespace ShopApiClient
             {
                 listProduk = await Produk.GetPage();
             }
-            
-            return listProduk;
+
+            List<Produk> TempList = new();
+            foreach (Produk produk in listProduk)
+            {
+                if (produk.Stok > 0)
+                {
+                    TempList.Add(produk);
+                }
+            }
+            return TempList;
         }
 
         public static async Task<List<Produk>> GetProdukList(Penjual penj)

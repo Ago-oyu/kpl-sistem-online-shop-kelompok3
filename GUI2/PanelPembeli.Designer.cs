@@ -169,6 +169,7 @@
             button1.TabIndex = 5;
             button1.Text = "Refresh";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += refreshButton_Click;
             // 
             // pesananDataGridView
             // 
