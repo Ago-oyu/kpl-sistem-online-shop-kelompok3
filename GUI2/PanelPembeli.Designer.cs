@@ -46,6 +46,7 @@
             Jumlah = new DataGridViewTextBoxColumn();
             TotalHarga = new DataGridViewTextBoxColumn();
             Alamat = new DataGridViewTextBoxColumn();
+            StatusPesanan = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             tabControl1.SuspendLayout();
             HomePage.SuspendLayout();
@@ -163,7 +164,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(359, 200);
+            button1.Location = new Point(8, 171);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 5;
@@ -180,14 +181,14 @@
             pesananDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             pesananDataGridView.BackgroundColor = Color.White;
             pesananDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { Penjual, Produk, Jumlah, TotalHarga, Alamat });
-            pesananDataGridView.Location = new Point(39, 23);
+            pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { Penjual, Produk, Jumlah, TotalHarga, Alamat, StatusPesanan });
+            pesananDataGridView.Location = new Point(8, 15);
             pesananDataGridView.Name = "pesananDataGridView";
             pesananDataGridView.ReadOnly = true;
             pesananDataGridView.RowHeadersVisible = false;
             pesananDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             pesananDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            pesananDataGridView.Size = new Size(555, 140);
+            pesananDataGridView.Size = new Size(634, 140);
             pesananDataGridView.TabIndex = 4;
             // 
             // Penjual
@@ -219,6 +220,12 @@
             Alamat.HeaderText = "Alamat";
             Alamat.Name = "Alamat";
             Alamat.ReadOnly = true;
+            // 
+            // StatusPesanan
+            // 
+            StatusPesanan.HeaderText = "Status";
+            StatusPesanan.Name = "StatusPesanan";
+            StatusPesanan.ReadOnly = true;
             // 
             // PanelPembeli
             // 
@@ -252,11 +259,12 @@
         private TabPage HomePage;
         private TabPage PesananPage;
         private DataGridView pesananDataGridView;
+        private Button button1;
         private DataGridViewTextBoxColumn Penjual;
         private DataGridViewTextBoxColumn Produk;
         private DataGridViewTextBoxColumn Jumlah;
         private DataGridViewTextBoxColumn TotalHarga;
         private DataGridViewTextBoxColumn Alamat;
-        private Button button1;
+        private DataGridViewTextBoxColumn StatusPesanan;
     }
 }
