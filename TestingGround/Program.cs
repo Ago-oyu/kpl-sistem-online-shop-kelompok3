@@ -5,6 +5,7 @@ using DataTypes;
 
 string baseUrl = "http://localhost:5058";
 
+
 Produk.baseUrl = baseUrl;
 Produk.endpoint = "/api/produk";
 
@@ -19,7 +20,6 @@ Pembeli newUser = new()
     Nama = "test",
     Email = email,
     Password = pass,
-    Id = Database.CreateGUID(),
     Alamat = "bumi"
 };
 

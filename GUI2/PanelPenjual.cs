@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Core.Common.CommandTrees.ExpressionBuilder;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -15,17 +16,16 @@ namespace GUI
     public partial class PanelPenjual : Form
     {
         private Penjual p;
+        private string selectedProdukID;
         public PanelPenjual(Penjual p)
         {
             InitializeComponent();
 
-            produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            produkGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-            GetProduk();
 
+            GetProduk();
+            GetPesanan();
         }
 
         async private void tambahProdukButton_Click(object sender, EventArgs e)
@@ -34,22 +34,35 @@ namespace GUI
             this.Hide();
             panelTambahProduk.ShowDialog();
             this.Show();
-            GetProduk();
+            refreshButton_Click(sender, e);
         }
 
         async private void GetProduk()
         {
-            produkGridView.Rows.Clear(); ;
+            produkGridView.Rows.Clear();
             foreach (Produk produk in await ShopApiClient.Database.GetProdukList(p))
             {
-                produkGridView.Rows.Add(produk.Nama, produk.Harga, produk.Deskripsi);
+                produkGridView.Rows.Add(produk.Id, produk.Nama, produk.Harga, produk.Deskripsi);
             }
+            produkGridView.ClearSelection();
+            selectedProdukID = null;
+        }
+
+        async private void GetPesanan()
+        {
+            pesananDataGridView.Rows.Clear();
+            foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
+            {
+                pesananDataGridView.Rows.Add(pesanan.Pembeli.Nama, pesanan.Produk.Nama, pesanan.stok, pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Produk.Id);
+            }
+            pesananDataGridView.ClearSelection();
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
             ShopApiClient.Database.Refresh();
             GetProduk();
+            GetPesanan();
         }
 
         private void PanelPenjual_FormClosed(object sender, FormClosedEventArgs e)
@@ -61,19 +74,33 @@ namespace GUI
         {
             if (e.RowIndex >= 0)
             {
-                PanelEditProduk ppd = new(produkGridView.SelectedRows[0].Cells["ID"].Value.ToString());
+                PanelEditProduk ppd = new(selectedProdukID);
                 ppd.ShowDialog();
+                refreshButton_Click(sender, e);
             }
         }
 
-        private void produkGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
-
+            foreach (DataGridViewRow row in pesananDataGridView.Rows)
+            {
+                if (row.Cells["ProdukID"].Value.Equals(selectedProdukID))
+                {
+                    MessageBox.Show("Produk sedang dipesan. Selesaikan atau Batalkan pesanan.");
+                    return;
+                }
+            }
+            Produk.Delete(selectedProdukID);
+            MessageBox.Show("Produk telah dihapus");
+            refreshButton_Click(sender, e);
         }
 
-        private void namaTextBox_TextChanged(object sender, EventArgs e)
+        private void produkGridView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
+            if (e.RowIndex >= 0)
+            {
+                selectedProdukID = produkGridView.SelectedRows[0].Cells["ID"].Value.ToString();
+            }
         }
     }
 }

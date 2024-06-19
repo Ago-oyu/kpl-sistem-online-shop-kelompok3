@@ -36,6 +36,14 @@
             statusComboBox = new ComboBox();
             label1 = new Label();
             PesananPage = new TabPage();
+            button1 = new Button();
+            pesananDataGridView = new DataGridView();
+            Penjual = new DataGridViewTextBoxColumn();
+            Produk = new DataGridViewTextBoxColumn();
+            Jumlah = new DataGridViewTextBoxColumn();
+            TotalHarga = new DataGridViewTextBoxColumn();
+            Alamat = new DataGridViewTextBoxColumn();
+            StatusPesanan = new DataGridViewTextBoxColumn();
             dataGridView1 = new DataGridView();
             ID = new DataGridViewTextBoxColumn();
             penjualId = new DataGridViewTextBoxColumn();
@@ -47,7 +55,7 @@
             tabControl1.SuspendLayout();
             HomePage.SuspendLayout();
             PesananPage.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pesananDataGridView).BeginInit();
             SuspendLayout();
             // 
             // produkGridView
@@ -56,6 +64,7 @@
             produkGridView.AllowUserToDeleteRows = false;
             produkGridView.AllowUserToResizeColumns = false;
             produkGridView.AllowUserToResizeRows = false;
+            produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.BackgroundColor = Color.White;
             produkGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             produkGridView.Columns.AddRange(new DataGridViewColumn[] { ID, penjualId, Nama, Harga, Deskripsi, Stok });
@@ -140,9 +149,9 @@
             // 
             // PesananPage
             // 
-            PesananPage.Controls.Add(dataGridView1);
-            PesananPage.Location = new Point(4, 29);
-            PesananPage.Margin = new Padding(3, 4, 3, 4);
+            PesananPage.Controls.Add(button1);
+            PesananPage.Controls.Add(pesananDataGridView);
+            PesananPage.Location = new Point(4, 24);
             PesananPage.Name = "PesananPage";
             PesananPage.Padding = new Padding(3, 4, 3, 4);
             PesananPage.Size = new Size(906, 567);
@@ -150,7 +159,66 @@
             PesananPage.Text = "Pesanan";
             PesananPage.UseVisualStyleBackColor = true;
             // 
-            // dataGridView1
+            // button1
+            // 
+            button1.Location = new Point(8, 171);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 5;
+            button1.Text = "Refresh";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += refreshButton_Click;
+            // 
+            // pesananDataGridView
+            // 
+            pesananDataGridView.AllowUserToAddRows = false;
+            pesananDataGridView.AllowUserToDeleteRows = false;
+            pesananDataGridView.AllowUserToResizeColumns = false;
+            pesananDataGridView.AllowUserToResizeRows = false;
+            pesananDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            pesananDataGridView.BackgroundColor = Color.White;
+            pesananDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { Penjual, Produk, Jumlah, TotalHarga, Alamat, StatusPesanan });
+            pesananDataGridView.Location = new Point(8, 15);
+            pesananDataGridView.Name = "pesananDataGridView";
+            pesananDataGridView.ReadOnly = true;
+            pesananDataGridView.RowHeadersVisible = false;
+            pesananDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            pesananDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            pesananDataGridView.Size = new Size(634, 140);
+            pesananDataGridView.TabIndex = 4;
+            // 
+            // Penjual
+            // 
+            Penjual.HeaderText = "Penjual";
+            Penjual.Name = "Penjual";
+            Penjual.ReadOnly = true;
+            // 
+            // Produk
+            // 
+            Produk.HeaderText = "Produk";
+            Produk.Name = "Produk";
+            Produk.ReadOnly = true;
+            // 
+            // Jumlah
+            // 
+            Jumlah.HeaderText = "Jumlah";
+            Jumlah.Name = "Jumlah";
+            Jumlah.ReadOnly = true;
+            // 
+            // TotalHarga
+            // 
+            TotalHarga.HeaderText = "Total Harga";
+            TotalHarga.Name = "TotalHarga";
+            TotalHarga.ReadOnly = true;
+            // 
+            // Alamat
+            // 
+            Alamat.HeaderText = "Alamat";
+            Alamat.Name = "Alamat";
+            Alamat.ReadOnly = true;
+            // 
+            // StatusPesanan
             // 
             dataGridView1.AllowUserToAddRows = false;
             dataGridView1.AllowUserToDeleteRows = false;
@@ -162,6 +230,9 @@
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.Size = new Size(274, 200);
             dataGridView1.TabIndex = 0;
+            StatusPesanan.HeaderText = "Status";
+            StatusPesanan.Name = "StatusPesanan";
+            StatusPesanan.ReadOnly = true;
             // 
             // ID
             // 
@@ -228,7 +299,7 @@
             HomePage.ResumeLayout(false);
             HomePage.PerformLayout();
             PesananPage.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pesananDataGridView).EndInit();
             ResumeLayout(false);
         }
 
@@ -249,5 +320,13 @@
         private DataGridViewTextBoxColumn Harga;
         private DataGridViewTextBoxColumn Deskripsi;
         private DataGridViewTextBoxColumn Stok;
+        private DataGridView pesananDataGridView;
+        private Button button1;
+        private DataGridViewTextBoxColumn Penjual;
+        private DataGridViewTextBoxColumn Produk;
+        private DataGridViewTextBoxColumn Jumlah;
+        private DataGridViewTextBoxColumn TotalHarga;
+        private DataGridViewTextBoxColumn Alamat;
+        private DataGridViewTextBoxColumn StatusPesanan;
     }
 }

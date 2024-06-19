@@ -1,16 +1,12 @@
 ﻿using DataTypes;
+using System.Runtime.InteropServices;
 
 namespace ShopApiClient
 {
     public class Database
     {
-
-/*        private Pembeli pembeliUser;
-        private Penjual penjualUser;
-*/
         private static List<Produk> listProduk;
         private static List<Pesanan> listPesanan;
-
 
         public static async Task<List<Produk>> GetProdukList()
         {
@@ -18,13 +14,16 @@ namespace ShopApiClient
             {
                 listProduk = await Produk.GetPage();
             }
-            
-/*            if (filter != null)
+
+            List<Produk> TempList = new();
+            foreach (Produk produk in listProduk)
             {
-                List<Produk> = tempList
+                if (produk.Stok > 0)
+                {
+                    TempList.Add(produk);
+                }
             }
-*/
-            return listProduk;
+            return TempList;
         }
 
         public static async Task<List<Produk>> GetProdukList(Penjual penj)
@@ -35,7 +34,7 @@ namespace ShopApiClient
             }
 
             List<Produk> TempList = new();
-            foreach (Produk produk in await Produk.GetPage())
+            foreach (Produk produk in listProduk)
             {
                 if (produk.IDPenjual == penj.Id)
                 {
@@ -44,6 +43,43 @@ namespace ShopApiClient
             }
             return TempList;
         }
+
+        public static async Task<List<Pesanan>> GetPesananList(Pembeli pem)
+        {
+            if (listPesanan == null)
+            {
+                listPesanan = await Pesanan.GetListPesanan();
+            }
+
+            List<Pesanan> TempList = new();
+            foreach (Pesanan pesanan in listPesanan)
+            {
+                if (pesanan.PembeliID == pem.Id)
+                {
+                    TempList.Add(pesanan);
+                }
+            }
+            return TempList;
+        }
+
+        public static async Task<List<Pesanan>> GetPesananList(Penjual penj)
+        {
+            if (listPesanan == null)
+            {
+                listPesanan = await Pesanan.GetListPesanan();
+            }
+
+            List<Pesanan> TempList = new();
+            foreach (Pesanan pesanan in listPesanan)
+            {
+                if (pesanan.PenjualID == penj.Id)
+                {
+                    TempList.Add(pesanan);
+                }
+            }
+            return TempList;
+        }
+
         public static void AddProduk(Produk produk)
         {
             listProduk.Add(produk);
@@ -53,6 +89,7 @@ namespace ShopApiClient
         {
             Reset();
             listProduk = await Produk.GetPage();
+            listPesanan = await Pesanan.GetListPesanan();
 
         }
 
@@ -61,43 +98,6 @@ namespace ShopApiClient
             listProduk = null;
             listPesanan = null;
         }
-
-        /*        private async Task Login(string email, string password)
-                {
-
-                    LoginInfo loginInfo = new()
-                    {
-                        Email = email,
-                        Password = password
-                    };
-
-                    LoginOut<Penjual> penjualLogin = await Penjual.Login(loginInfo);
-
-                    if (penjualLogin.Info != null)
-                    {
-                        penjualUser = penjualLogin.Info;
-                    } else
-                    {
-                        LoginOut <Pembeli> pembeliLogin = await User<Pembeli>.Login(loginInfo);
-                        pembeliUser = pembeliLogin.Info;
-
-                        if (pembeliUser == null)
-                        {
-                            throw new Exception("Username atau Password salah");
-                        }
-                    }
-                }
-
-                public User Login()
-
-                public async Task GetProdukList<T>()
-                {
-                    if (typeof(T) == typeof(Pembeli))
-                    {
-                        List<Produk> produks = await Produk.GetPage();
-                    }
-                }*/
-
 
     }
 }

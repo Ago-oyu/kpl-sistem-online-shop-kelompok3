@@ -30,6 +30,9 @@ namespace GUI
             currentStatusStok = statusStok.Semua;
             GetProduk();
 
+            GetProduk(); 
+            GetPesanan();
+
         }
 
         async private void GetProduk()
@@ -49,12 +52,24 @@ namespace GUI
                         produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok);
                 }
             }
+            produkGridView.ClearSelection();
+        }
+
+        async private void GetPesanan()
+        {
+            pesananDataGridView.Rows.Clear(); ;
+            foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
+            {
+                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok, pesanan.totalHarga, pesanan.Pembeli.Alamat);
+            }
+            pesananDataGridView.ClearSelection();
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
             ShopApiClient.Database.Refresh();
             GetProduk();
+            GetPesanan();
         }
 
         private async void selectProduk(object sender, DataGridViewCellEventArgs e)
@@ -65,6 +80,7 @@ namespace GUI
                     produkGridView.SelectedRows[0].Cells["penjualId"].Value.ToString(),
                     p);
                 ppd.ShowDialog();
+                refreshButton_Click(sender, e);
             }
         }
 
