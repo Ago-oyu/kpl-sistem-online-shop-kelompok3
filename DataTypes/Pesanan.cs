@@ -24,7 +24,7 @@ namespace DataTypes
         
         public int stok { get; set; }
         public int totalHarga { get; set; }
-
+        public string status { get; set; }
 
         public Pesanan(string Id=null) : base(Id)
         {
