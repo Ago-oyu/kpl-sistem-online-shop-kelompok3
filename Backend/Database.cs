@@ -40,7 +40,7 @@ namespace Backend
 
                 Pembeli pmb = new()
                 {
-                    Id="tes", // buat ini aja harusnya dibiaring kosong
+                    Id="testes", // buat ini aja harusnya dibiaring kosong
                     Alamat="tes",
                     Nama="tes",
                     Password="tes",
