@@ -59,7 +59,7 @@ namespace Backend.Controllers
                 query = query.Skip((page?? - 1) * batch).Take(batch);
             }
 
-            return JsonSerializer.Serialize(query.ToList());
+            return JsonSerializer.Serialize(query.ToList().Select(x => x.PullDependency(db)));
         }
 
         [HttpPost("login")]
@@ -142,7 +142,7 @@ namespace Backend.Controllers
             switch (type)
             {
                 case Types.produk:
-                    return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                    return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
                 case Types.pembeli:
                      return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.penjual:
