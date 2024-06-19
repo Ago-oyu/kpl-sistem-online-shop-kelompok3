@@ -15,26 +15,45 @@ namespace GUI
     public partial class PanelPembeli : Form
     {
         Pembeli p;
+        int status;
+
+        enum statusStok { Semua, Habis, Sedikit, Banyak }
+        int[] batasStatus = { -1, 0, 10, int.MaxValue};
+
+        statusStok currentStatusStok;
         public PanelPembeli(Pembeli p)
         {
             InitializeComponent();
 
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
+            currentStatusStok = statusStok.Semua;
             GetProduk();
+
         }
 
         async private void GetProduk()
         {
             produkGridView.Rows.Clear();
-            foreach (Produk produk in await ShopApiClient.Database.GetProdukList())
+            if (currentStatusStok == statusStok.Semua)
             {
-                produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi);
+                foreach (Produk produk in await ShopApiClient.Database.GetProdukList())
+                {
+                    produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok);
+                }
+            } else
+            {
+                foreach (Produk produk in await ShopApiClient.Database.GetProdukList())
+                {
+                    if (produk.Stok <= batasStatus[(int) currentStatusStok] && produk.Stok > batasStatus[(int) currentStatusStok - 1])
+                        produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok);
+                }
             }
         }
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
+            ShopApiClient.Database.Refresh();
             GetProduk();
         }
 
@@ -47,6 +66,17 @@ namespace GUI
                     p);
                 ppd.ShowDialog();
             }
+        }
+
+        private void PanelPembeli_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ShopApiClient.Database.Reset();
+        }
+
+        private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Enum.TryParse(statusComboBox.Text, out currentStatusStok);
+            GetProduk();
         }
     }
 }

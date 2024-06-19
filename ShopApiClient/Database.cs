@@ -31,20 +31,32 @@ namespace ShopApiClient
         {
             if (listProduk == null)
             {
-                listProduk = new();
-                foreach (Produk produk in await Produk.GetPage())
-                {
-                    if (produk.IDPenjual == penj.Id)
-                    {
-                        listProduk.Add(produk);
-                    }
-                }
+                listProduk = await Produk.GetPage();
             }
 
-            return listProduk;
+            List<Produk> TempList = new();
+            foreach (Produk produk in await Produk.GetPage())
+            {
+                if (produk.IDPenjual == penj.Id)
+                {
+                    TempList.Add(produk);
+                }
+            }
+            return TempList;
+        }
+        public static void AddProduk(Produk produk)
+        {
+            listProduk.Add(produk);
         }
 
-        public void Reset()
+        public static async Task Refresh()
+        {
+            Reset();
+            listProduk = await Produk.GetPage();
+
+        }
+
+        public static async Task Reset()
         {
             listProduk = null;
             listPesanan = null;

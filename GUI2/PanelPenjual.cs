@@ -22,35 +22,22 @@ namespace GUI
             produkGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             produkGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-
-            HargaNumericUpDown.Maximum = 2147483647;
-            stokNumericUpDown.Maximum = 2147483647;
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-            AwaitGetProduk();
+            GetProduk();
 
         }
 
         async private void tambahProdukButton_Click(object sender, EventArgs e)
         {
-            string namaProduk = namaTextBox.Text;
-            int hargaProduk = (int)HargaNumericUpDown.Value;
-            string deskripsiProduk = deskripsiTextBox.Text;
-            int stokProduk = (int)stokNumericUpDown.Value;
-            Produk newProduk = new Produk()
-            {
-                Id = Produk.CreateGUID(),
-                Nama = namaProduk,
-                Harga = hargaProduk,
-                Deskripsi = deskripsiProduk,
-                Stok = stokProduk,
-                IDPenjual = p.Id
-            };
-            MessageBox.Show(await newProduk.Push());
-            AwaitGetProduk();
+            PanelTambahProduk panelTambahProduk = new PanelTambahProduk(p);
+            this.Hide();
+            panelTambahProduk.ShowDialog();
+            this.Show();
+            GetProduk();
         }
 
-        async private void AwaitGetProduk()
+        async private void GetProduk()
         {
             produkGridView.Rows.Clear(); ;
             foreach (Produk produk in await ShopApiClient.Database.GetProdukList(p))
@@ -61,7 +48,13 @@ namespace GUI
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            AwaitGetProduk();
+            ShopApiClient.Database.Refresh();
+            GetProduk();
+        }
+
+        private void PanelPenjual_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            ShopApiClient.Database.Reset();
         }
 
         private void produkGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
