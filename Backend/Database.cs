@@ -25,6 +25,75 @@ namespace Backend
                 RelationalDatabaseCreator databaseCreator = 
                     (RelationalDatabaseCreator) Database.GetService<IDatabaseCreator>();
                 databaseCreator.CreateTables();
+
+                DatabaseUpdater updater = new(this);
+
+                Penjual pjl = new()
+                {
+                    Id="tes", // buat ini aja harusnya dibiaring kosong
+                    NamaToko="tes",
+                    Nama="tes",
+                    Password="tes",
+                    Email="tes"
+                };
+                updater.InsertUser<Penjual>(JsonSerializer.SerializeToElement(pjl));
+
+                Pembeli pmb = new()
+                {
+                    Id="tes", // buat ini aja harusnya dibiaring kosong
+                    Alamat="tes",
+                    Nama="tes",
+                    Password="tes",
+                    Email="tes"
+                };
+                updater.InsertUser<Pembeli>(JsonSerializer.SerializeToElement(pmb));
+
+                Produk prd = new()
+                {
+                    Nama="pensil",
+                    Harga=10000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=1
+                };
+
+                produk.Add(prd);
+
+                prd = new()
+                {
+                    Nama="pulpen",
+                    Harga=20000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=5
+                };
+
+                produk.Add(prd);
+
+                prd = new()
+                {
+                    Nama="penggaris",
+                    Harga=50000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=10
+                };
+
+                produk.Add(prd);
+
+                prd = new()
+                {
+                    Nama="kursi",
+                    Harga=100000,
+                    IDPenjual="tes",
+                    Deskripsi="alat tulis",
+                    Stok=100
+                };
+
+                produk.Add(prd);
+
+                SaveChanges();
+
             } catch (Exception)
             {
                 // table sudah dibuat
