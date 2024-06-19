@@ -36,7 +36,7 @@ namespace GUI
                 Harga = hargaProduk,
                 Deskripsi = deskripsiProduk,
                 Stok = stokProduk,
-                IDPenjual = penjual.Id
+                IDPenjual = penjual.Id,
             };
             MessageBox.Show(await newProduk.Push());
             ShopApiClient.Database.AddProduk(newProduk);

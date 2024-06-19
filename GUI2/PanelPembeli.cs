@@ -60,7 +60,8 @@ namespace GUI
             pesananDataGridView.Rows.Clear(); ;
             foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
             {
-                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok, pesanan.totalHarga, pesanan.Pembeli.Alamat);
+                pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok, 
+                    pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Status);
             }
             pesananDataGridView.ClearSelection();
         }
