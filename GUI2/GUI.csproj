@@ -11,7 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Backend\Backend.csproj" />
     <ProjectReference Include="..\DataTypes\DataTypes.csproj" />
-    <ProjectReference Include="..\ShopApiClient\ShopApiClient.csproj" />
+    <ProjectReference Include="..\ShopApiClient\ShopManagementLib.csproj" />
   </ItemGroup>
 
   <ItemGroup>

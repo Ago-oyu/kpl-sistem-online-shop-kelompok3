@@ -10,7 +10,7 @@ namespace Backend
 {
     public class Database : DbContext
     {
-        Config config = Config.GetConfig();
+        Config config = Config.GetConfig<Config>();
         public DbSet<Produk> produk { get; set; }
         public DbSet<Penjual> penjual { get; set; }
         public DbSet<Pembeli> pembeli { get; set; }
@@ -157,7 +157,6 @@ namespace Backend
             db.SaveChanges();
             
         }
-        // will have to do, mungkin revisi nanti
         public void InsertUser<T>(JsonElement input) where T : class, IHashable
         {
             T parsedInput = Parse<T>(input);

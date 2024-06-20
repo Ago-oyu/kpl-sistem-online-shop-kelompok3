@@ -16,7 +16,20 @@ namespace DataTypes
         public string IDPenjual { get; set; }
         public string Deskripsi { get; set; }
         public int Stok { get; set; }
-        public StatusStok Status {  get; set; }
+        public StatusStok Status
+        {
+            get
+            {
+                for (int i = 0; i < BatasStatus.Count(); i++)
+                {
+                    if (Stok <= BatasStatus[i])
+                    {
+                        return (StatusStok)i;
+                    }
+                }
+                return StatusStok.habis;
+            }
+        }
 
         public Produk(string Id=null) : base(Id)
         {
@@ -59,18 +72,6 @@ namespace DataTypes
             //     Console.WriteLine($"An error occurred: {ex.Message}");
             // }
             return null;
-        }
-
-        public void UpdateStatus()
-        {
-            for (int i = 0; i < BatasStatus.Count(); i++)
-            {
-                if (Stok <= BatasStatus[i])
-                {
-                    Status = (StatusStok)i;
-                    break;
-                }
-            }
         }
     }
 

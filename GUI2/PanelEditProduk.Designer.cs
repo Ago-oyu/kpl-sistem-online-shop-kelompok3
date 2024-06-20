@@ -79,6 +79,7 @@
             // stokNumericUpDown
             // 
             stokNumericUpDown.Location = new Point(89, 147);
+            stokNumericUpDown.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
             stokNumericUpDown.Name = "stokNumericUpDown";
             stokNumericUpDown.Size = new Size(120, 23);
             stokNumericUpDown.TabIndex = 13;
@@ -94,7 +95,9 @@
             // 
             // HargaNumericUpDown
             // 
+            HargaNumericUpDown.Increment = new decimal(new int[] { 2000, 0, 0, 0 });
             HargaNumericUpDown.Location = new Point(89, 52);
+            HargaNumericUpDown.Maximum = new decimal(new int[] { int.MaxValue, 0, 0, 0 });
             HargaNumericUpDown.Name = "HargaNumericUpDown";
             HargaNumericUpDown.Size = new Size(120, 23);
             HargaNumericUpDown.TabIndex = 14;

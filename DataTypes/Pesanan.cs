@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace DataTypes
 {
-    public enum StatusPesanan {diterima, packing, perjalanan, sampai}
+    public enum StatusPesanan {packing, perjalanan, sampai, diterima}
     public class Pesanan: Syncronizeable<Pesanan>
     {
         public StatusPesanan Status {get; set;}
