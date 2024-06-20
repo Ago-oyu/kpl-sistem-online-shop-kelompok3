@@ -1,4 +1,5 @@
 ﻿using DataTypes;
+using ShopManagementLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +34,7 @@ namespace GUI
         {
             produkGridView.Rows.Clear();
 
-            List<Produk> filteredList = await ShopApiClient.Database.GetProdukList();
+            List<Produk> filteredList = await ShopRepository.GetProdukList();
 
 
             if (currentStatusStok != "semua")
@@ -57,7 +58,7 @@ namespace GUI
         async private void GetPesanan()
         {
             pesananDataGridView.Rows.Clear(); ;
-            foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
+            foreach (Pesanan pesanan in await ShopRepository.GetPesananList(p))
             {
                 pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok,
                     pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Status);
@@ -67,7 +68,7 @@ namespace GUI
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            ShopApiClient.Database.Refresh();
+            ShopRepository.Refresh();
             GetProduk();
             GetPesanan();
         }
@@ -86,7 +87,7 @@ namespace GUI
 
         private void PanelPembeli_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ShopApiClient.Database.Reset();
+            ShopRepository.Reset();
         }
 
         private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)

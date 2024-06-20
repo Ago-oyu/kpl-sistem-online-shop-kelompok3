@@ -197,7 +197,7 @@
             btnRegister.TabIndex = 13;
             btnRegister.Text = "Register";
             btnRegister.UseVisualStyleBackColor = true;
-            btnRegister.Click += btnRegister_Click;
+            btnRegister.Click += registerButton_Click;
             // 
             // button2
             // 
