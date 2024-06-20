@@ -42,6 +42,8 @@ namespace GUI
             await Pesanan.Push();
 
             GetData();
+
+            MessageBox.Show($"update status berhasil, sekarang pesanan {statusBaru}");
         }
 
         async void GetData()
