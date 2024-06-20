@@ -1,4 +1,5 @@
 ﻿using DataTypes;
+using ShopManagementLib;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -44,11 +45,11 @@ namespace GUI
             produk.Deskripsi = deskripsiTextBox.Text;
             produk.Stok = (int)stokNumericUpDown.Value;
 
-            string msg = await produk.Push();
+            await produk.Push();
 
-            MessageBox.Show(msg);
+            MessageBox.Show($"Detail {produk.Nama} telah diubah");
 
-            ShopApiClient.Database.Refresh();
+            ShopRepository.Refresh();
             this.Dispose();
         }
 

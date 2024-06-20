@@ -2,9 +2,9 @@
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 
-namespace ShopApiClient
+namespace ShopManagementLib
 {
-    public class Database
+    public class ShopRepository
     {
         private static List<Produk> listProduk;
         private static List<Pesanan> listPesanan;
@@ -24,19 +24,8 @@ namespace ShopApiClient
                 listProduk = await Produk.GetPage();
             }
 
-            //List<Produk> TempList = new();
-            //foreach (Produk produk in listProduk)
-            //{
-            //    if (produk.Stok > 0)
-            //    {
-            //        TempList.Add(produk);
-            //    }
-            //}
-            //return TempList;
             return listProduk;
         }
-
-
 
         public static async Task<Produk> GetProduk(string ID)
         {
@@ -54,7 +43,6 @@ namespace ShopApiClient
             }
             return null;
         }
-
 
         public static async Task<List<Produk>> GetProdukList(Penjual penj)
         {
@@ -107,7 +95,6 @@ namespace ShopApiClient
 
                 listPesanan = listPesanan.Where(pesanan => pesanan.stok > BatasJumlahPesanan[(int)filterJumlah1] && pesanan.stok <= BatasJumlahPesanan[(int)filterJumlah1 + 1]).ToList();
             }
-
             return listPesanan;
         }
 
@@ -132,7 +119,6 @@ namespace ShopApiClient
             Reset();
             listProduk = await Produk.GetPage();
             listPesanan = await Pesanan.GetListPesanan();
-
         }
 
         public static async Task Reset()

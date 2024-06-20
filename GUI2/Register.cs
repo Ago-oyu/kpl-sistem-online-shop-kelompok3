@@ -31,7 +31,6 @@ namespace GUI
             this.Close();
         }
 
-        // Event handler untuk tombol "Register"
         async private void btnRegister_Click(object sender, EventArgs e)
         {
             // Mendapatkan input dari TextBox yang ada di form
@@ -55,7 +54,6 @@ namespace GUI
                 return;
             }
 
-            // cek apakah password valid (Tipe generic user tidak penting)
             string passwordValid = User<Pembeli>.ValidasiPassword(pass);
             if (!string.IsNullOrWhiteSpace(passwordValid))
             {

@@ -33,16 +33,16 @@
             label3 = new Label();
             label4 = new Label();
             label5 = new Label();
-            comboBox1 = new ComboBox();
+            ubahStatus = new ComboBox();
             label6 = new Label();
             label7 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
-            textBox5 = new TextBox();
-            textBox6 = new TextBox();
-            button1 = new Button();
+            namaProduk = new TextBox();
+            namaPembeli = new TextBox();
+            jumlahProduk = new TextBox();
+            totalHarga = new TextBox();
+            alamatPembeli = new TextBox();
+            statusSaatIni = new TextBox();
+            updateStatus = new Button();
             SuspendLayout();
             // 
             // label1
@@ -53,7 +53,6 @@
             label1.Size = new Size(83, 15);
             label1.TabIndex = 0;
             label1.Text = "Nama Produk:";
-            label1.Click += label1_Click;
             // 
             // label2
             // 
@@ -91,13 +90,14 @@
             label5.TabIndex = 4;
             label5.Text = "Alamat Pembeli:";
             // 
-            // comboBox1
+            // ubahStatus
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(144, 266);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(121, 23);
-            comboBox1.TabIndex = 5;
+            ubahStatus.FormattingEnabled = true;
+            ubahStatus.Items.AddRange(new object[] { "ter packing", "sampai", "diterima" });
+            ubahStatus.Location = new Point(144, 266);
+            ubahStatus.Name = "ubahStatus";
+            ubahStatus.Size = new Size(121, 23);
+            ubahStatus.TabIndex = 5;
             // 
             // label6
             // 
@@ -117,72 +117,73 @@
             label7.TabIndex = 7;
             label7.Text = "Status Saat Ini:";
             // 
-            // textBox1
+            // namaProduk
             // 
-            textBox1.Location = new Point(144, 30);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(215, 23);
-            textBox1.TabIndex = 8;
+            namaProduk.Location = new Point(144, 30);
+            namaProduk.Name = "namaProduk";
+            namaProduk.Size = new Size(215, 23);
+            namaProduk.TabIndex = 8;
             // 
-            // textBox2
+            // namaPembeli
             // 
-            textBox2.Location = new Point(144, 71);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(215, 23);
-            textBox2.TabIndex = 9;
+            namaPembeli.Location = new Point(144, 71);
+            namaPembeli.Name = "namaPembeli";
+            namaPembeli.Size = new Size(215, 23);
+            namaPembeli.TabIndex = 9;
             // 
-            // textBox3
+            // jumlahProduk
             // 
-            textBox3.Location = new Point(144, 110);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(215, 23);
-            textBox3.TabIndex = 10;
+            jumlahProduk.Location = new Point(144, 110);
+            jumlahProduk.Name = "jumlahProduk";
+            jumlahProduk.Size = new Size(215, 23);
+            jumlahProduk.TabIndex = 10;
             // 
-            // textBox4
+            // totalHarga
             // 
-            textBox4.Location = new Point(144, 149);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(215, 23);
-            textBox4.TabIndex = 11;
+            totalHarga.Location = new Point(144, 149);
+            totalHarga.Name = "totalHarga";
+            totalHarga.Size = new Size(215, 23);
+            totalHarga.TabIndex = 11;
             // 
-            // textBox5
+            // alamatPembeli
             // 
-            textBox5.Location = new Point(145, 187);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(214, 23);
-            textBox5.TabIndex = 12;
+            alamatPembeli.Location = new Point(145, 187);
+            alamatPembeli.Name = "alamatPembeli";
+            alamatPembeli.Size = new Size(214, 23);
+            alamatPembeli.TabIndex = 12;
             // 
-            // textBox6
+            // statusSaatIni
             // 
-            textBox6.Location = new Point(145, 227);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(120, 23);
-            textBox6.TabIndex = 13;
+            statusSaatIni.Location = new Point(145, 227);
+            statusSaatIni.Name = "statusSaatIni";
+            statusSaatIni.Size = new Size(120, 23);
+            statusSaatIni.TabIndex = 13;
             // 
-            // button1
+            // updateStatus
             // 
-            button1.Location = new Point(145, 308);
-            button1.Name = "button1";
-            button1.Size = new Size(105, 23);
-            button1.TabIndex = 14;
-            button1.Text = "Update Status";
-            button1.UseVisualStyleBackColor = true;
+            updateStatus.Location = new Point(145, 308);
+            updateStatus.Name = "updateStatus";
+            updateStatus.Size = new Size(105, 23);
+            updateStatus.TabIndex = 14;
+            updateStatus.Text = "Update Status";
+            updateStatus.UseVisualStyleBackColor = true;
+            updateStatus.Click += button1_Click;
             // 
             // PanelPesananDetail
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(393, 450);
-            Controls.Add(button1);
-            Controls.Add(textBox6);
-            Controls.Add(textBox5);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(updateStatus);
+            Controls.Add(statusSaatIni);
+            Controls.Add(alamatPembeli);
+            Controls.Add(totalHarga);
+            Controls.Add(jumlahProduk);
+            Controls.Add(namaPembeli);
+            Controls.Add(namaProduk);
             Controls.Add(label7);
             Controls.Add(label6);
-            Controls.Add(comboBox1);
+            Controls.Add(ubahStatus);
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
@@ -202,15 +203,15 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private ComboBox comboBox1;
+        private ComboBox ubahStatus;
         private Label label6;
         private Label label7;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private TextBox textBox5;
-        private TextBox textBox6;
-        private Button button1;
+        private TextBox namaProduk;
+        private TextBox namaPembeli;
+        private TextBox jumlahProduk;
+        private TextBox totalHarga;
+        private TextBox alamatPembeli;
+        private TextBox statusSaatIni;
+        private Button updateStatus;
     }
 }
