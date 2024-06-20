@@ -152,10 +152,7 @@ namespace DataTypes
     {
         public static string CreateSalt(int size=16)
         {
-            var rng = new RNGCryptoServiceProvider();
-            var buff = new byte[size];
-            rng.GetBytes(buff);
-            return Convert.ToBase64String(buff);
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(size));
         }
         public static string GenerateSHA512Hash(string input, string salt)
         {
