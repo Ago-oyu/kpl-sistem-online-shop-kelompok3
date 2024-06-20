@@ -61,16 +61,16 @@ namespace DataTypes
             return null;
         }
 
-        public void UpdateStatus()
+        public StatusStok UpdateStatus(int Stok)
         {
             for (int i = 0; i < BatasStatus.Count(); i++)
             {
                 if (Stok <= BatasStatus[i])
                 {
-                    Status = (StatusStok)i;
-                    break;
+                    return  (StatusStok)i;
                 }
             }
+            return StatusStok.habis;
         }
     }
 

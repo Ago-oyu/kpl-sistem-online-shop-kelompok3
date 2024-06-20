@@ -17,7 +17,7 @@ namespace GUI
     {
         Pembeli p;
         string search = "";
-        string currentStatusStok = "";
+        string currentStatusStok = "semua";
 
         public PanelPembeli(Pembeli p)
         {
@@ -25,46 +25,32 @@ namespace GUI
 
             this.p = p;
             welcomeLabel.Text = $"Selamat datang {p.Nama}";
-            currentStatusStok = "Semua";
-/*            statusComboBox.SelectedIndex = 0;
-*/            GetProduk();
+            GetProduk();
             GetPesanan();
-
         }
 
         async private void GetProduk()
         {
-
-            List<Produk> filteredList = new();
-
             produkGridView.Rows.Clear();
 
-            MessageBox.Show(currentStatusStok);
-
-            filteredList = await ShopApiClient.Database.GetProdukList();
+            List<Produk> filteredList = await ShopApiClient.Database.GetProdukList();
 
 
-            if (currentStatusStok != "Semua")
+            if (currentStatusStok != "semua")
             {
-
-                filteredList = filteredList.Where(produk => produk.Status.ToString() == currentStatusStok).ToList<Produk>();
+                filteredList = filteredList.Where(produk => produk.Status.ToString() == currentStatusStok).ToList();
             }
 
-/*            currentStatusStok = "habis";
-            MessageBox.Show((filteredList[0].Status.ToString() == currentStatusStok).ToString());
-*/
 
             if (search.Length > 0)
             {
-                filteredList = filteredList.Where(produk => Regex.IsMatch(produk.Nama, $".*{search}.*")).ToList<Produk>();
+                filteredList = filteredList.Where(produk => Regex.IsMatch(produk.Nama, $".*{search}.*")).ToList();
             }
 
             foreach (Produk produk in filteredList)
             {
                 produkGridView.Rows.Add(produk.Id, produk.IDPenjual, produk.Nama, produk.Harga, produk.Deskripsi, produk.Stok, produk.Status);
             }
-
-
             produkGridView.ClearSelection();
         }
 
@@ -106,7 +92,6 @@ namespace GUI
         private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             currentStatusStok = statusComboBox.Text.ToLower();
-            GetProduk();
         }
 
         private void searchTextBox_TextChanged(object sender, EventArgs e)
@@ -116,9 +101,7 @@ namespace GUI
 
         private void searchButton_Click(object sender, EventArgs e)
         {
-            /*            Enum.TryParse(statusComboBox.Text, out currentStatusStok);
-            *//*            currentStatusStok = statusComboBox.Text;
-            */
+            currentStatusStok = statusComboBox.Text.ToLower();
 
             GetProduk();
         }
@@ -126,6 +109,6 @@ namespace GUI
         private void HomePage_Click(object sender, EventArgs e)
         {
 
-        }
+        }         
     }
 }

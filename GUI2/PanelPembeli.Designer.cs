@@ -82,7 +82,7 @@
             produkGridView.RowHeadersVisible = false;
             produkGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             produkGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            produkGridView.Size = new Size(428, 348);
+            produkGridView.Size = new Size(533, 348);
             produkGridView.TabIndex = 3;
             produkGridView.CellDoubleClick += selectProduk;
             // 
@@ -147,7 +147,7 @@
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(466, 272);
+            refreshButton.Location = new Point(547, 391);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(75, 23);
             refreshButton.TabIndex = 12;
@@ -186,7 +186,7 @@
             // 
             // searchButton
             // 
-            searchButton.Location = new Point(620, 151);
+            searchButton.Location = new Point(705, 65);
             searchButton.Name = "searchButton";
             searchButton.Size = new Size(75, 23);
             searchButton.TabIndex = 17;
@@ -196,7 +196,7 @@
             // 
             // searchTextBox
             // 
-            searchTextBox.Location = new Point(466, 152);
+            searchTextBox.Location = new Point(551, 66);
             searchTextBox.Name = "searchTextBox";
             searchTextBox.Size = new Size(148, 23);
             searchTextBox.TabIndex = 15;
@@ -204,20 +204,20 @@
             // 
             // statusComboBox
             // 
+            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             statusComboBox.FormattingEnabled = true;
             statusComboBox.Items.AddRange(new object[] { "Semua", "Banyak", "Sedikit", "Habis" });
-            statusComboBox.Location = new Point(466, 220);
+            statusComboBox.Location = new Point(551, 122);
             statusComboBox.Margin = new Padding(3, 2, 3, 2);
             statusComboBox.Name = "statusComboBox";
             statusComboBox.Size = new Size(133, 23);
             statusComboBox.TabIndex = 14;
-            statusComboBox.Text = "Semua";
             statusComboBox.SelectedIndexChanged += statusComboBox_SelectedIndexChanged;
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(466, 196);
+            label1.Location = new Point(551, 98);
             label1.Name = "label1";
             label1.Size = new Size(30, 15);
             label1.TabIndex = 13;
@@ -238,7 +238,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(7, 128);
+            button1.Location = new Point(718, 11);
             button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
             button1.Size = new Size(66, 23);
@@ -257,14 +257,15 @@
             pesananDataGridView.BackgroundColor = Color.White;
             pesananDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { Penjual, Produk, Jumlah, TotalHarga, Alamat, StatusPesanan });
-            pesananDataGridView.Location = new Point(7, 11);
+            pesananDataGridView.Dock = DockStyle.Bottom;
+            pesananDataGridView.Location = new Point(3, 38);
             pesananDataGridView.Margin = new Padding(3, 2, 3, 2);
             pesananDataGridView.Name = "pesananDataGridView";
             pesananDataGridView.ReadOnly = true;
             pesananDataGridView.RowHeadersVisible = false;
             pesananDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             pesananDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            pesananDataGridView.Size = new Size(555, 105);
+            pesananDataGridView.Size = new Size(786, 381);
             pesananDataGridView.TabIndex = 4;
             // 
             // Penjual
@@ -369,5 +370,7 @@
         private DataGridViewTextBoxColumn Deskripsi;
         private DataGridViewTextBoxColumn Stok;
         private DataGridViewTextBoxColumn Status;
+        private ComboBox hargaComboBox;
+        private Label label2;
     }
 }

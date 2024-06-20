@@ -42,14 +42,10 @@
             HomePage = new TabPage();
             button2 = new Button();
             PesananPage = new TabPage();
+            label1 = new Label();
+            jumlahPesananComboBox = new ComboBox();
             button1 = new Button();
             pesananDataGridView = new DataGridView();
-            dataGridView1 = new DataGridView();
-            Penjual = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             PembeliNama = new DataGridViewTextBoxColumn();
             ProdukNama = new DataGridViewTextBoxColumn();
             Jumlah = new DataGridViewTextBoxColumn();
@@ -57,6 +53,12 @@
             Alamat = new DataGridViewTextBoxColumn();
             ProdukID = new DataGridViewTextBoxColumn();
             StatusPesanan = new DataGridViewTextBoxColumn();
+            dataGridView1 = new DataGridView();
+            Penjual = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             tabControl1.SuspendLayout();
             HomePage.SuspendLayout();
@@ -121,17 +123,7 @@
             Deskripsi.MinimumWidth = 6;
             Deskripsi.Name = "Deskripsi";
             Deskripsi.ReadOnly = true;
-            Deskripsi.Width = 125;
             // 
-            // 
-            // namaTextBox
-            // 
-/*            namaTextBox.Location = new Point(107, 58);
-            namaTextBox.Name = "namaTextBox";
-            namaTextBox.Size = new Size(100, 23);
-            namaTextBox.TabIndex = 2;
-            namaTextBox.TextChanged += namaTextBox_TextChanged;
-*/            // 
             // contextMenuStrip1
             // 
             contextMenuStrip1.ImageScalingSize = new Size(20, 20);
@@ -140,7 +132,7 @@
             // 
             // tambahProdukButton
             // 
-            tambahProdukButton.Location = new Point(378, 74);
+            tambahProdukButton.Location = new Point(383, 117);
             tambahProdukButton.Name = "tambahProdukButton";
             tambahProdukButton.Size = new Size(101, 23);
             tambahProdukButton.TabIndex = 10;
@@ -150,7 +142,7 @@
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(378, 133);
+            refreshButton.Location = new Point(383, 176);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(101, 23);
             refreshButton.TabIndex = 11;
@@ -186,7 +178,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(378, 103);
+            button2.Location = new Point(383, 146);
             button2.Name = "button2";
             button2.Size = new Size(101, 23);
             button2.TabIndex = 12;
@@ -196,6 +188,8 @@
             // 
             // PesananPage
             // 
+            PesananPage.Controls.Add(label1);
+            PesananPage.Controls.Add(jumlahPesananComboBox);
             PesananPage.Controls.Add(button1);
             PesananPage.Controls.Add(pesananDataGridView);
             PesananPage.Location = new Point(4, 24);
@@ -205,6 +199,27 @@
             PesananPage.TabIndex = 1;
             PesananPage.Text = "Pesanan";
             PesananPage.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(349, 179);
+            label1.Name = "label1";
+            label1.Size = new Size(95, 15);
+            label1.TabIndex = 21;
+            label1.Text = "Jumlah pesanan:";
+            // 
+            // jumlahPesananComboBox
+            // 
+            jumlahPesananComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            jumlahPesananComboBox.FormattingEnabled = true;
+            jumlahPesananComboBox.Items.AddRange(new object[] { "Banyak", "Sedang", "Sedikit" });
+            jumlahPesananComboBox.Location = new Point(450, 180);
+            jumlahPesananComboBox.Margin = new Padding(3, 2, 3, 2);
+            jumlahPesananComboBox.Name = "jumlahPesananComboBox";
+            jumlahPesananComboBox.Size = new Size(133, 23);
+            jumlahPesananComboBox.TabIndex = 20;
+            jumlahPesananComboBox.SelectedIndexChanged += jumlahPesananComboBox_SelectedIndexChanged;
             // 
             // button1
             // 
@@ -235,6 +250,49 @@
             pesananDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             pesananDataGridView.Size = new Size(664, 211);
             pesananDataGridView.TabIndex = 3;
+            // 
+            // PembeliNama
+            // 
+            PembeliNama.HeaderText = "Pembeli";
+            PembeliNama.Name = "PembeliNama";
+            PembeliNama.ReadOnly = true;
+            // 
+            // ProdukNama
+            // 
+            ProdukNama.HeaderText = "Produk";
+            ProdukNama.Name = "ProdukNama";
+            ProdukNama.ReadOnly = true;
+            // 
+            // Jumlah
+            // 
+            Jumlah.HeaderText = "Jumlah";
+            Jumlah.Name = "Jumlah";
+            Jumlah.ReadOnly = true;
+            // 
+            // TotalHarga
+            // 
+            TotalHarga.HeaderText = "Total Harga";
+            TotalHarga.Name = "TotalHarga";
+            TotalHarga.ReadOnly = true;
+            // 
+            // Alamat
+            // 
+            Alamat.HeaderText = "Alamat";
+            Alamat.Name = "Alamat";
+            Alamat.ReadOnly = true;
+            // 
+            // ProdukID
+            // 
+            ProdukID.HeaderText = "ProdukID";
+            ProdukID.Name = "ProdukID";
+            ProdukID.ReadOnly = true;
+            ProdukID.Visible = false;
+            // 
+            // StatusPesanan
+            // 
+            StatusPesanan.HeaderText = "Status";
+            StatusPesanan.Name = "StatusPesanan";
+            StatusPesanan.ReadOnly = true;
             // 
             // dataGridView1
             // 
@@ -285,49 +343,6 @@
             dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
             dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
-            // PembeliNama
-            // 
-            PembeliNama.HeaderText = "Pembeli";
-            PembeliNama.Name = "PembeliNama";
-            PembeliNama.ReadOnly = true;
-            // 
-            // ProdukNama
-            // 
-            ProdukNama.HeaderText = "Produk";
-            ProdukNama.Name = "ProdukNama";
-            ProdukNama.ReadOnly = true;
-            // 
-            // Jumlah
-            // 
-            Jumlah.HeaderText = "Jumlah";
-            Jumlah.Name = "Jumlah";
-            Jumlah.ReadOnly = true;
-            // 
-            // TotalHarga
-            // 
-            TotalHarga.HeaderText = "Total Harga";
-            TotalHarga.Name = "TotalHarga";
-            TotalHarga.ReadOnly = true;
-            // 
-            // Alamat
-            // 
-            Alamat.HeaderText = "Alamat";
-            Alamat.Name = "Alamat";
-            Alamat.ReadOnly = true;
-            // 
-            // ProdukID
-            // 
-            ProdukID.HeaderText = "ProdukID";
-            ProdukID.Name = "ProdukID";
-            ProdukID.ReadOnly = true;
-            ProdukID.Visible = false;
-            // 
-            // StatusPesanan
-            // 
-            StatusPesanan.HeaderText = "Status";
-            StatusPesanan.Name = "StatusPesanan";
-            StatusPesanan.ReadOnly = true;
-            // 
             // PanelPenjual
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -343,6 +358,7 @@
             HomePage.ResumeLayout(false);
             HomePage.PerformLayout();
             PesananPage.ResumeLayout(false);
+            PesananPage.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pesananDataGridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
@@ -378,5 +394,7 @@
         private DataGridViewTextBoxColumn Alamat;
         private DataGridViewTextBoxColumn ProdukID;
         private DataGridViewTextBoxColumn StatusPesanan;
+        private ComboBox jumlahPesananComboBox;
+        private Label label1;
     }
 }

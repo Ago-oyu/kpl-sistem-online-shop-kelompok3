@@ -15,7 +15,7 @@ namespace Backend
 
         public static Produk PullDependency(this Produk produk, Database db)
         {
-            produk.UpdateStatus(); // yang update status
+            produk.Status = produk.UpdateStatus(produk.Stok);
             return produk;
         }
     }

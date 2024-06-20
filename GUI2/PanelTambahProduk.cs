@@ -19,8 +19,6 @@ namespace GUI
         {
             InitializeComponent();
             this.penjual = penjual;
-            hargaNumericUpDown.Maximum = 2147483647;
-            stokNumericUpDown.Maximum = 2147483647;
         }
 
         private async void tambahBtn_Click(object sender, EventArgs e)

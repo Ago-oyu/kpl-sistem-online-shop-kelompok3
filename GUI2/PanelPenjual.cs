@@ -17,6 +17,8 @@ namespace GUI
     {
         private Penjual p;
         private string selectedProdukID;
+        string currentJumlahPesanan = "semua";
+
         public PanelPenjual(Penjual p)
         {
             InitializeComponent();
@@ -51,11 +53,15 @@ namespace GUI
         async private void GetPesanan()
         {
             pesananDataGridView.Rows.Clear();
-            foreach (Pesanan pesanan in await ShopApiClient.Database.GetPesananList(p))
+
+
+            List<Pesanan> filteredList = await ShopApiClient.Database.GetPesananList(p, currentJumlahPesanan);
+
+            foreach (Pesanan pesanan in filteredList)
             {
-                pesananDataGridView.Rows.Add(pesanan.Pembeli.Nama, pesanan.Produk.Nama, pesanan.stok, 
+                pesananDataGridView.Rows.Add(pesanan.Pembeli.Nama, pesanan.Produk.Nama, pesanan.stok,
                     pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Produk.Id,
-                    pesanan.Status                    
+                    pesanan.Status
                 );
             }
             pesananDataGridView.ClearSelection();
@@ -93,8 +99,7 @@ namespace GUI
                     return;
                 }
             }
-            Produk.Delete(selectedProdukID);
-            MessageBox.Show("Produk telah dihapus");
+            ShopApiClient.Database.DeleteProduk(selectedProdukID);
             refreshButton_Click(sender, e);
         }
 
@@ -104,6 +109,11 @@ namespace GUI
             {
                 selectedProdukID = produkGridView.SelectedRows[0].Cells["ID"].Value.ToString();
             }
+        }
+
+        private void jumlahPesananComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            currentJumlahPesanan = jumlahPesananComboBox.Text.ToLower();
         }
     }
 }
