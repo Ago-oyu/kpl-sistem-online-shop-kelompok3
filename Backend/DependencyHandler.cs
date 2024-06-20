@@ -12,5 +12,10 @@ namespace Backend
             pesanan.Penjual = db.penjual.FirstOrDefault(i => i.Id == pesanan.PenjualID);
             return pesanan;
         }
+
+        public static Produk PullDependency(this Produk produk, Database db)
+        {
+            return produk;
+        }
     }
 }
