@@ -10,7 +10,7 @@ namespace Backend
 {
     public class Database : DbContext
     {
-        readonly Config Config = Config.GetConfig<Config>();
+        readonly Config _config = Config.GetConfig<Config>();
         public DbSet<Produk> Produk { get; set; }
         public DbSet<Penjual> Penjual { get; set; }
         public DbSet<Pembeli> Pembeli { get; set; }
@@ -103,7 +103,7 @@ namespace Backend
 
         // konfigurasi efcore sqlite dan data source
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={Config.dataSource}");
+            => options.UseSqlite($"Data Source={_config.dataSource}");
     }
     public class DatabaseUpdater
     {
