@@ -63,5 +63,13 @@ namespace GUI
         {
             AwaitGetProduk();
         }
+        private void pesananDataGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                PanelPesananDetail panelPesananDetail = new PanelPesananDetail();
+                panelPesananDetail.ShowDialog();
+            }
+        }
     }
 }
