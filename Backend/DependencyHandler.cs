@@ -7,9 +7,9 @@ namespace Backend
     {
         public static Pesanan PullDependency(this Pesanan pesanan, Database db)
         {
-            pesanan.Produk = db.produk.FirstOrDefault(i => i.Id == pesanan.ProdukID);
-            pesanan.Pembeli = db.pembeli.FirstOrDefault(i => i.Id == pesanan.PembeliID);
-            pesanan.Penjual = db.penjual.FirstOrDefault(i => i.Id == pesanan.PenjualID);
+            pesanan.Produk = db.Produk.FirstOrDefault(i => i.Id == pesanan.ProdukID);
+            pesanan.Pembeli = db.Pembeli.FirstOrDefault(i => i.Id == pesanan.PembeliID);
+            pesanan.Penjual = db.Penjual.FirstOrDefault(i => i.Id == pesanan.PenjualID);
             return pesanan;
         }
 

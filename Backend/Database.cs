@@ -10,22 +10,22 @@ namespace Backend
 {
     public class Database : DbContext
     {
-        Config config = Config.GetConfig<Config>();
-        public DbSet<Produk> produk { get; set; }
-        public DbSet<Penjual> penjual { get; set; }
-        public DbSet<Pembeli> pembeli { get; set; }
-        public DbSet<Keranjang> keranjang { get; set; }
-        public DbSet<Pesanan> pesanan { get; set; }
+        readonly Config Config = Config.GetConfig<Config>();
+        public DbSet<Produk> Produk { get; set; }
+        public DbSet<Penjual> Penjual { get; set; }
+        public DbSet<Pembeli> Pembeli { get; set; }
+        public DbSet<Keranjang> Keranjang { get; set; }
+        public DbSet<Pesanan> Pesanan { get; set; }
 
         public Database()
         {
-            // TODO: ganti jadi definisi table sendiri (foreign key, etc)
             try
             {
                 RelationalDatabaseCreator databaseCreator = 
                     (RelationalDatabaseCreator) Database.GetService<IDatabaseCreator>();
                 databaseCreator.CreateTables();
 
+                // pertama kali setup table isi dengan beberapa data dummy
                 DatabaseUpdater updater = new(this);
 
                 Penjual pjl = new()
@@ -57,7 +57,7 @@ namespace Backend
                     Stok=1
                 };
 
-                produk.Add(prd);
+                Produk.Add(prd);
 
                 prd = new()
                 {
@@ -68,7 +68,7 @@ namespace Backend
                     Stok=5
                 };
 
-                produk.Add(prd);
+                Produk.Add(prd);
 
                 prd = new()
                 {
@@ -79,7 +79,7 @@ namespace Backend
                     Stok=10
                 };
 
-                produk.Add(prd);
+                Produk.Add(prd);
 
                 prd = new()
                 {
@@ -90,28 +90,20 @@ namespace Backend
                     Stok=100
                 };
 
-                produk.Add(prd);
+                Produk.Add(prd);
 
                 SaveChanges();
 
             } catch (Exception)
             {
-                // table sudah dibuat
+                // catch exception jika table sudah dibuat
             }
             
         }
-        // The following configures EF to create a Sqlite database file in the
-        // special "local" folder for your platform.
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlite($"Data Source={config.dataSource}");
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            // modelBuilder.Entity<User>()
-            //     .HasOne(e => e.productId)
-            //     .WithOne()
-            //     .HasForeignKey<Product>(e => e.id);
-        }
+        // konfigurasi efcore sqlite dan data source
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlite($"Data Source={Config.dataSource}");
     }
     public class DatabaseUpdater
     {

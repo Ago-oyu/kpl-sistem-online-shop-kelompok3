@@ -21,7 +21,7 @@ namespace Backend.Controllers
         {
             using var db = new Database();
 
-            var query = db.produk.Where(prd => true).AsEnumerable();
+            var query = db.Produk.Where(prd => true).AsEnumerable();
             
             if (namaContain != "")
                 query = query.Where(prd => prd.Nama.Contains(namaContain));
@@ -60,10 +60,10 @@ namespace Backend.Controllers
 
             if (data.Type == UserTypes.pembeli)
             {
-                res.Info = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
+                res.Info = db.Pembeli.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
             } else 
             {
-                res.Info = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
+                res.Info = db.Penjual.AsEnumerable().FirstOrDefault(i => i.Email == data.Email);
             }
 
             if (res.Info == null)
@@ -93,13 +93,13 @@ namespace Backend.Controllers
             if (type == UserTypes.pembeli)
             {
                 res = JsonSerializer.Deserialize<Pembeli>(data);
-                existingEmail = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
-                existingId = db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == res.Id);
+                existingEmail = db.Pembeli.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+                existingId = db.Pembeli.AsEnumerable().FirstOrDefault(i => i.Id == res.Id);
             } else 
             {
                 res = JsonSerializer.Deserialize<Penjual>(data);
-                existingEmail = db.penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
-                existingId = db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == res.Id);
+                existingEmail = db.Penjual.AsEnumerable().FirstOrDefault(i => i.Email == res.Email);
+                existingId = db.Penjual.AsEnumerable().FirstOrDefault(i => i.Id == res.Id);
             }
 
             if (existingEmail != null)
@@ -132,15 +132,15 @@ namespace Backend.Controllers
             switch (type)
             {
                 case Types.produk:
-                    return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
+                    return JsonSerializer.Serialize(db.Produk.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
                 case Types.pembeli:
-                     return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                     return JsonSerializer.Serialize(db.Pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.penjual:
-                     return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                     return JsonSerializer.Serialize(db.Penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.keranjang:
-                    return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
+                    return JsonSerializer.Serialize(db.Keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.pesanan:
-                    return JsonSerializer.Serialize(db.pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
+                    return JsonSerializer.Serialize(db.Pesanan.AsEnumerable().FirstOrDefault(i => i.Id == id)?.PullDependency(db));
                 default:
                     return "";
             }
@@ -153,7 +153,7 @@ namespace Backend.Controllers
             switch (type)
             {
                 case Types.pesanan:
-                    List<Pesanan> pesanans = db.pesanan.ToList();
+                    List<Pesanan> pesanans = db.Pesanan.ToList();
                     pesanans.ForEach(i => i.PullDependency(db));
                     return JsonSerializer.Serialize(pesanans);
                 default:
