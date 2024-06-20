@@ -14,22 +14,43 @@ namespace GUI
     public partial class PanelPesananDetail : Form
     {
         String pesananID;
-
-        public PanelPesananDetail()
-        {
-        }
+        Pesanan pesanan;
 
         public PanelPesananDetail(String PesananID)
         {
             InitializeComponent();
+
+            GetData();
         }
 
         private void PanelPesananDetail_Load(object sender, EventArgs e)
         {
-        }
-        private void label1_Click(object sender, EventArgs e)
-        {
 
+        }
+
+        private async void button1_Click(object sender, EventArgs e)
+        {
+            Trigger trigger = (Trigger)ubahStatus.SelectedIndex;
+
+            StatusPesanan statusBaru = Transition.GetStatusPesanan(pesanan.Status, trigger);
+            if (statusBaru == pesanan.Status)
+                MessageBox.Show("update status gagal, transisi tidak valid");
+
+            pesanan.Status = statusBaru;
+            await pesanan.Push();
+
+            GetData();
+        }
+
+        async void GetData()
+        {
+            pesanan = await Pesanan.Get(pesananID);
+            namaProduk.Text = pesanan.Produk.Nama;
+            namaPembeli.Text = pesanan.Pembeli.Nama;
+            jumlahProduk.Text = pesanan.stok.ToString();
+            totalHarga.Text = pesanan.totalHarga.ToString();
+            alamatPembeli.Text = pesanan.Pembeli.Alamat;
+            statusSaatIni.Text = pesanan.Status.ToString();
         }
     }
     public enum Trigger { terPacking, sampai, diterima }

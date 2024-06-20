@@ -120,7 +120,8 @@ namespace GUI
         {
             if (e.RowIndex >= 0)
             {
-                PanelPesananDetail panelPesananDetail = new PanelPesananDetail();
+                string selectedPesananID = pesananDataGridView.SelectedRows[0].Cells["ID"].Value.ToString();
+                PanelPesananDetail panelPesananDetail = new PanelPesananDetail(selectedPesananID);
                 panelPesananDetail.ShowDialog();
             }
 
