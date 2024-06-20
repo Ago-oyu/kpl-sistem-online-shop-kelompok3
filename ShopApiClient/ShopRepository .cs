@@ -11,11 +11,12 @@ namespace ShopManagementLib
 
         private enum FilterJumlah
         {
-            sedikit,
-            sedang,
-            banyak
+            Sedikit,
+            Sedang,
+            Banyak
         }
-        private static int[] BatasJumlahPesanan = new int[4] {0, 10, 25, int.MaxValue };
+
+        private static readonly int[] BatasJumlahPesanan = { 0, 10, 25, int.MaxValue };
 
         public static async Task<List<Produk>> GetProdukList()
         {
@@ -23,78 +24,61 @@ namespace ShopManagementLib
             {
                 listProduk = await Produk.GetPage();
             }
-
             return listProduk;
         }
 
-        public static async Task<Produk> GetProduk(string ID)
+        public static async Task<Produk> GetProduk(string id)
         {
             if (listProduk == null)
             {
                 listProduk = await Produk.GetPage();
             }
 
-            foreach (Produk produk in listProduk)
-            {
-                if (produk.Id == ID)
-                {
-                    return produk;
-                }
-            }
-            return null;
+            return listProduk.FirstOrDefault(produk => produk.Id == id);
         }
 
-        public static async Task<List<Produk>> GetProdukList(Penjual penj)
+        public static async Task<List<Produk>> GetProdukList(Penjual penjual)
         {
             if (listProduk == null)
             {
                 listProduk = await Produk.GetPage();
             }
 
-            List<Produk> TempList = new();
-            foreach (Produk produk in listProduk)
-            {
-                if (produk.IDPenjual == penj.Id)
-                {
-                    TempList.Add(produk);
-                }
-            }
-            return TempList;
+            return listProduk.Where(produk => produk.IDPenjual == penjual.Id).ToList();
         }
 
-        public static async Task<List<Pesanan>> GetPesananList(Pembeli pem)
+        public static async Task<List<Pesanan>> GetPesananList(Pembeli pembeli)
         {
             if (listPesanan == null)
             {
                 listPesanan = await Pesanan.GetListPesanan();
             }
 
-            List<Pesanan> TempList = new();
-            foreach (Pesanan pesanan in listPesanan)
-            {
-                if (pesanan.PembeliID == pem.Id)
-                {
-                    TempList.Add(pesanan);
-                }
-            }
-            return TempList;
+            return listPesanan.Where(pesanan => pesanan.PembeliID == pembeli.Id).ToList();
         }
 
-        public static async Task<List<Pesanan>> GetPesananList(Penjual penj, string filterJumlah=null)
+        public static async Task<List<Pesanan>> GetPesananList(Penjual penjual, string filterJumlah = null)
         {
-            FilterJumlah filterJumlah1;
-
             if (listPesanan == null)
             {
                 listPesanan = await Pesanan.GetListPesanan();
-                listPesanan = listPesanan.Where(pesanan => pesanan.PenjualID == penj.Id).ToList();
             }
 
-            if (filterJumlah != "semua") {
-                Enum.TryParse(filterJumlah, out filterJumlah1);
+            listPesanan = listPesanan.Where(pesanan => pesanan.PenjualID == penjual.Id).ToList();
 
-                listPesanan = listPesanan.Where(pesanan => pesanan.stok > BatasJumlahPesanan[(int)filterJumlah1] && pesanan.stok <= BatasJumlahPesanan[(int)filterJumlah1 + 1]).ToList();
+            if (filterJumlah != null && filterJumlah != "semua")
+            {
+                if (Enum.TryParse(filterJumlah, true, out FilterJumlah filterJumlahEnum))
+                {
+                    int lowerBound = BatasJumlahPesanan[(int)filterJumlahEnum];
+                    int upperBound = BatasJumlahPesanan[(int)filterJumlahEnum + 1];
+
+                    listPesanan = listPesanan
+                        .Where(pesanan => pesanan.stok > lowerBound && pesanan.stok <= upperBound)
+                        .ToList();
+                }
             }
+
             return listPesanan;
         }
 
@@ -104,9 +88,9 @@ namespace ShopManagementLib
             produk.Push();
         }
 
-        public static async Task DeleteProduk(string ID)
+        public static async Task DeleteProduk(string id)
         {
-            Produk deletedProduk = await GetProduk(ID);
+            Produk deletedProduk = await GetProduk(id);
             if (deletedProduk != null)
             {
                 listProduk.Remove(deletedProduk);
@@ -116,7 +100,7 @@ namespace ShopManagementLib
 
         public static async Task Refresh()
         {
-            Reset();
+            await Reset();
             listProduk = await Produk.GetPage();
             listPesanan = await Pesanan.GetListPesanan();
         }
@@ -126,6 +110,5 @@ namespace ShopManagementLib
             listProduk = null;
             listPesanan = null;
         }
-
     }
 }
