@@ -319,7 +319,7 @@
             // 
             // databaseBindingSource
             // 
-            databaseBindingSource.DataSource = typeof(ShopApiClient.Database);
+            databaseBindingSource.DataSource = typeof(ShopManagementLib.ShopRepository);
             // 
             // PanelPembeli
             // 

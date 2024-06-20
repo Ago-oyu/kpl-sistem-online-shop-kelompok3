@@ -46,10 +46,15 @@ namespace GUI
             logInf.Email = inputUsername;
             logInf.Password = inputPassword;
 
+            if (usernameTextBox.Text.Length <= 0 || passwordTextBox.Text.Length <= 0)
+            {
+                MessageBox.Show("Username/Password tidak boleh kosong");
+                return;
+            }
+
             if (pembeliRadioButton.Checked)
             {
                 LoginOut<Pembeli> res = await Pembeli.Login(logInf);
-                MessageBox.Show(res.Status);
                 if (res.Info != null)
                 {
                     PanelPembeli pPemp = new(res.Info);
@@ -57,8 +62,12 @@ namespace GUI
                     pPemp.ShowDialog();
                     this.Show();
                 }
+                else
+                {
+                    MessageBox.Show(res.Status);
+                }
             }
-            else
+            else if (penjualRadioButton.Checked)
             {
                 LoginOut<Penjual> res = await Penjual.Login(logInf);
                 MessageBox.Show(res.Status);
@@ -68,8 +77,16 @@ namespace GUI
                     this.Hide();
                     pPenj.ShowDialog();
                     this.Show();
+                } else
+                {
+                    MessageBox.Show(res.Status);
                 }
+            } 
+            else
+            {
+                MessageBox.Show("Pilih tipe akun apa yang anda ingin pakai");
             }
+
         }
     }
 }

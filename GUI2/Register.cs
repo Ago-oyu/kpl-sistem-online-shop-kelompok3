@@ -28,7 +28,7 @@ namespace GUI
             this.Close();
         }
 
-        async private void btnRegister_Click(object sender, EventArgs e)
+        async private void registerButton_Click(object sender, EventArgs e)
         {
             inputUsername = usernameTextBox.Text;
             inputEmail = emailTextBox.Text;
@@ -48,7 +48,6 @@ namespace GUI
                 return;
             }
 
-            // cek apakah password valid (Tipe generic user tidak penting)
             string passwordValid = User<Pembeli>.ValidasiPassword(pass);
             if (!string.IsNullOrWhiteSpace(passwordValid))
             {

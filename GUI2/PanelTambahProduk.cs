@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DataTypes;
 using Backend;
+using ShopManagementLib;
 
 namespace GUI
 {
@@ -36,8 +37,8 @@ namespace GUI
                 Stok = stokProduk,
                 IDPenjual = penjual.Id,
             };
-            MessageBox.Show(await newProduk.Push());
-            ShopApiClient.Database.AddProduk(newProduk);
+            MessageBox.Show("Produk telah ditambah");
+            ShopRepository.AddProduk(newProduk);            
             this.Close();
         }
     }
