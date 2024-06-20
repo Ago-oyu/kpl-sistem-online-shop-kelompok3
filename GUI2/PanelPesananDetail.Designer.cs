@@ -190,7 +190,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Name = "PanelPesananDetail";
-            Text = "t";
+            Text = "Detail Pesanan";
             Load += PanelPesananDetail_Load;
             ResumeLayout(false);
             PerformLayout();
