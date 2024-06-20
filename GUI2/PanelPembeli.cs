@@ -20,6 +20,8 @@ namespace GUI
         string search = "";
         string currentStatusStok = "semua";
 
+        ShopRepository shopRepository = ShopRepository.GetShopRepository();
+
         public PanelPembeli(Pembeli p)
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace GUI
         {
             produkGridView.Rows.Clear();
 
-            List<Produk> filteredList = await ShopRepository.GetProdukList();
+            List<Produk> filteredList = await shopRepository.GetProdukList();
 
 
             if (currentStatusStok != "semua")
@@ -58,7 +60,7 @@ namespace GUI
         async private void GetPesanan()
         {
             pesananDataGridView.Rows.Clear(); ;
-            foreach (Pesanan pesanan in await ShopRepository.GetPesananList(p))
+            foreach (Pesanan pesanan in await shopRepository.GetPesananList(p))
             {
                 pesananDataGridView.Rows.Add(pesanan.Penjual.Nama, pesanan.Produk.Nama, pesanan.stok,
                     pesanan.totalHarga, pesanan.Pembeli.Alamat, pesanan.Status);
@@ -68,7 +70,7 @@ namespace GUI
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            ShopRepository.Refresh();
+            shopRepository.Refresh();
             GetProduk();
             GetPesanan();
         }
@@ -87,7 +89,7 @@ namespace GUI
 
         private void PanelPembeli_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ShopRepository.Reset();
+            shopRepository.Reset();
         }
 
         private void statusComboBox_SelectedIndexChanged(object sender, EventArgs e)

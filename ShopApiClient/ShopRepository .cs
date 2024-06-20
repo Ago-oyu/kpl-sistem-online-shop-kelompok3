@@ -6,8 +6,9 @@ namespace ShopManagementLib
 {
     public class ShopRepository
     {
-        private static List<Produk> listProduk;
-        private static List<Pesanan> listPesanan;
+        private static ShopRepository Ins = null;
+        private List<Produk> listProduk;
+        private List<Pesanan> listPesanan;
 
         private enum FilterJumlah
         {
@@ -16,9 +17,23 @@ namespace ShopManagementLib
             Banyak
         }
 
-        private static readonly int[] BatasJumlahPesanan = { 0, 10, 25, int.MaxValue };
+        private ShopRepository()
+        {
+            listProduk = new();
+            listPesanan = new();
+        }
 
-        public static async Task<List<Produk>> GetProdukList()
+        public static ShopRepository GetShopRepository()
+        {
+            if (Ins == null)
+                Ins = new();
+                
+            return Ins;
+        }
+
+        private readonly int[] BatasJumlahPesanan = { 0, 10, 25, int.MaxValue };
+
+        public async Task<List<Produk>> GetProdukList()
         {
             if (listProduk == null)
             {
@@ -27,7 +42,7 @@ namespace ShopManagementLib
             return listProduk;
         }
 
-        public static async Task<Produk> GetProduk(string id)
+        public async Task<Produk> GetProduk(string id)
         {
             if (listProduk == null)
             {
@@ -37,7 +52,7 @@ namespace ShopManagementLib
             return listProduk.FirstOrDefault(produk => produk.Id == id);
         }
 
-        public static async Task<List<Produk>> GetProdukList(Penjual penjual)
+        public async Task<List<Produk>> GetProdukList(Penjual penjual)
         {
             if (listProduk == null)
             {
@@ -47,7 +62,7 @@ namespace ShopManagementLib
             return listProduk.Where(produk => produk.IDPenjual == penjual.Id).ToList();
         }
 
-        public static async Task<List<Pesanan>> GetPesananList(Pembeli pembeli)
+        public async Task<List<Pesanan>> GetPesananList(Pembeli pembeli)
         {
             if (listPesanan == null)
             {
@@ -57,7 +72,7 @@ namespace ShopManagementLib
             return listPesanan.Where(pesanan => pesanan.PembeliID == pembeli.Id).ToList();
         }
 
-        public static async Task<List<Pesanan>> GetPesananList(Penjual penjual, string filterJumlah = null)
+        public async Task<List<Pesanan>> GetPesananList(Penjual penjual, string filterJumlah = null)
         {
             if (listPesanan == null)
             {
@@ -82,13 +97,13 @@ namespace ShopManagementLib
             return listPesanan;
         }
 
-        public static void AddProduk(Produk produk)
+        public void AddProduk(Produk produk)
         {
             listProduk.Add(produk);
             produk.Push();
         }
 
-        public static async Task DeleteProduk(string id)
+        public async Task DeleteProduk(string id)
         {
             Produk deletedProduk = await GetProduk(id);
             if (deletedProduk != null)
@@ -98,14 +113,14 @@ namespace ShopManagementLib
             }
         }
 
-        public static async Task Refresh()
+        public async Task Refresh()
         {
             await Reset();
             listProduk = await Produk.GetPage();
             listPesanan = await Pesanan.GetListPesanan();
         }
 
-        public static async Task Reset()
+        public async Task Reset()
         {
             listProduk = null;
             listPesanan = null;

@@ -44,33 +44,27 @@ namespace DataTypes
         /// <param name="itemPerPage">item per page berapa kalau parameter page lebih dari 0</param>
         /// <param name="sort">sorting apa</param>
         /// <param name="dir">sorting direction nya apa</param>
-        /// <returns></returns>
+        /// <returns>list produk dari database</returns>
         public static async Task<List<Produk>> GetPage(int page=-1, int itemPerPage=20, Sorting sort=Sorting.none, SortDir dir=SortDir.asc, string namaContain="")
         {
             using var client = new HttpClient();
 
             string requestUrl = baseUrl + $"/api/getProductPage?page={page}&batch={itemPerPage}&sort={sort}&dir={dir}&namaContain={namaContain}";
-            
-            // try
-            // {
-                HttpResponseMessage response = await client.GetAsync(requestUrl);
 
-                // Check if the request was successful (status code 200)
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseBody = await response.Content.ReadAsStringAsync();
+            HttpResponseMessage response = await client.GetAsync(requestUrl);
 
-                    return JsonSerializer.Deserialize<List<Produk>>(responseBody);
-                }
-                else
-                {
-                    Console.WriteLine($"Failed to call the API. Status code: {response.StatusCode}");
-                }
-            // }
-            // catch (Exception ex)
-            // {
-            //     Console.WriteLine($"An error occurred: {ex.Message}");
-            // }
+            // Check if the request was successful (status code 200)
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+
+                return JsonSerializer.Deserialize<List<Produk>>(responseBody);
+            }
+            else
+            {
+                Console.WriteLine($"Failed to call the API. Status code: {response.StatusCode}");
+            }
+
             return null;
         }
     }

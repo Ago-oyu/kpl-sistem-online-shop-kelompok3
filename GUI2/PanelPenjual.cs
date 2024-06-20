@@ -19,7 +19,7 @@ namespace GUI
         private Penjual p;
         private string selectedProdukID;
         string currentJumlahPesanan = "semua";
-
+        ShopRepository shopRepository = ShopRepository.GetShopRepository();
         private enum PanelState
         {
             ViewProducts,
@@ -52,7 +52,7 @@ namespace GUI
         async private void GetProduk()
         {
             produkGridView.Rows.Clear();
-            foreach (Produk produk in await ShopRepository.GetProdukList(p))
+            foreach (Produk produk in await shopRepository.GetProdukList(p))
             {
                 produkGridView.Rows.Add(produk.Id, produk.Nama, produk.Harga, produk.Deskripsi);
             }
@@ -65,7 +65,7 @@ namespace GUI
             pesananDataGridView.Rows.Clear();
 
 
-            List<Pesanan> filteredList = await ShopRepository.GetPesananList(p, currentJumlahPesanan);
+            List<Pesanan> filteredList = await shopRepository.GetPesananList(p, currentJumlahPesanan);
 
             foreach (Pesanan pesanan in filteredList)
             {
@@ -79,14 +79,14 @@ namespace GUI
 
         private void refreshButton_Click(object sender, EventArgs e)
         {
-            ShopRepository.Refresh();
+            shopRepository.Refresh();
             GetProduk();
             GetPesanan();
         }
 
         private void PanelPenjual_FormClosed(object sender, FormClosedEventArgs e)
         {
-            ShopRepository.Reset();
+            shopRepository.Reset();
         }
 
         private void produkGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
@@ -109,7 +109,7 @@ namespace GUI
                     return;
                 }
             }
-            ShopRepository.DeleteProduk(selectedProdukID);
+            shopRepository.DeleteProduk(selectedProdukID);
             refreshButton_Click(sender, e);
         }
 

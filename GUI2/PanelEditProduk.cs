@@ -49,7 +49,7 @@ namespace GUI
 
             MessageBox.Show($"Detail {produk.Nama} telah diubah");
 
-            ShopRepository.Refresh();
+            ShopRepository.GetShopRepository().Refresh();
             this.Dispose();
         }
 

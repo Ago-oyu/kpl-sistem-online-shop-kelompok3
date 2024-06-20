@@ -38,7 +38,7 @@ namespace GUI
                 IDPenjual = penjual.Id,
             };
             MessageBox.Show("Produk telah ditambah");
-            ShopRepository.AddProduk(newProduk);            
+            ShopRepository.GetShopRepository().AddProduk(newProduk);            
             this.Close();
         }
     }
