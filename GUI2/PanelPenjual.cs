@@ -130,7 +130,7 @@ namespace GUI
         {
             if (e.RowIndex >= 0)
             {
-                string selectedPesananID = pesananDataGridView.SelectedRows[0].Cells["ID"].Value.ToString();
+                string selectedPesananID = pesananDataGridView.SelectedRows[0].Cells["PesananID"].Value.ToString();
                 PanelPesananDetail panelPesananDetail = new PanelPesananDetail(selectedPesananID);
                 panelPesananDetail.ShowDialog();
             }
