@@ -398,3 +398,11 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+TODO
+unit_test.py
+.vscode/settings.json
+Backend/appsettings.Development.json
+DataTypes/DataTypes.csproj
+GUI2/GUI.csproj
+TestingGround/Program.cs
+UtilityLibrary/Util.cs

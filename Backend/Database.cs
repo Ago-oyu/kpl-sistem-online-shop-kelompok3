@@ -157,7 +157,6 @@ namespace Backend
             db.SaveChanges();
             
         }
-        // will have to do, mungkin revisi nanti
         public void InsertUser<T>(JsonElement input) where T : class, IHashable
         {
             T parsedInput = Parse<T>(input);
