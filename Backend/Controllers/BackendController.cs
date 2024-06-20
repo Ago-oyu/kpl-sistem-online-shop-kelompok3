@@ -1,12 +1,7 @@
 using System.Data;
-using System.Data.Entity.Core.Common.CommandTrees;
-using System.Data.SQLite;
-using System.Linq.Expressions;
 using System.Text.Json;
-using Dapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using DataTypes;
 
 namespace Backend.Controllers
@@ -16,12 +11,7 @@ namespace Backend.Controllers
     public class BackendController : ControllerBase
     {
         readonly Database database = new();
-        // Dictionary<string, string> tableMapping = new(){
-        //     {"produk", "product"},
-        //     {"user", "user"},
-        //     // {"keranjang", "keranjang"},
-        //     // {"product", "product"}
-        // };
+
         public enum Types {
             produk, pembeli, penjual, keranjang, pesanan
         }
@@ -159,18 +149,9 @@ namespace Backend.Controllers
         public string GetMany([FromRoute] Types type)
         {
             using var db = new Database();
-            dynamic result; 
 
             switch (type)
             {
-                // case Types.produk:
-                //     return JsonSerializer.Serialize(db.produk.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                // case Types.pembeli:
-                //      return JsonSerializer.Serialize(db.pembeli.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                // case Types.penjual:
-                //      return JsonSerializer.Serialize(db.penjual.AsEnumerable().FirstOrDefault(i => i.Id == id));
-                // case Types.keranjang:
-                //     return JsonSerializer.Serialize(db.keranjang.AsEnumerable().FirstOrDefault(i => i.Id == id));
                 case Types.pesanan:
                     List<Pesanan> pesanans = db.pesanan.ToList();
                     pesanans.ForEach(i => i.PullDependency(db));
@@ -219,8 +200,7 @@ namespace Backend.Controllers
                 }
             } catch (Exception ex)
             {
-                // return new ContentResult() { Content = ex.Message, StatusCode = 500 };
-                throw;
+                return new ContentResult() { Content = ex.Message, StatusCode = 500 };
             }
 
             if (operationDone == DatabaseUpdater.Result.inserted)

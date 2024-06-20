@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Mapster;
+using System.Text.RegularExpressions;
 
 namespace DataTypes
 {
@@ -120,6 +121,31 @@ namespace DataTypes
             // {
             //     return $"An error occurred: {ex.Message}";
             // }
+       }
+       public static string ValidasiPassword(string password)
+       {
+        // verfikasi validasi password
+            List<string> msg = new List<string>();
+
+            if (password.Length < 8)
+            {
+                msg.Add("Password minimal memiliki 8 karakter.");
+            }
+
+            if (!Regex.IsMatch(password, "[0-9]"))
+            {
+                msg.Add("Password minimal memiliki 1 angka.");
+            }
+
+            if (!Regex.IsMatch(password, "[^a-zA-Z0-9]"))
+            {
+                msg.Add("Password minimal memiliki 1 karakter spesial.");
+            }
+
+            if (msg.Count > 0)
+                return string.Join("\n", msg);
+            
+            return null;
        }
     }
     public class PasswordHandler
