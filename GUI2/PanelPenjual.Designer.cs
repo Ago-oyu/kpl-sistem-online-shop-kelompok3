@@ -250,6 +250,7 @@
             pesananDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             pesananDataGridView.Size = new Size(664, 211);
             pesananDataGridView.TabIndex = 3;
+            pesananDataGridView.CellDoubleClick += pesananDataGridView_CellDoubleClick_1;
             // 
             // PembeliNama
             // 
