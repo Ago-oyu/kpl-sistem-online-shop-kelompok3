@@ -48,6 +48,13 @@ namespace GUI
                 return;
             }
 
+            // cek apakah password valid (Tipe generic user tidak penting)
+            string passwordValid = User<Pembeli>.ValidasiPassword(pass);
+            if (!string.IsNullOrWhiteSpace(passwordValid))
+            {
+                MessageBox.Show(passwordValid);
+                return;
+            }
 
             if (PembeliRadioButton.Checked)
             {

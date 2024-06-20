@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using Backend;
 using Serilog;
 
-Config config = Config.GetConfig();
+Config config = Config.GetConfig<Config>();
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((_, serviceProvider, loggerConfiguration) =>
