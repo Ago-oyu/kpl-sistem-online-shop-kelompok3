@@ -19,6 +19,15 @@ namespace GUI
         private string selectedProdukID;
         string currentJumlahPesanan = "semua";
 
+        private enum PanelState
+        {
+            ViewProducts,
+            ManageOrders,
+            EditProduct,
+            // Add more states as needed
+        }
+
+
         public PanelPenjual(Penjual p)
         {
             InitializeComponent();
