@@ -13,12 +13,14 @@ namespace GUI
 {
     public partial class PanelPesananDetail : Form
     {
-        String pesananID;
-        Pesanan pesanan;
+        String PesananID;
+        Pesanan Pesanan;
 
-        public PanelPesananDetail(String PesananID)
+        public PanelPesananDetail(String pesananID)
         {
             InitializeComponent();
+
+            PesananID = pesananID;
 
             GetData();
         }
@@ -32,25 +34,25 @@ namespace GUI
         {
             Trigger trigger = (Trigger)ubahStatus.SelectedIndex;
 
-            StatusPesanan statusBaru = Transition.GetStatusPesanan(pesanan.Status, trigger);
-            if (statusBaru == pesanan.Status)
+            StatusPesanan statusBaru = Transition.GetStatusPesanan(Pesanan.Status, trigger);
+            if (statusBaru == Pesanan.Status)
                 MessageBox.Show("update status gagal, transisi tidak valid");
 
-            pesanan.Status = statusBaru;
-            await pesanan.Push();
+            Pesanan.Status = statusBaru;
+            await Pesanan.Push();
 
             GetData();
         }
 
         async void GetData()
         {
-            pesanan = await Pesanan.Get(pesananID);
-            namaProduk.Text = pesanan.Produk.Nama;
-            namaPembeli.Text = pesanan.Pembeli.Nama;
-            jumlahProduk.Text = pesanan.stok.ToString();
-            totalHarga.Text = pesanan.totalHarga.ToString();
-            alamatPembeli.Text = pesanan.Pembeli.Alamat;
-            statusSaatIni.Text = pesanan.Status.ToString();
+            Pesanan = await Pesanan.Get(PesananID);
+            namaProduk.Text = Pesanan.Produk.Nama;
+            namaPembeli.Text = Pesanan.Pembeli.Nama;
+            jumlahProduk.Text = Pesanan.stok.ToString();
+            totalHarga.Text = Pesanan.totalHarga.ToString();
+            alamatPembeli.Text = Pesanan.Pembeli.Alamat;
+            statusSaatIni.Text = Pesanan.Status.ToString();
         }
     }
     public enum Trigger { terPacking, sampai, diterima }
