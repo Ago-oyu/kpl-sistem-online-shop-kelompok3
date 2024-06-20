@@ -10,7 +10,7 @@ namespace Backend
 {
     public class Database : DbContext
     {
-        Config config = Config.GetConfig();
+        Config config = Config.GetConfig<Config>();
         public DbSet<Produk> produk { get; set; }
         public DbSet<Penjual> penjual { get; set; }
         public DbSet<Pembeli> pembeli { get; set; }
