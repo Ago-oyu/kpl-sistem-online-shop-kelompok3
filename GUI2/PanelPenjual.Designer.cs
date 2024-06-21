@@ -46,12 +46,6 @@
             jumlahPesananComboBox = new ComboBox();
             button1 = new Button();
             pesananDataGridView = new DataGridView();
-            dataGridView1 = new DataGridView();
-            Penjual = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
-            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             PembeliNama = new DataGridViewTextBoxColumn();
             ProdukNama = new DataGridViewTextBoxColumn();
             Jumlah = new DataGridViewTextBoxColumn();
@@ -60,6 +54,12 @@
             StatusPesanan = new DataGridViewTextBoxColumn();
             ProdukID = new DataGridViewTextBoxColumn();
             PesananID = new DataGridViewTextBoxColumn();
+            dataGridView1 = new DataGridView();
+            Penjual = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn1 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn2 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn3 = new DataGridViewTextBoxColumn();
+            dataGridViewTextBoxColumn4 = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)produkGridView).BeginInit();
             tabControl1.SuspendLayout();
             HomePage.SuspendLayout();
@@ -93,7 +93,7 @@
             produkGridView.RowHeadersVisible = false;
             produkGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             produkGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            produkGridView.Size = new Size(332, 340);
+            produkGridView.Size = new Size(538, 340);
             produkGridView.TabIndex = 2;
             produkGridView.CellClick += produkGridView_CellClick;
             produkGridView.CellDoubleClick += produkGridView_CellDoubleClick;
@@ -133,7 +133,7 @@
             // 
             // tambahProdukButton
             // 
-            tambahProdukButton.Location = new Point(383, 117);
+            tambahProdukButton.Location = new Point(561, 74);
             tambahProdukButton.Name = "tambahProdukButton";
             tambahProdukButton.Size = new Size(101, 23);
             tambahProdukButton.TabIndex = 10;
@@ -143,7 +143,7 @@
             // 
             // refreshButton
             // 
-            refreshButton.Location = new Point(383, 176);
+            refreshButton.Location = new Point(561, 133);
             refreshButton.Name = "refreshButton";
             refreshButton.Size = new Size(101, 23);
             refreshButton.TabIndex = 11;
@@ -179,7 +179,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(383, 146);
+            button2.Location = new Point(561, 103);
             button2.Name = "button2";
             button2.Size = new Size(101, 23);
             button2.TabIndex = 12;
@@ -204,7 +204,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(349, 179);
+            label1.Location = new Point(349, 4);
             label1.Name = "label1";
             label1.Size = new Size(95, 15);
             label1.TabIndex = 21;
@@ -215,7 +215,7 @@
             jumlahPesananComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             jumlahPesananComboBox.FormattingEnabled = true;
             jumlahPesananComboBox.Items.AddRange(new object[] { "Banyak", "Sedang", "Sedikit" });
-            jumlahPesananComboBox.Location = new Point(450, 180);
+            jumlahPesananComboBox.Location = new Point(450, 5);
             jumlahPesananComboBox.Margin = new Padding(3, 2, 3, 2);
             jumlahPesananComboBox.Name = "jumlahPesananComboBox";
             jumlahPesananComboBox.Size = new Size(133, 23);
@@ -224,7 +224,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(589, 179);
+            button1.Location = new Point(589, 4);
             button1.Name = "button1";
             button1.Size = new Size(75, 23);
             button1.TabIndex = 4;
@@ -243,64 +243,15 @@
             pesananDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             pesananDataGridView.Columns.AddRange(new DataGridViewColumn[] { PembeliNama, ProdukNama, Jumlah, TotalHarga, Alamat, StatusPesanan, ProdukID, PesananID });
             pesananDataGridView.Dock = DockStyle.Bottom;
-            pesananDataGridView.Location = new Point(3, 208);
+            pesananDataGridView.Location = new Point(3, 33);
             pesananDataGridView.Name = "pesananDataGridView";
             pesananDataGridView.ReadOnly = true;
             pesananDataGridView.RowHeadersVisible = false;
             pesananDataGridView.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             pesananDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            pesananDataGridView.Size = new Size(664, 211);
+            pesananDataGridView.Size = new Size(664, 386);
             pesananDataGridView.TabIndex = 3;
             pesananDataGridView.CellDoubleClick += pesananDataGridView_CellDoubleClick_1;
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AllowUserToResizeColumns = false;
-            dataGridView1.AllowUserToResizeRows = false;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.BackgroundColor = Color.White;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Penjual, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4 });
-            dataGridView1.Location = new Point(58, 141);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersVisible = false;
-            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(555, 140);
-            dataGridView1.TabIndex = 5;
-            // 
-            // Penjual
-            // 
-            Penjual.HeaderText = "Penjual";
-            Penjual.Name = "Penjual";
-            Penjual.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            dataGridViewTextBoxColumn1.HeaderText = "Produk";
-            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            dataGridViewTextBoxColumn1.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn2
-            // 
-            dataGridViewTextBoxColumn2.HeaderText = "Jumlah";
-            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            dataGridViewTextBoxColumn2.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn3
-            // 
-            dataGridViewTextBoxColumn3.HeaderText = "Total Harga";
-            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            dataGridViewTextBoxColumn3.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn4
-            // 
-            dataGridViewTextBoxColumn4.HeaderText = "Alamat";
-            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // PembeliNama
             // 
@@ -351,6 +302,55 @@
             PesananID.Name = "PesananID";
             PesananID.ReadOnly = true;
             PesananID.Visible = false;
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.White;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Columns.AddRange(new DataGridViewColumn[] { Penjual, dataGridViewTextBoxColumn1, dataGridViewTextBoxColumn2, dataGridViewTextBoxColumn3, dataGridViewTextBoxColumn4 });
+            dataGridView1.Location = new Point(58, 141);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(555, 140);
+            dataGridView1.TabIndex = 5;
+            // 
+            // Penjual
+            // 
+            Penjual.HeaderText = "Penjual";
+            Penjual.Name = "Penjual";
+            Penjual.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            dataGridViewTextBoxColumn1.HeaderText = "Produk";
+            dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            dataGridViewTextBoxColumn1.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn2
+            // 
+            dataGridViewTextBoxColumn2.HeaderText = "Jumlah";
+            dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
+            dataGridViewTextBoxColumn2.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn3
+            // 
+            dataGridViewTextBoxColumn3.HeaderText = "Total Harga";
+            dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
+            dataGridViewTextBoxColumn3.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn4
+            // 
+            dataGridViewTextBoxColumn4.HeaderText = "Alamat";
+            dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            dataGridViewTextBoxColumn4.ReadOnly = true;
             // 
             // PanelPenjual
             // 

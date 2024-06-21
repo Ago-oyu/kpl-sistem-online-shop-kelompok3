@@ -70,7 +70,6 @@ namespace GUI
             else if (penjualRadioButton.Checked)
             {
                 LoginOut<Penjual> res = await Penjual.Login(logInf);
-                MessageBox.Show(res.Status);
                 if (res.Info != null)
                 {
                     PanelPenjual pPenj = new(res.Info);

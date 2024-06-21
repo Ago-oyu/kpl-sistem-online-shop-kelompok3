@@ -97,12 +97,14 @@ namespace ShopManagementLib
             return listPesanan;
         }
 
+        // Menghapus produk dari database dan list pesanan
         public void AddProduk(Produk produk)
         {
             listProduk.Add(produk);
             produk.Push();
         }
 
+        // Menghapus produk dari database melalui dan list pesanan
         public async Task DeleteProduk(string id)
         {
             Produk deletedProduk = await GetProduk(id);
@@ -113,6 +115,7 @@ namespace ShopManagementLib
             }
         }
 
+        // Menghapus list data produk dan pesanan terbaru di database
         public async Task Refresh()
         {
             await Reset();
@@ -120,6 +123,7 @@ namespace ShopManagementLib
             listPesanan = await Pesanan.GetListPesanan();
         }
 
+        // Menghapus semua data di list pesanan dan produk
         public async Task Reset()
         {
             listProduk = null;
